@@ -104,7 +104,7 @@ module.exports.signIn = (req, res) => {
             message: "User not found.",
           });
         } else {
-          if (!user.Verified) {
+          if (!user.verified) {
             return res.status(400).json({
               error: true,
               status: "FAILED",

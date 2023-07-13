@@ -7,7 +7,7 @@ const RoleSchema = new mongoose.Schema({
 const UserSchema = mongoose.Schema({
   username: {
     type: String,
-    unique: [true, 'The first name is unique'],
+    unique: true
   },
   email: {
     type : String , 
@@ -17,9 +17,12 @@ const UserSchema = mongoose.Schema({
   phone_number: {
     type: String
   },
-  Password: String,
+  password: String,
   profileImage:  String,
-  Verified :Boolean,
+  Verified : {
+      type:Boolean,
+      default:false
+    },
   role :RoleSchema,
 }, {
   timestamps: true,

@@ -22,6 +22,7 @@ mongoose
     })
 
 /* app.use(routes) */
+
 app.use(UserRoutes)
 
 app.listen(PORT,()=>{

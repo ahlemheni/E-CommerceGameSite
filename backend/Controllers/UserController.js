@@ -92,32 +92,37 @@ module.exports.signIn = (req, res) => {
     let query;
     if (username) {
       query = { username: username };
-    } else {
+     } 
+    else {
       query = { email: email };
-    }
+     }
   
-    UserModel.findOne(query)
+    UserModel
+      .findOne(query)
       .then((user) => {
         if (!user) {
           return res.status(404).json({
             error: true,
             message: "User not found.",
           });
-        } else {
-          if (!user.Verified) {
+         } 
+        else {
+          if (!user.verified) {
             return res.status(400).json({
               error: true,
               status: "FAILED",
               message: "Email hasn't been verified.",
             });
-          } else {
+          } 
+          else {
             bcrypt.compare(password, user.password).then((same) => {
               if (same) {
                 let token = jwt.sign({ id: user._id }, privateKey, {
                   expiresIn: '4h',
                 });
                 res.json({ token, user,msg:"sucessfully..." });
-              } else {
+              } 
+              else {
                 return res.status(404).json({
                   error: true,
                   message: "Invalid password or email.",

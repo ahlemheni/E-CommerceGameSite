@@ -1,6 +1,7 @@
 const UserModel=require("../Models/UserModel")
 const nodemailer = require('nodemailer');
 const bcrypt=require('bcrypt')
+const jwt=require('jsonwebtoken');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -75,3 +76,61 @@ module.exports.delete= async(req,res)=>{
 module.exports.verify= async(req,res)=>{
        
                 }
+
+const privateKey = 'SwiftCode';
+
+module.exports.signIn = (req, res) => {
+    const { username, email, password } = req.body;
+  
+    if ((!username && !email) || !password) {
+      return res.status(400).json({
+        error: true,
+        message: "First name or email and password are required.",
+      });
+    }
+  
+    let query;
+    if (username) {
+      query = { username: username };
+    } else {
+      query = { email: email };
+    }
+  
+    UserModel.findOne(query)
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({
+            error: true,
+            message: "User not found.",
+          });
+        } else {
+          if (!user.Verified) {
+            return res.status(400).json({
+              error: true,
+              status: "FAILED",
+              message: "Email hasn't been verified.",
+            });
+          } else {
+            bcrypt.compare(password, user.password).then((same) => {
+              if (same) {
+                let token = jwt.sign({ id: user._id }, privateKey, {
+                  expiresIn: '4h',
+                });
+                res.json({ token, user,msg:"sucessfully..." });
+              } else {
+                return res.status(404).json({
+                  error: true,
+                  message: "Invalid password or email.",
+                });
+              }
+            });
+          }
+        }
+      })
+      .catch((error) => {
+        return res.status(500).json({
+          error: true,
+          message: "Internal server error.",
+        });
+      });
+  };

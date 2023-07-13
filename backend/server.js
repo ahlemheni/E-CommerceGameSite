@@ -21,8 +21,6 @@ mongoose
     })
 
 /* app.use(routes) */
-
-
 app.listen(PORT,()=>{
     console.log(`server running on https://localhost:${PORT}...`)
 })

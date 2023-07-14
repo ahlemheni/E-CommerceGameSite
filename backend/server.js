@@ -1,6 +1,7 @@
 const express=require("express")
 const mongoose=require("mongoose")
 const UserRoutes=require('./Routes/UserRoutes')
+const ProductRoutes = require('./Routes/ProductRoutes')
 const cors=require("cors")
 require('dotenv').config()
 
@@ -24,6 +25,7 @@ mongoose
 /* app.use(routes) */
 
 app.use(UserRoutes)
+app.use(ProductRoutes)
 
 app.listen(PORT,()=>{
     console.log(`server running on https://localhost:${PORT}...`)

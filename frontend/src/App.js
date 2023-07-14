@@ -6,20 +6,27 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import NotFound from './Components/notFound/notFound';
 import Spinner from './Components/spinner/spinner';
+import Register from './Page/Registre';
+import LandingPage from './Components/LandingPage';
+import Login from './Page/Login';
 
 function App() {
   return (
     <div className="App">
 <Router>
-  <Header></Header>
   <Routes>
-  <Route path="/" element={ <Home/>} />
-  <Route path="/profile" element={ <Profile />} />
+  <Route path="/" element={ <Home/>} >
+  <Route path="" element={ <LandingPage />} />
+
+  <Route path="profile" element={ <Profile />} />
+  <Route path="Registre" element={ <Register />} />
+  <Route path='Login' element={<Login />} />
+  
   <Route path='*' element={<NotFound />} />
- 
+  </Route>
+
   </Routes>
 
-<Footer></Footer>
 </Router>
       
     </div>

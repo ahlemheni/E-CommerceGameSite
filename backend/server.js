@@ -1,32 +1,33 @@
-const express=require("express")
-const mongoose=require("mongoose")
-const UserRoutes=require('./Routes/UserRoutes')
-const ProductRoutes = require('./Routes/ProductRoutes')
-const cors=require("cors")
-require('dotenv').config()
+const express = require('express');
+const mongoose = require('mongoose');
+const UserRoutes = require('./Routes/UserRoutes');
+const ProductRoutes = require('./Routes/ProductRoutes');
+const cors = require('cors');
+require('dotenv').config();
 
+const app = express();
+const PORT = process.env.PORT || 5000;
 
-const app=express()
-const PORT=process.env.PORT || 5000
-
-app.use(express.json())
-app.use(cors())
-
+app.use(express.json({ limit: '10mb' })); 
+app.use(cors());
 
 mongoose
-    .connect(process.env.MONGODB_URL)
-    .then(()=>{
-        console.log("Connected to the database...")
-    })
-    .catch((err)=>{
-        console.log(`An error has occured while trying to connect to the database : ${err}`)
-    })
+  .connect(process.env.MONGODB_URL)
+  .then(() => {
+    console.log('Connected to the database...');
+  })
+  .catch((err) => {
+    console.log(`An error has occurred while trying to connect to the database: ${err}`);
+  });
 
-/* app.use(routes) */
+app.use(UserRoutes);
+app.use( ProductRoutes);
 
-app.use(UserRoutes)
-app.use(ProductRoutes)
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Internal Server Error' });
+});
 
-app.listen(PORT,()=>{
-    console.log(`server running on https://localhost:${PORT}...`)
-})
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}...`);
+});

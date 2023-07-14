@@ -1,12 +1,12 @@
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
-import LandingPage from '../Components/LandingPage';
+import { Outlet } from 'react-router-dom';
 
 function Home() {
     return (
       <div>
        <Header/>
-       <LandingPage/>
+       <Outlet />
        <Footer/>
         
       </div>

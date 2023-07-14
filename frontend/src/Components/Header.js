@@ -24,8 +24,8 @@ function Header(){
                     <ul className="nav">
                         <li><Link to="/" className="active">Home</Link></li>
                         <li><Link to="/shop">Shop</Link></li>
-                        <li><Link to="/register">Register</Link></li>
-                        <li><Link to="/login">Login</Link></li>
+                        <li><Link to="/Registre">Register</Link></li>
+                        <li><Link to="/Login">Login</Link></li>
                         <li><Link to="/card"><BsCart2/></Link></li>
                         <li><Link to="/profile">Profile <img src="../assets/images/profile-header.jpg" alt=""/></Link></li>
                     </ul>   

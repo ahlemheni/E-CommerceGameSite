@@ -2,14 +2,10 @@ const UserModel=require("../Models/UserModel")
 const nodemailer = require('nodemailer');
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken');
+const { generatorOTP ,mailTransport,generateToken } = require('./utils/mail.js')
+const verficationToken  = require('../Models/token.js')
+const mongoose = require('mongoose');
 
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'chattichiheb35@gmail.com',
-      pass: 'ejgjzihlqtctemup'
-    }
-  });
 
 module.exports.get= async(req,res)=>{
     const users= await UserModel.find()
@@ -17,42 +13,114 @@ module.exports.get= async(req,res)=>{
        
 }
 
-module.exports.save= async(req,res)=>{
-    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
-        if (err) {
-          res.status(500).send({
-            message: "Error occurred while encrypting the password."
-          });
-          return;
-        }
-   
-    const {username,email,phone_number,profileImage}=req.body
-    const password=hashedPassword
+module.exports.save = async (req, res) => {
+  const { username, email, phone_number, profileImage, password } = req.body;
 
-        
-    let mailOptions = {
-        from: `chattichiheb35@gmail.com`, 
-        to: email, 
-        subject: 'Account verification', 
-        text: `Please click the following link to verify your account :` 
-      };
- 
-    UserModel
-        .create({username,email,phone_number,password,role: {name: "userRole"},profileImage})
-        .then((data)=>{
-            console.log("Data added sucessfully to the database....")
-            console.log(data)
-            transporter.sendMail(mailOptions,(err,info)=>{
-                if (err){
-                    console.log('an error has occured while sending the mail')
-                }
-                else {
-                    console.log(`Email has been sent ${info}`)
-                }
-            })
-            res.send(data)
-        })})
+  if (!username || !email || !password) {
+    res.status(400).json({ message: 'Please provide all required fields.' });
+    return;
+  }
+
+  bcrypt.hash(password, 10, (err, hashedPassword) => {
+    if (err) {
+      res.status(500).send({ message: 'Error occurred while encrypting the password.' });
+      return;
     }
+
+    const otp = generatorOTP();
+
+    UserModel.create({
+      username,
+      email,
+      phone_number,
+      password: hashedPassword,
+      role: { name: 'userRole' },
+      profileImage,
+      emailToken: otp,
+    })
+      .then((user) => {
+        verficationToken.create({ owner: user._id, vtoken: otp }) // Create the verification token document with the user's _id as owner
+          .then((token) => {
+            console.log('Data added successfully to the database.');
+            console.log(user);
+            mailTransport().sendMail({
+              from: 'chattichiheb35@gmail.com',
+              to: email,
+              subject: 'Account verification',
+              html: `Please click the following link to verify your account ${otp}`,
+            });
+            res.send(user);
+          })
+          .catch((error) => {
+            console.error('Error occurred while creating the verification token:', error);
+            res.status(500).send({ message: 'An error occurred while creating the verification token.' });
+          });
+      })
+      .catch((error) => {
+        console.error('Error occurred while saving the user:', error);
+        res.status(500).send({ message: 'An error occurred while saving the user.' });
+      });
+  });
+};
+
+
+module.exports.verify = async (req, res) => {
+  const token = req.params.token;
+
+  if (!token) {
+    res.status(400);
+    throw new Error('Invalid request');
+  }
+
+  const user = await UserModel.findOne({ emailToken: token }).exec();
+
+  if (!user) {
+    res.status(404);
+    throw new Error('User Not Found!!');
+  }
+
+  if (user.verify) {
+    res.status(400);
+    throw new Error('User Already Verified!!');
+  }
+
+  if (!user.emailToken) {
+    res.status(404);
+    throw new Error('Invalid Token!!');
+  }
+
+  if (user.emailToken !== token) {
+    res.status(400);
+    throw new Error('Invalid Token!!');
+  }
+  user.emailToken = null;
+  user.verified = true;
+
+  await user.save();
+
+  // Delete the verification token
+  await verficationToken.findOneAndDelete({ owner: mongoose.Types.ObjectId.createFromHexString(user._id.toString()) });
+
+  // Send verification success email
+  mailTransport().sendMail({
+    from: 'chattichiheb35@gmail.com',
+    to: user.email,
+    subject: 'Account Verified Successfully',
+    html: `
+      <td align="center">
+        <h1 style="color: #AB7F42; text-align: center;">${user.username}, Your Account Is Verified</h1>
+        <h3 style="color: #444444; font-size: 16px; text-align: justify;">Dear ${user.username},</p>
+        <p>We are pleased to inform you that your account has been verified. You can now access all the features and services that we offer.</p>
+        <p>If you have any questions or concerns, please don't hesitate to contact us.</p>
+        <p>Best regards,</p>
+        <h3 style="color: #444444; font-size: 16px; text-align: justify;">The gaming team Team</p>
+      </td>
+    `,
+  });
+
+  res.json(user);
+};
+
     
 
 module.exports.update= async(req,res)=>{
@@ -73,9 +141,8 @@ module.exports.delete= async(req,res)=>{
             console.log(`Error while deleting ${username}'s account :${err}`)
         })
                 } 
-module.exports.verify= async(req,res)=>{
-       
-                }
+
+
 
 const privateKey = 'SwiftCode';
 

@@ -17,7 +17,7 @@ function Header(){
                     </a>
                     <div className="search-input">
                       <form id="search" action="#">
-                        <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
+                        <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeyPress="handle" />
                         <i className="fa fa-search"></i>
                       </form>
                     </div>

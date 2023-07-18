@@ -59,7 +59,7 @@ const Card = () => {
             </Row>
           </Container>
         </section>
-        <Footer/>
+        
       </>
     );
   };

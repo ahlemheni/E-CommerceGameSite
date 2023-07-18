@@ -1,9 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { MDBContainer, MDBCol, MDBRow, MDBBtn, MDBIcon, MDBInput } from 'mdb-react-ui-kit';
+import { useNavigate } from 'react-router-dom';
+import { MDBContainer, MDBCol, MDBRow, MDBIcon, MDBInput } from 'mdb-react-ui-kit';
 import axios from 'axios';
 
 function Register() {
+  const navigate = useNavigate();
+
   const Username = useRef();
   const email = useRef();
   const pic = useRef();
@@ -83,7 +85,9 @@ function Register() {
       .post('http://localhost:5000/save', UserData)
       .then(function (response) {
         console.log(response);
-        alert('New User added');
+        alert('Welcome, please verify your email before to login');
+        navigate('/Login');
+
       })
       .catch((error) => {
         if (error.response) {
@@ -101,7 +105,7 @@ function Register() {
         <div className="page-content">
         <MDBContainer fluid >
               <MDBRow>
-              <h1 className="mb-4" style={{ color: '#a06177' }}><MDBIcon fas icon="user-plus" /> Create Account</h1>
+              <h1 className="mb-4"style={{ color: '#a06177' ,textAlign:"center"}}><MDBIcon fas icon="user-plus" /> Create Account</h1>
 
                 <MDBCol col="7" md="6">
 
@@ -190,10 +194,15 @@ function Register() {
                   {errorMessage && <div className="text-danger mb-3">{errorMessage}</div>}
 
                 
-                  <MDBBtn className="mb-8 w-50" size="lg"style={{ backgroundColor: '#e75e8e5b' }} onClick={Register}>
-                    <MDBIcon icon="sign-in-alt" className="me-2" />
-                    Submit
-                  </MDBBtn>
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <button
+                 className="btn btn-primary btn-lg"
+                 size="lg"
+                 style={{ backgroundColor: '#e75e8e5b' }}
+                onClick={Register} >
+                <MDBIcon icon="sign-in-alt" className="me-2" /> Register
+                </button>
+                </div>
 
                 </MDBCol>
                 <MDBCol col="5" md="6" style={{ marginTop:"100px" }}>

@@ -13,13 +13,12 @@ import Card from './Page/card/Card';
 
 function App() {
   return (
-    <div className="App">
 <Router>
   <Routes>
   <Route path="/" element={ <Home/>} >
   <Route path="" element={ <LandingPage />} />
 
-  <Route path="profile" element={ <Profile />} />
+  <Route path="profile/:id" element={ <Profile />} />
   <Route path="Registre" element={ <Register />} />
   <Route path='Login' element={<Login />} />
   <Route path='card' element={<Card/>} />
@@ -30,7 +29,6 @@ function App() {
 
 </Router>
       
-    </div>
   );
 }
 

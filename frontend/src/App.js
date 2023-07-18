@@ -9,6 +9,7 @@ import Spinner from './Components/spinner/spinner';
 import Register from './Page/Registre';
 import LandingPage from './Components/LandingPage';
 import Login from './Page/Login';
+import Card from './Page/card/Card';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
   <Route path="profile" element={ <Profile />} />
   <Route path="Registre" element={ <Register />} />
   <Route path='Login' element={<Login />} />
-  
+  <Route path='card' element={<Card/>} />
   <Route path='*' element={<NotFound />} />
   </Route>
 

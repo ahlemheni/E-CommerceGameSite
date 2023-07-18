@@ -12,6 +12,26 @@ module.exports.get= async(req,res)=>{
     res.send(users)
        
 }
+module.exports.findOne = (req, res) => {
+  UserModel.findById(req.params.userId)
+  .then(user => {
+      if(!user) {
+          return res.status(404).send({
+              message: "user not found with id " + req.params.userId
+          });            
+      }
+      res.send(user);
+  }).catch(err => {
+      if(err.kind === 'ObjectId') {
+          return res.status(404).send({
+              message: "user not found with id " + req.params.userId
+          });                
+      }
+      return res.status(500).send({
+          message: "Error retrieving user with id " + req.params.userId
+      });
+  });
+};
 
 module.exports.save = async (req, res) => {
   const { username, email, phone_number, profileImage, password } = req.body;

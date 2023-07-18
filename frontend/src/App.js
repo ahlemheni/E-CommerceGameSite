@@ -9,20 +9,28 @@ import Spinner from './Components/spinner/spinner';
 import Register from './Page/Registre';
 import LandingPage from './Components/LandingPage';
 import Login from './Page/Login';
+
 import Shop from './Page/Shop';
+
+import Card from './Page/card/Card';
+
 
 function App() {
   return (
-    <div className="App">
 <Router>
   <Routes>
   <Route path="/" element={ <Home/>} >
   <Route path="" element={ <LandingPage />} />
+
   <Route path='Shop' element={<Shop/>} />
   <Route path="profile" element={ <Profile />} />
+
+
+  <Route path="profile/:id" element={ <Profile />} />
+
   <Route path="Registre" element={ <Register />} />
   <Route path='Login' element={<Login />} />
-  
+  <Route path='card' element={<Card/>} />
   <Route path='*' element={<NotFound />} />
   </Route>
 
@@ -30,7 +38,6 @@ function App() {
 
 </Router>
       
-    </div>
   );
 }
 

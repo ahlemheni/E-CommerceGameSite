@@ -1,29 +1,32 @@
-import axios from "axios";
 import Spinner from "../spinner/spinner";
-import { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import Clip from "../Clip/clip";
+import axios from 'axios';
+import {MDBIcon} from 'mdb-react-ui-kit';
+
+
+import { useParams } from 'react-router-dom';
 
 
 export default function Profile() {
-  
-    const [ j, setJ ] = useState(8);
-    const [ user, setUser ] = useState(null);
-const LoadMore = ()=> {
+  const { id } = useParams();
 
-setJ(j+8)
-}
+  const [user, setUser] = useState({});
 
-    const getUserData = () =>{
-        axios.get('https://dummyjson.com/products')
-        .then((res)=>{
-            setUser(res.data);
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
-    }
-  
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/'+id);
+        setUser(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     getUserData();
+  }, [id]);
+
 
   return (
 <div>
@@ -40,12 +43,12 @@ setJ(j+8)
             <div className="main-profile ">
               <div className="row">
                 <div className="col-lg-4">
-                  <img src="assets/images/profile.jpg" alt style={{borderRadius: 23}} />
+                  <img src={user.profileImage} alt style={{borderRadius: 500}} />
                 </div>
                 <div className="col-lg-4 align-self-center">
                   <div className="main-info header-text">
-                    <span>Offline</span>
-                    <h4>Alan Smithee</h4>
+                    <span>Welcome</span>
+                    <h4><MDBIcon icon="user-alt" className="me-2" />Name : {user.username}</h4>
                     <p>You Haven't Gone Live yet. Go Live By Touching The Button Below.</p>
                     <div className="main-border-button">
                       <a href="#">Start Live Stream</a>
@@ -54,11 +57,10 @@ setJ(j+8)
                 </div>
                 <div className="col-lg-4 align-self-center">
                   <ul>
-                    <li>Games Downloaded <span>3</span></li>
-                    <li>Friends Online <span>16</span></li>
-                    <li>Live Streams <span>None</span></li>
-                    <li>Clips <span>29</span></li>
+                  <li><MDBIcon icon="envelope" className="me-2" /> E-mail : {user.email} </li>
+                    <li> <MDBIcon icon="phone-alt" className="me-2" />  Phone : {user.phone_number} </li>
                   </ul>
+            
                 </div>
               </div>
               <div className="container">
@@ -70,7 +72,7 @@ setJ(j+8)
                           <h4><em>Your Most Popular</em> Clips</h4>
                         </div>
                       </div>
-                <div className="d-flex flex-wrap justify-content-between">  
+                {/* <div className="d-flex flex-wrap justify-content-between">  
                  {
                     user && user.products.length > 8 ?
                     user.products.slice(0,j).map((produit)=>(
@@ -96,7 +98,7 @@ setJ(j+8)
                  
                 </div>
                     :  <></>
-                   }
+                   } */}
                  
              
               </div>

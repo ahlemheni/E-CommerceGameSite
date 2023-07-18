@@ -1,9 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MDBContainer, MDBCol, MDBRow, MDBBtn, MDBIcon, MDBInput } from 'mdb-react-ui-kit';
+import { useNavigate } from 'react-router-dom';
+
+import { MDBContainer, MDBCol, MDBRow,  MDBIcon, MDBInput } from 'mdb-react-ui-kit';
 import axios from 'axios';
 
 function Login() {
+  const navigate = useNavigate();
+
   const emailOrUsername = useRef();
   const password = useRef();
   const [errorMessage, setErrorMessage] = useState('');
@@ -30,7 +34,7 @@ function Login() {
 
         if (token && user) {
           alert('Welcome, ' + user.username);
-          window.location.replace('/' + user._id);
+          navigate('/profile/' + user._id);
 
         }
       })
@@ -48,7 +52,7 @@ function Login() {
       <div className="row">
         <div className="col-lg-12">
           <div className="page-content">
-            <h1 style={{ color: '#a06177' }}>Welcome back, you've been missed!</h1>
+            <h1 style={{ color: '#a06177' ,textAlign:"center"}}>Welcome back, you've been missed!</h1>
 
             <MDBContainer fluid className="p-3 my-4">
               <MDBRow>
@@ -94,10 +98,15 @@ function Login() {
                     <Link to="/forgot-password">Forgot password?</Link>
                     <Link to="/Registre" className="text-end">Are you New? Create account</Link>
                   </div>
-                  <MDBBtn className="mb-8 w-50" size="lg"style={{ backgroundColor: '#e75e8e5b' }} onClick={handleLogin}>
-                    <MDBIcon icon="sign-in-alt" className="me-2" />
-                    Sign in
-                  </MDBBtn>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <button
+                 className="btn btn-primary btn-lg"
+                 size="lg"
+                 style={{ backgroundColor: '#e75e8e5b' }}
+                onClick={handleLogin} >
+                <MDBIcon icon="sign-in-alt" className="me-2" /> Login
+                </button>
+                </div>
 
                 </MDBCol>
               </MDBRow>

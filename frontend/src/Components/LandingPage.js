@@ -1,4 +1,6 @@
 
+import { Link } from 'react-router-dom';
+
 function LandingPage(){
     return(
     
@@ -116,7 +118,7 @@ function LandingPage(){
             </div>
             <div className="col-lg-12">
               <div className="main-button">
-                <a href="profile.html">View Your Library</a>
+                <Link to="/profile">View Your Library</Link>
               </div>
             </div>
           </div>

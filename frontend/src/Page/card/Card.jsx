@@ -26,7 +26,7 @@ const Card = () => {
                     <th className="white-text"> Product Image</th>
                     <th className="white-text">Title</th>
                     <th className="white-text">Price</th>
-                    <th className="white-text">Quantite</th>
+                    <th className="white-text">Quantity</th>
                     <th className="white-text">Delete</th>
                     </tr>
                   </thead>

@@ -2,9 +2,10 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 
 const verficationTokenSchema = new mongoose.Schema({
-    owner : {type: mongoose.Types.ObjectId,required:true,ref:"User"},
+    owner : {type: String,required:true},
     vtoken:{type:String , require:true},
-    createAt: {type:Date , expires:3600 , default:Date.now()}
+    createdAt:Date,
+    expiresAt:Date
 })
 
 verficationTokenSchema.pre("save",async function(next){
@@ -15,9 +16,9 @@ verficationTokenSchema.pre("save",async function(next){
     next()
 });
 
-verficationTokenSchema.methods.compareToken = async(vtoken) =>{
-    const result = await bcrypt.compareSync(vtoken, this.vtoken);
-    return result;
-};
+verficationTokenSchema.methods.compareToken = function(vtoken) {
+    return bcrypt.compare(vtoken, this.vtoken);
+  };
+  
 
 module.exports = mongoose.model('verficationToken', verficationTokenSchema)

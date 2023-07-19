@@ -1,23 +1,29 @@
-import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-
-import { MDBContainer, MDBCol, MDBRow,  MDBIcon, MDBInput } from 'mdb-react-ui-kit';
+import React, { useRef, useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { MDBContainer, MDBCol, MDBRow, MDBIcon, MDBInput } from 'mdb-react-ui-kit';
 import axios from 'axios';
 
 function Login() {
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(['session']);
 
   const emailOrUsername = useRef();
   const password = useRef();
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (cookies.session) {
+      navigate(`/profile/${cookies.username}`);
+    }
+  }, [cookies.session, cookies.username, navigate]);
+
   const handleLogin = () => {
     if (!emailOrUsername.current.value || !password.current.value) {
       setErrorMessage('All fields are required.');
       return;
     }
 
-   
     const loginData = {};
 
     if (emailOrUsername.current.value.includes('@')) {
@@ -25,17 +31,20 @@ function Login() {
     } else {
       loginData.username = emailOrUsername.current.value;
     }
-  
+
     loginData.password = password.current.value;
     axios
       .post('http://localhost:5000/signIn', loginData)
       .then(function (response) {
-        const { token, user } = response.data;
+        const { token, user, sessionId } = response.data;
 
-        if (token && user) {
+        if (token && user && sessionId) {
+          setCookie('session', sessionId, { path: '/' });
+          setCookie('username', user.username, { path: '/' });
+          setCookie('id', user._id, { path: '/' });
+
           alert('Welcome, ' + user.username);
-          navigate('/profile/' + user._id);
-
+          navigate(`/profile/${user.username}`);
         }
       })
       .catch((error) => {
@@ -95,7 +104,7 @@ function Login() {
                   {errorMessage && <div className="text-danger mb-3">{errorMessage}</div>}
 
                   <div className="d-flex justify-content-between mx-4 mb-4">
-                    <Link to="/forgot-password">Forgot password?</Link>
+                    <Link to="/ResetPassword">Forgot password?</Link>
                     <Link to="/Registre" className="text-end">Are you New? Create account</Link>
                   </div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -111,6 +120,7 @@ function Login() {
                 </MDBCol>
               </MDBRow>
             </MDBContainer>
+            
           </div>
         </div>
       </div>

@@ -130,7 +130,7 @@ body {
 body .page-content {
   margin-top: 110px;
   background-color: #27292a;
-  padding: 0 60px;
+  padding: 60px;
   border-radius: 23px;
 }
 
@@ -401,25 +401,26 @@ Header Style
 }
 
 .header-area .main-nav .logo {
-  border-right: 1px solid #27292a;
   flex-basis: 25%;
-  margin-right: 5%;
+  margin-right: 8%;
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s;
+  display: inline-block;
+
 }
 
 .header-area .main-nav .logo img {
-  width: 191px;
+  width: 100px;
 }
 
 .background-header .main-nav .logo {
-  margin-top: 8px;
+  margin-top: 0px;
 }
 
 .background-header .main-nav .logo img {
-  width: 180px;
+  width: 100px;
 }
 
 .header-area .main-nav .nav {
@@ -647,7 +648,7 @@ Header Style
   .header-area .main-nav .logo {
     position: absolute;
     left: 30px;
-    top: 15px;
+    top: 2px;
   }
   .background-header .main-nav .logo {
     top: 0px;

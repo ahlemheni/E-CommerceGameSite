@@ -11,6 +11,7 @@
     "isotope-layout": "^3.0.6",
     "mdb-react-ui-kit": "^6.1.0",
     "react": "^18.2.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.14.1",

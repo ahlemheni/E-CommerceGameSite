@@ -4,6 +4,7 @@ const UserRoutes = require('./Routes/UserRoutes');
 const ProductRoutes = require('./Routes/ProductRoutes');
 const cors = require('cors');
 require('dotenv').config();
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +23,7 @@ mongoose
 
 app.use(UserRoutes);
 app.use( ProductRoutes);
+app.use(cookieParser());
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

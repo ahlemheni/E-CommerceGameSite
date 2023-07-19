@@ -8,7 +8,10 @@ router.get('/:userId', UserController.findOne);
 router.post('/save',UserController.save)
 router.post('/update',UserController.update)
 router.post('/delete',UserController.delete)
-router.post('/verify/:token',UserController.verify)
+router.get('/verify/:owner/:vtoken',UserController.verify);
+
+router.get('/verified',UserController.verified);
 router.post('/signIn',UserController.signIn)
+router.post('/ResetPassword', UserController.ResetPassword);
 
 module.exports = router;

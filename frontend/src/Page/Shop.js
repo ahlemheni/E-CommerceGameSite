@@ -57,39 +57,70 @@ function Shop() {
       }
     return (
         <div>
-     <div className="container">
- 
-      <div class="row">
-        <div class="col-lg-12">
-       
-        
-          <div class="page-content pt-1">
-          <div className="filters text-light my-4 d-flex justify-content-between">
-     <div className="d-flex mt-4">
-     <span className="mx-2">Price :</span>
-  <div className="d-flex justify-content-between">
-  <span className="px-2">10$</span>
-<input type="range" class="form-range" id="customRange1" />
-<span className="px-2">100$</span>
-  </div>
-     </div>
-     <div className="mt-3">
-     <span className="mx-3">Category</span>
-     <div class="btn-group dropend">
+           <div className="container">
+          <div class="row">
+            <div class="col-lg-12 ">
+              <div class="page-content">
+              
+              <div class="col-lg-4">
+                 <div class="top-downloaded">
+                   <div class="heading-section">
+                       <h4><em></em> Categories</h4>
+                    </div>
+                       <ul>
+                         <li>
+                         <a href="Clothes.js"> <h6>Clothes</h6></a>
+                          </li>
 
-  <select onChange={handleOptionChange} value={selectedOption} class=" bg-light  " id="categoryGames">
-  <option value={"0"}>Select Category</option>
-    <option value={"online"}>Online Games</option>
-    <option value={"multiplayer"}>Multiplayer Games</option>
-    <option value={"arcade"}>Arcade Games</option>
-  </select>
-</div>
-     </div>
-     <div className="row mt-4">
-      <div className="col-6 text-end">
-      <span className="mx-2 ">Game ID/Name :</span>
-      </div>
- 
+                          <li>
+                          <a href="Cosmetics"> <h6>Cosmetics</h6></a>
+                           
+                          </li>
+                          <li>
+                          <a href="Electronics"> <h6>Electronics</h6></a>
+                            
+                          </li>
+                        </ul>
+                  </div>
+              </div>
+             </div>
+               
+            
+             
+               <div class="row">
+                <div class="col-lg-12">
+                  <div class="featured-games header-text">
+                  
+                      <div class="item">
+                        <div class="thumb">
+             <div class="page-content pt-1">
+              <div className="filters text-light my-4 d-flex justify-content-between">
+                <div className="d-flex mt-4">
+                  <span className="mx-2">Price :</span>
+                  <div className="d-flex justify-content-between">
+                    <span className="px-2">10$</span>
+                      <input type="range" class="form-range" id="customRange1" />
+                       <span className="px-2">100$</span>
+                  </div>
+                </div>
+     
+     
+              <div className="mt-3">
+                <span className="mx-3">Category</span>
+                <div class="btn-group dropend">
+                   <select onChange={handleOptionChange} value={selectedOption} class=" bg-light  " id="categoryGames">
+                     <option value={"0"}>Select Category</option>
+                     <option value={"online"}>Online Games</option>
+                     <option value={"multiplayer"}>Multiplayer Games</option>
+                     <option value={"arcade"}>Arcade Games</option>
+                    </select>
+                 </div>
+              </div>
+                   <div className="row mt-4">
+                     <div className="col-6 text-end">
+                      <span className="mx-2 ">Game ID/Name :</span>
+                    </div>
+                    </div>
      <div className="col-6 ">
 <input onChange={filterByName} type="text" id="gameID" className="form-control form-control-sm " />
 </div>
@@ -108,6 +139,13 @@ function Shop() {
              
               }
               </div>
+                </div>
+              </div>
+             
+            
+            </div>
+            </div>
+            </div> </div></div>
               <div className="most-popular">
             <div className="row">
               <div className="col-lg-12">
@@ -121,7 +159,7 @@ function Shop() {
                      <h4>Fortnite<br/><span>Sandbox</span></h4>
                       <ul>
                         <li><i className="fa fa-star"></i> 4.8</li>
-                        <li><i className="fa fa-download"></i> 2.3M</li>
+                        
                       </ul>
                     </div>
                   </div>
@@ -131,7 +169,7 @@ function Shop() {
                       <h4>PubG<br/><span>Battle S</span></h4>
                       <ul>
                         <li><i className="fa fa-star"></i> 4.8</li>
-                        <li><i className="fa fa-download"></i> 2.3M</li>
+                        
                       </ul>
                     </div>
                   </div>
@@ -141,7 +179,7 @@ function Shop() {
                       <h4>Dota2<br/><span>Steam-X</span></h4>
                       <ul>
                         <li><i className="fa fa-star"></i> 4.8</li>
-                        <li><i className="fa fa-download"></i> 2.3M</li>
+                       
                       </ul>
                     </div>
                   </div>
@@ -151,7 +189,7 @@ function Shop() {
                       <h4>CS-GO<br/><span>Legendary</span></h4>
                       <ul>
                         <li><i className="fa fa-star"></i> 4.8</li>
-                        <li><i className="fa fa-download"></i> 2.3M</li>
+                        
                       </ul>
                     </div>
                   </div>
@@ -166,10 +204,10 @@ function Shop() {
             </div>
           </div>
           
-        </div>
+       
               </div>
-              </div>
-              </div>
+              
+              
              
     );
 }

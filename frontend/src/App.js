@@ -15,6 +15,7 @@ import Shop from './Page/Shop';
 import Card from './Page/card/Card';
 
 
+
 function App() {
   return (
 <Router>
@@ -31,6 +32,7 @@ function App() {
   <Route path="Registre" element={ <Register />} />
   <Route path='Login' element={<Login />} />
   <Route path='card' element={<Card/>} />
+ 
   <Route path='*' element={<NotFound />} />
   </Route>
 

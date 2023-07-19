@@ -11,7 +11,6 @@ import LandingPage from './Components/LandingPage';
 import Login from './Page/Login';
 
 import Shop from './Page/Shop';
-
 import Card from './Page/card/Card';
 
 
@@ -24,6 +23,7 @@ function App() {
   <Route path="" element={ <LandingPage />} />
 
   <Route path='Shop' element={<Shop/>} />
+  
   <Route path="profile" element={ <Profile />} />
 
 

@@ -9,14 +9,15 @@ import LandingPage from './Components/LandingPage';
 import Login from './Page/Login';
 
 import Shop from './Page/Shop';
-
 import Card from './Page/card/Card';
 import ResetPassword from './Page/ResetPassword';
+
 
 
 function App() {
 
   return (
+
 
   
       <Router>
@@ -27,10 +28,12 @@ function App() {
             <Route path="" element={<LandingPage />} />
             <Route path='Shop' element={<Shop/>} />
 
+
             <Route path="profile/:username" element={<Profile  />} />
             <Route path="Registre" element={<Register />} />
             <Route path="Login" element={<Login />} />
             <Route path="ResetPassword" element={<ResetPassword />} />
+
 
             <Route path="card" element={<Card />} />
             <Route path="*" element={<NotFound />} />
@@ -41,5 +44,6 @@ function App() {
     );
   }
   
+
 
 export default App;

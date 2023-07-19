@@ -1092,11 +1092,12 @@ Featured Games Style
 }
 
 .top-downloaded ul li h6 {
-  font-size: 15px;
-  color: #666;
+  font-size: 20px;
+  color:white;
   font-weight: 400;
   margin-top: 5px;
   margin-bottom: 5px;
+ 
 }
 
 .top-downloaded ul li span {
@@ -1734,3 +1735,5 @@ body {
     width: 16%;
   }
 }
+h6:hover {
+  color: #e75e8d !important;}

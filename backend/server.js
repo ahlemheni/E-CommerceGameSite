@@ -27,6 +27,7 @@ app.use(UserRoutes);
 app.use( ProductRoutes);
 app.use( GenreRoutes);
 
+
 app.use(cookieParser());
 
 app.use((err, req, res, next) => {

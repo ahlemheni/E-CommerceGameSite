@@ -72,7 +72,7 @@ function LandingPage(){
                   </div>
                  
                   <div className="col-lg-12">
-                    <div className="main-button">
+                    <div className="main-button my-4">
                       <a href="browse.html">Discover More</a>
                     </div>
                   </div>
@@ -117,7 +117,7 @@ function LandingPage(){
               </div>
             </div>
             <div className="col-lg-12">
-              <div className="main-button">
+              <div className="main-button my-4">
                 <Link to="/profile">View Your Library</Link>
               </div>
             </div>

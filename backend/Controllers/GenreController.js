@@ -2,11 +2,13 @@ const GenreModel = require('../Models/GenreModel')
 
 
 module.exports.get = async (req,res)=>{
-    
-  const genres= await GenreModel.find()
-  console.log(await GenreModel.find())
-  res.send(genres)
+
+
+   const genres= await GenreModel.find()
+   console.log(await GenreModel.find())
+   res.send(genres)
 }
+
 module.exports.save = async (req,res) =>{
     const {name} = req.body
     GenreModel
@@ -35,20 +37,24 @@ module.exports.update = async (req,res) =>{
 module.exports.findone = async (req,res) =>{
     const { name, id } = req.params;
     console.log(name, id);
-  
-    try {
-      const genre = await GenreModel.findById({
-        _id:id
 
-      });
-      console.log(genre);
-      if (!genre) {
-        res.status(404).json({ error: 'Genre not found' });
-      } else {
-        res.send(genre);
-      }
-    } catch (err) {
-      return res.status(500).json({ err: 'Internal server error' });
-    }
+   
+    try {
+        const Genrename= await GenreModel.findOne({name:name})
+        console.log(Genrename)
+        const genre = await GenreModel.findById({
+            _id:id
+
+        });
+        console.log(genre);
+        if (!genre) {
+            res.status(404).json({ error: 'Genre not found' });
+        } else {
+            res.send(genre);
+        }
+        } catch (err) {
+        return res.status(500).json({ err: 'Internal server error' });
+        }
+
     
 }

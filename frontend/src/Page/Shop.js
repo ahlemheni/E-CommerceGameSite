@@ -33,7 +33,8 @@ function Shop() {
       if (selectedOption === "0") {
         setGames(GamesIntialState); // Restaurez l'état initial de votre tableau ici
       } else {
-        const filteredArray = games.filter((item) => item.category === selectedOption);
+        setGames(GamesIntialState);
+        const filteredArray = GamesIntialState.filter((item) => item.category === selectedOption);
         setGames(filteredArray);
       }
       

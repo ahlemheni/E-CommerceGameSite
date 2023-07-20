@@ -64,15 +64,17 @@ function Login() {
             <h1 style={{ color: '#a06177' ,textAlign:"center"}}>Welcome back, you've been missed!</h1>
 
             <MDBContainer fluid className="p-3 my-4">
-              
+            <MDBRow>
+                <MDBCol col="5" md="5">
                 
                   <img
                     src="https://cdn-icons-png.flaticon.com/512/5087/5087579.png"
                     className="img-fluid"
                    
                   />
-              
-                
+               </MDBCol>
+               <MDBCol col="7" md="6"style={{ marginTop:"100px" }}>
+
                   <div className="mb-4">
                     <label htmlFor="emailInput" className="form-label custom-label mb-2" style={{ color: '#e75e8d',fontSize:"20px" }}><MDBIcon icon="envelope" className="me-2" /> Email address :</label>
                     <MDBInput
@@ -119,6 +121,9 @@ function Login() {
 
             
         
+                </MDBCol>
+
+              </MDBRow>
             </MDBContainer>
             
           </div>

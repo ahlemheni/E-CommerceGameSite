@@ -9,7 +9,6 @@ function ResetPassword() {
   const [cookies, setCookie] = useCookies(['session']);
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   useEffect(() => {
     if (cookies.session) {
       navigate(`/profile/${cookies.username}`);
@@ -21,16 +20,16 @@ function ResetPassword() {
       const response = await axios.post(
         'http://localhost:5000/ResetPassword',{email});
       if (response.data.status === 'SUCCESS') {
-        setSuccess('Email sent successfully. Please check your inbox.');
+       alert('Email sent successfully. Please check your inbox.');
         setError('');
+        navigate('/Login');
+
       } else {
         setError(response.data.message);
-        setSuccess('');
       }
     } catch (error) {
       console.error(error);
       setError('An error occurred. Please try again later.');
-      setSuccess('');
     }
   };
   return (
@@ -68,7 +67,6 @@ function ResetPassword() {
             
                  <div className="text-danger mb-3"></div>
                  {error && <p style={ {marginTop:10,fontSize: 16,color: 'red', marginBottom: 10}}>{error}</p> }
-      {success && <p style={ {marginTop:10,fontSize: 16,color: 'green', marginBottom: 10}}>{success}</p> }
                
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                   <button

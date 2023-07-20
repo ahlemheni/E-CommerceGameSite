@@ -1,6 +1,6 @@
-import { BsCart2 } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import {  MDBIcon } from 'mdb-react-ui-kit';
 
 
 function Header() {
@@ -32,19 +32,19 @@ function Header() {
                 </form>
               </div>
               <ul className="nav">
-                <li><Link to="/" className="active">Home</Link></li>
-                <li><Link to="/shop">Shop</Link></li>
+                <li><Link to="/" className="active"><MDBIcon fas icon="home" /> Home</Link></li>
+                <li><Link to="/shop"><MDBIcon fas icon="shopping-cart" /> Shop</Link></li>
                 
                 {sessionCookie ? (
                   <>
-                    <li><Link to="/card"><BsCart2 /></Link></li>
-                    <li><Link to="/Login" onClick={handleLogout}>Logout</Link></li>
+                    <li><Link to="/card"><MDBIcon fas icon="shopping-basket" /></Link></li>
+                    <li><Link to="/Login" onClick={handleLogout}><MDBIcon fas icon="sign-out-alt" /> Logout</Link></li>
                     <li><Link to={`/profile/${username}`}>Profile <img src="../assets/images/profile-header.jpg" alt="" /></Link></li>
                   </>
                 ) : (
                   <>
-                    <li><Link to="/Registre">Register</Link></li>
-                    <li><Link to="/Login">Login</Link></li>
+                    <li><Link to="/Registre"><MDBIcon fas icon="user-plus" /> Register</Link></li>
+                    <li><Link to="/Login"><MDBIcon fas icon="sign-in-alt" /> Login</Link></li>
                     <li></li>
                   </>
                 )}

@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const UserRoutes = require('./Routes/UserRoutes');
 const ProductRoutes = require('./Routes/ProductRoutes');
+const GenreRoutes = require('./Routes/GenreRoutes');
+
 const cors = require('cors');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
@@ -23,6 +25,8 @@ mongoose
 
 app.use(UserRoutes);
 app.use( ProductRoutes);
+app.use( GenreRoutes);
+
 app.use(cookieParser());
 
 app.use((err, req, res, next) => {

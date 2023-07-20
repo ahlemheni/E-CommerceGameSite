@@ -15,23 +15,25 @@ module.exports.get= async(req,res)=>{
        
 }
 module.exports.findOne = (req, res) => {
-  UserModel.findById(req.params.userId)
+  const {  id } = req.params;
+
+  UserModel.findById(id)
   .then(user => {
       if(!user) {
           return res.status(404).send({
-              message: "user not found with id " + req.params.userId
+              message: "user not found with id " + id
           });            
       }
       res.send(user);
   }).catch(err => {
       if(err.kind === 'ObjectId') {
           return res.status(404).send({
-              message: "user not found with id " + req.params.userId
+              message: "user not found with id " + id
           });                
       }
       return res.status(500).send({
-          message: "Error retrieving user with id " + req.params.userId
-      });
+          message: "Error retrieving user with id " + id
+      })
   });
 };
 
@@ -178,7 +180,7 @@ module.exports.verify = (req, res) => {
             });
         }
       } else {
-        let message = "Invalid verification details passed";
+        let message = "Account  has been verified already";
         res.redirect(`/verified?error=true&message=${message}`);
       }
     })
@@ -197,17 +199,69 @@ module.exports.verify = (req, res) => {
  }
      
 
-    
+module.exports.update = (req, res) => {
+  const { id } = req.params;
 
-module.exports.update= async(req,res)=>{
-    const {_id,username,phone_number,password,profileImage}= req.body
-    UserModel
-        .findByIdAndUpdate(_id,{username,phone_number,password,profileImage})
-        .then(()=>{res.send("Updated sucessfully...")})
-        .catch((err)=>{
-            console.log(`Error while updating info concerning  ${username} :${err}`)
-        })
-                }
+
+  // Find user and update it with the request body
+  UserModel.findById(id)
+    .then(user => {
+      if (!user) {
+        return res.status(404).send({
+          message: "User not found with id " + id
+        });
+      }
+
+      // Update user fields
+      user.username = req.body.username;
+      user.phone_number = req.body.phone_number;
+      user.profileImage = req.body.profileImage;
+
+      // If password is provided and changed, encrypt it with bcrypt
+      if (req.body.password && req.body.password !== user.password) {
+        bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+          if (err) {
+            return res.status(500).send({
+              message: "Error occurred while encrypting the password."
+            });
+          }
+          user.password = hashedPassword;
+
+          // Save the updated user
+          user.save()
+            .then(updatedUser => {
+              res.send(updatedUser);
+            })
+            .catch(err => {
+              res.status(500).send({
+                message: "Error updating user with id " + req.params.id
+              });
+            });
+        });
+      } else {
+        // Save the updated user without changing the password
+        user.save()
+          .then(updatedUser => {
+            res.send(updatedUser);
+          })
+          .catch(err => {
+            res.status(500).send({
+              message: "Error updating user with id " + req.params.id
+            });
+          });
+      }
+    })
+    .catch(err => {
+      if (err.kind === 'ObjectId') {
+        return res.status(404).send({
+          message: "User not found with id " + req.params.id
+        });
+      }
+      return res.status(500).send({
+        message: "Error retrieving user with id " + req.params.id
+      });
+    });
+};
 module.exports.delete= async(req,res)=>{
     const {_id,username} = req.body
     UserModel

@@ -1,8 +1,5 @@
 const mongoose = require('mongoose')
-const GenreSchema = mongoose.Schema({
-    name : {type : String , required : true }
-      
-})
+const GenreSchema = require('./GenreModel')
 
 const ProductSchema = mongoose.Schema({
 
@@ -23,7 +20,10 @@ const ProductSchema = mongoose.Schema({
     image : String,
     game_title :String,
     price : Number,
-    genre:GenreSchema
+    genre: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Genre', 
+      },
     
     
 

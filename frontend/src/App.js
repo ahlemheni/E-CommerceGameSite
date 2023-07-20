@@ -11,7 +11,7 @@ import Login from './Page/Login';
 import Shop from './Page/Shop';
 import Card from './Page/card/Card';
 import ResetPassword from './Page/ResetPassword';
-
+import Nav from './Components/ShopNavbar/Nav';
 
 
 function App() {
@@ -33,7 +33,7 @@ function App() {
             <Route path="Registre" element={<Register />} />
             <Route path="Login" element={<Login />} />
             <Route path="ResetPassword" element={<ResetPassword />} />
-
+           
 
             <Route path="card" element={<Card />} />
             <Route path="*" element={<NotFound />} />

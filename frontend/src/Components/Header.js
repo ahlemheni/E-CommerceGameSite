@@ -32,8 +32,8 @@ function Header() {
                 </form>
               </div>
               <ul className="nav">
-                <li><NavLink to="/"activeClassName="active"><MDBIcon fas icon="home" /> Home</NavLink></li>
-                <li><NavLink to="/shop" activeClassName="active"><MDBIcon fas icon="shopping-cart" /> Shop</NavLink></li>
+                <li><NavLink to="/"><MDBIcon fas icon="home" /> Home</NavLink></li>
+                <li><NavLink to="/shop" ><MDBIcon fas icon="shopping-cart" /> Shop</NavLink></li>
                 
                 {sessionCookie ? (
                   <>

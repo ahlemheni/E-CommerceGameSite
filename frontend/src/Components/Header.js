@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import {  MDBIcon } from 'mdb-react-ui-kit';
 
+import { NavLink } from 'react-router-dom';
 
 function Header() {
   const [cookies, setCookie, removeCookie] = useCookies(['session','username','id']);
@@ -22,9 +22,9 @@ function Header() {
 
           <div className="col-12">
             <nav className="main-nav">
-              <Link to="/"  className="logo">
+              <NavLink to="/"  className="logo">
                 <img src="assets/images/logo.png" alt="" style={{marginTop:"-10px"}}/>
-              </Link>
+              </NavLink>
               <div className="search-input">
                 <form id="search" action="#">
                   <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onKeyPress="handle" />
@@ -32,19 +32,19 @@ function Header() {
                 </form>
               </div>
               <ul className="nav">
-                <li><Link to="/" className="active"><MDBIcon fas icon="home" /> Home</Link></li>
-                <li><Link to="/shop"><MDBIcon fas icon="shopping-cart" /> Shop</Link></li>
+                <li><NavLink to="/"activeClassName="active"><MDBIcon fas icon="home" /> Home</NavLink></li>
+                <li><NavLink to="/shop" activeClassName="active"><MDBIcon fas icon="shopping-cart" /> Shop</NavLink></li>
                 
                 {sessionCookie ? (
                   <>
-                    <li><Link to="/card"><MDBIcon fas icon="shopping-basket" /></Link></li>
-                    <li><Link to="/Login" onClick={handleLogout}><MDBIcon fas icon="sign-out-alt" /> Logout</Link></li>
-                    <li><Link to={`/profile/${username}`}>Profile <img src="../assets/images/profile-header.jpg" alt="" /></Link></li>
+                    <li><NavLink to="/card" ><MDBIcon fas icon="shopping-basket" /></NavLink></li>
+                    <li><NavLink to="/Login" onClick={handleLogout}><MDBIcon fas icon="sign-out-alt" /> Logout</NavLink></li>
+                    <li><NavLink to={`/profile/${username}`}>Profile <img src="../assets/images/profile-header.jpg" alt="" /></NavLink></li>
                   </>
                 ) : (
                   <>
-                    <li><Link to="/Registre"><MDBIcon fas icon="user-plus" /> Register</Link></li>
-                    <li><Link to="/Login"><MDBIcon fas icon="sign-in-alt" /> Login</Link></li>
+                    <li><NavLink to="/Registre"><MDBIcon fas icon="user-plus" /> Register</NavLink></li>
+                    <li><NavLink to="/Login"><MDBIcon fas icon="sign-in-alt" /> Login</NavLink></li>
                     <li></li>
                   </>
                 )}

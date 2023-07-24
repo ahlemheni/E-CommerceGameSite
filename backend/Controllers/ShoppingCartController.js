@@ -3,8 +3,8 @@ const session = require('express-session');
 const UserModel = require('../Models/UserModel');
 const assert=require('assert')
 
-module.exports.save =  async (req,res)=>{
-    module.exports.save = async (req, res) => {
+
+module.exports.save = async (req, res) => {
         const { items,totalprice} = req.body;
          const client =req.session.username
         console.log(client) 
@@ -59,7 +59,7 @@ module.exports.save =  async (req,res)=>{
         }}
       };
 
-}
+
 module.exports.update = async (req,res) =>{
 
 }

@@ -47,7 +47,6 @@ const Card = () => {
  
 
   const handleIncrement = async (cartItemId) => {
-    setIsLoading(true);
 
     try {
       // Find the cart item in the ShoppingCart array by its ID
@@ -66,12 +65,10 @@ const Card = () => {
     } catch (error) {
       console.error(error);
     }
-    setIsLoading(false);
 
   };
 
   const handleDecrement = async (cartItemId) => {
-    setIsLoading(true);
 
     try {
       // Find the cart item in the ShoppingCart array by its ID
@@ -93,7 +90,6 @@ const Card = () => {
     } catch (error) {
       console.error(error);
     }
-    setIsLoading(false);
 
   };
   const deleteone = async (cartItemId) => {

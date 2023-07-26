@@ -32,11 +32,17 @@ export default function GameCard(props) {
       console.log(response.data); // This will log the cart data returned from the server
 
       alert('New product added to Shopping Cart successfully!');
-      navigate(`/card`);
 
     } catch (error) {
-      console.error('Error adding item to cart:', error);
-      alert('Failed to add item to cart. Please try again.');
+      if(!cookies.id){
+        alert(' Connect to your account is required.');
+
+        navigate('/Login');
+      }else{
+        console.error('Error adding item to cart:', error);
+        alert('Failed to add item to cart. Please try again.');
+      }
+     
     } 
   };
 

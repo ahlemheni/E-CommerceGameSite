@@ -50,13 +50,12 @@ module.exports.delete= async(req,res)=>{
 } 
 
 module.exports.findone = async (req, res) => {
-    const { genreparam, categoryparam, id } = req.params;
-    console.log(genreparam, categoryparam, id);
+    const { id } =req.query;
+    console.log( id);
   
     try {
       const product = await ProductModel.findOne({
-        'genre.name': genreparam,
-        category: categoryparam,
+        
         _id: id
       });
       console.log(product);

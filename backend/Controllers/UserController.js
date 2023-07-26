@@ -275,7 +275,7 @@ module.exports.delete= async(req,res)=>{
 
 
 const privateKey = 'SwiftCode';
-const sessions = {};
+const  sessions = {};
 
 module.exports.signIn = (req, res) => {
   const sessionId = uuidv4();
@@ -317,10 +317,14 @@ module.exports.signIn = (req, res) => {
                   expiresIn: '4h',
                 });
                 sessions[sessionId] = { user, userId: user._id };
-                res.cookie('session', sessionId, { httpOnly: true });
-                console.log(sessionId);
+                res.cookie('session', sessionId);
+                res.cookie('username', user.username);
 
-                res.json({ token, user,sessionId, msg: "Successfully signed in." });
+
+                res.json({ token, user,sessionId,  msg: "Successfully signed in." });
+                console.log(sessionId);
+                console.log(user.username);
+
               } else {
                 return res.status(401).json({
                   error: true,

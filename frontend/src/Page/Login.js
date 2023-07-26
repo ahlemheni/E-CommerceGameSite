@@ -6,7 +6,7 @@ import axios from 'axios';
 
 function Login() {
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(['session']);
+  const [cookies, setCookie] = useCookies([]);
 
   const emailOrUsername = useRef();
   const password = useRef();

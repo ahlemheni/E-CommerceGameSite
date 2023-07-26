@@ -678,6 +678,8 @@ Header Style
   }
   .header-area .container {
     padding: 0px;
+   
+    
   }
   .header-area .logo {
     margin-left: 0px;
@@ -773,29 +775,29 @@ Banner Style
 --------------------------------------------- 
 */
 
-.main-banner {
+.main-banner1 {
   background-image: url(../images/banner-bg.jpg);
   background-position: center center;
   background-size: cover;
   min-height: 380px;
   border-radius: 23px;
   padding: 80px 60px;
+  
 }
 
-.main-banner h6 {
+.main-banner1 h6 {
   font-size: 20px;
-  color: #fff;
-  font-weight: 400;
+ font-weight: 400;
   margin-bottom: 25px;
 }
 
-.main-banner h4 {
+.main-banner1 h4 {
   font-size: 45px;
   text-transform: uppercase;
   margin-bottom: 25px;
 }
 
-.main-banner h4 em {
+.main-banner1 h4 em {
   font-style: normal;
   color: #ec6090;
 }
@@ -811,6 +813,7 @@ Most Popular Style
   padding: 30px;
   background-color: #1f2122;
   border-radius: 23px;
+ 
 }
 
 .most-popular .item {
@@ -1321,10 +1324,12 @@ Game Details Style
   border-radius: 23px;
   padding: 30px;
   margin-bottom: 30px;
+  
 }
 
 .game-details .content .left-info .left {
   float: left;
+  
 }
 
 .game-details .content .left-info h4 {

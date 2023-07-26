@@ -51,14 +51,13 @@ module.exports.delete= async(req,res)=>{
 } 
 
 module.exports.findone = async (req, res) => {
-    const { genreparam, categoryparam, id } = req.params;
-    console.log(genreparam, categoryparam, id);
-     
+    const { id } =req.query;
+    console.log( id);
+  
+
     try {
-      const GenreId= await GenreModel.find({name:genreparam})
       const product = await ProductModel.findOne({
-        genre: GenreId,
-        category: categoryparam,
+
         _id: id
       });
       console.log(product)

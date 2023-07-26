@@ -1,62 +1,42 @@
 import { useEffect, useState } from "react";
 import GameCard from "../Components/GameCard/gameCard";
+import { MDBContainer, MDBCol, MDBRow, MDBIcon, MDBInput } from 'mdb-react-ui-kit';
+import axios from 'axios';
 
 function Shop() {
   
-  const GamesIntialState =  [
-    {id :"COD MMII" , name : "Call of Duty MW2", category : "online" , tags : ["MMII","COD"] , price : 50},
-    {id :"Assasin" , name : "Assasin Creed Revolution", category : "arcade" , tags : ["ASC","Action"] , price : 100 },
-    {id :"FIFA" , name : "FIFA EA 24", category : "multiplayer" , tags : ["Football","Joystick"] , price : 25},
-    {id :"PES" , name : "PES 2024", category : "multiplayer" , tags : ["Football","Joystick"] , price : 10 },
-    {id :"NFO" , name : "Need for Speed", category : "arcade" , tags : ["Speed","Cars"] , price : 90 },
-    {id :"NBA" , name : "NBA 2k24", category : "multiplayer" , tags : ["Sport","Agressive"] , price : 45 },
-  ];
-  const [games, setGames] = useState(
-    GamesIntialState
-  )
-  const [notFound, setNotFound] = useState(1)
+  const [games, setGames] = useState([]);
+  const [notFound, setNotFound] = useState(false); // Change the initial state to false
   const [selectedOption, setSelectedOption] = useState("0");
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value); // Mettre à jour l'option sélectionnée
-  };
 
   useEffect(() => {
-    setGames(GamesIntialState)
-    filterByCategory(selectedOption); // Appliquer le filtre lorsque l'option sélectionnée change ou lorsque le composant est monté
-  }, [selectedOption]);
+    fetchGames();
+  }, []);
+
+  const fetchGames = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/products/all');
+      setGames(response.data);
+    } catch (error) {
+      console.error('Error fetching games:', error);
+    }
+  };
 
  
 
-    const  filterByCategory = (selectedOption) => {
-      console.log(selectedOption);
-     
-      if (selectedOption === "0") {
-        setGames(GamesIntialState); // Restaurez l'état initial de votre tableau ici
-      } else {
-        setGames(GamesIntialState);
-        const filteredArray = GamesIntialState.filter((item) => item.category === selectedOption);
-        setGames(filteredArray);
-      }
-      
-
-    };
-
-    const  filterByName = () => {
-   
-      let input = document.getElementById("gameID").value.toUpperCase();
-      const newList = games.filter((item) => {
-        return item.name.toUpperCase().indexOf(input) > -1;
-      })
-      if(newList.length === 0) setNotFound(0);
-    else{
+  const filterByName = () => {
+    let input = document.getElementById("gameID").value.toUpperCase();
+    if (input === '') {
+      fetchGames();
+      setNotFound(false);
+    } else {
+      const newList = games.filter((item) => item.name.toUpperCase().indexOf(input) > -1);
       setGames(newList);
-      setNotFound(1)
+      setNotFound(newList.length === 0); 
     }
-      if(input.length ===0){
-        setGames(GamesIntialState)
-      }
-      }
+  };
     return (
+
         <div>
            <div className="container">
           <div className="row">
@@ -283,15 +263,66 @@ function Shop() {
                 <li><i className="fa fa-download"></i> 2.3M</li>
               </ul>
             </div>
+=======
+      <div className="container">
+      <div className="row">
+        <div className="page-content" >
+      <MDBRow>
+
+      <MDBCol md="3" >
+          <div className="top-downloaded">
+            <div className="heading-section">
+              <h4><em></em> Categories</h4>
+            </div>
+            <ul>
+            <li><a href="Clothes.js"><h6>All</h6></a></li>
+
+              <li><a href="Clothes.js"><h6>Clothes</h6></a></li>
+              <li><a href="Cosmetics"><h6>Cosmetics</h6></a></li>
+              <li><a href="Electronics"><h6>Electronics</h6></a></li>
+            </ul>
+
           </div>
-        </div>
+        </MDBCol>
+        <MDBCol md="9">
+           
+                  <div className="filters text-light my-4 d-flex justify-content-between"  > 
+                  <div className="d-flex mt-4">
+                      <span className="mx-2">Price :</span>
+                      <div className="d-flex justify-content-between">
+                        <span className="px-2">10$</span>
+                        <input type="range" className="form-range" id="customRange1" />
+                        <span className="px-2">100$</span>
+                      </div>
+                    </div>
+             
+                    <div className="row mt-4">
+                      <div className="col-6 text-end">
+                        <span className="mx-2">Game ID/Name :</span>
+                      </div>
+                      <div className="col-6">
+                      <input onChange={filterByName} type="text" id="gameID" className="form-control form-control-sm" />
+                      </div>
+                    </div>
+                  </div>
+                  {games.length > 0 ? ( // Check if the games array is not empty
+                <div className="row trending-box">
+                  {games.map((gm) => (<GameCard game={gm} key={gm._id} />))}
+                </div>
+                  ) : (
+                    <div className="text-center">
+                      <img height={"90px"} id="iconeNotFound" src="https://cdn-icons-png.flaticon.com/512/1178/1178479.png" />
+                      <h1 className="text-light">Product not found</h1>
+                    </div>
+                  )}
+        </MDBCol>
+
+      </MDBRow>
       </div>
-      
-      </div>
-      </div></div>
-      </div></div>
       </div>
       </div>
+
+         
 
    
 

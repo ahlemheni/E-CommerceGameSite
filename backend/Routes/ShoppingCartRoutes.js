@@ -1,12 +1,13 @@
 const express = require('express')
 const router=express.Router()
-const GenreController = require("../Controllers/ShoppingCartController")
+const ShoppingController = require("../Controllers/ShoppingCartController")
 
-router.get('/cart/all',GenreController.get)
-router.post('/cart/save',GenreController.save)
-router.post('/cart/update',GenreController.update)
-router.post('/cart/delete',GenreController.deleteAll)
-router.post('/cart/:cartitem:/delete',GenreController.deleteOne)
-router.get('/cart/:id/:username',GenreController.findone)
-router.get('/cart/:username',GenreController.findmany)
+router.get('/cart/all',ShoppingController.get)
+router.post('/cart/save',ShoppingController.save)
+router.post('/cart/update',ShoppingController.update)
+router.post('/cart/delete',ShoppingController.deleteAll)
+router.post('/cart/deleteone',ShoppingController.deleteOne)
+router.get('/cart/:id/:username',ShoppingController.findone)
+router.get('/cart/user',ShoppingController.findmany)
 
+module.exports = router;

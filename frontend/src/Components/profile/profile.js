@@ -72,7 +72,7 @@ export default function Profile() {
     } else {
       navigate('/Login');
     }
-  }, [id]);
+  }, [id, navigate]);
 
   const handleEdit = () => {
     setShowModal(true);

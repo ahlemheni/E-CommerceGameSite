@@ -59,13 +59,13 @@ function Shop() {
     return (
         <div>
            <div className="container">
-          <div class="row">
-            <div class="col-lg-12 ">
-              <div class="page-content">
+          <div className="row">
+            <div className="col-lg-12 ">
+              <div className="page-content">
               
-              <div class="col-lg-4">
-                 <div class="top-downloaded">
-                   <div class="heading-section">
+              <div className="col-lg-4">
+                 <div className="top-downloaded">
+                   <div className="heading-section">
                        <h4><em></em> Categories</h4>
                     </div>
                        <ul>
@@ -81,6 +81,21 @@ function Shop() {
                           <a href="Electronics"> <h6>Electronics</h6></a>
                             
                           </li>
+                          <li>
+                          
+              <div className="filters text-light my-4 d-flex justify-content-between">
+                <div className="d-flex mt-4">
+                  <span className="mx-2">
+                   Price </span>
+                  <div className="d-flex justify-content-between">
+                    <span className="px-2">10$</span>
+                      <input type="range" className="form-range" id="customRange1" />
+                       <span className="px-2">100$</span>
+              
+                </div>
+                </div>
+                </div>
+                          </li>
                         </ul>
                   </div>
               </div>
@@ -88,28 +103,20 @@ function Shop() {
                
             
              
-               <div class="row">
-                <div class="col-lg-12">
-                  <div class="featured-games header-text">
+           
+                <div className="col-lg-8">
+                  <div className="featured-games header-text">
                   
-                      <div class="item">
-                        <div class="thumb">
-             <div class="page-content pt-1">
-              <div className="filters text-light my-4 d-flex justify-content-between">
-                <div className="d-flex mt-4">
-                  <span className="mx-2">Price :</span>
-                  <div className="d-flex justify-content-between">
-                    <span className="px-2">10$</span>
-                      <input type="range" class="form-range" id="customRange1" />
-                       <span className="px-2">100$</span>
-                  </div>
-                </div>
+                      <div className="item">
+                        <div className="thumb">
+            
+              
      
      
               <div className="mt-3">
                 <span className="mx-3">Category</span>
-                <div class="btn-group dropend">
-                   <select onChange={handleOptionChange} value={selectedOption} class=" bg-light  " id="categoryGames">
+                <div className="btn-group dropend">
+                   <select onChange={handleOptionChange} value={selectedOption} className=" bg-light  " id="categoryGames">
                      <option value={"0"}>Select Category</option>
                      <option value={"online"}>Online Games</option>
                      <option value={"multiplayer"}>Multiplayer Games</option>
@@ -127,7 +134,7 @@ function Shop() {
 </div>
      </div>
   </div>
-         {notFound === 1 ?    <div class="row trending-box">
+         {notFound === 1 ?    <div className="row trending-box">
              {games && games.map(gm => (
               <GameCard game={gm} />
              ))}
@@ -141,12 +148,11 @@ function Shop() {
               }
               </div>
                 </div>
-              </div>
-             
+              
             
+          
             </div>
-            </div>
-            </div> </div></div>
+            </div> </div>
               <div className="most-popular">
             <div className="row">
               <div className="col-lg-12">
@@ -194,87 +200,87 @@ function Shop() {
                       </ul>
                     </div>
 
-      <div class="row">
-      <div class="col-lg-8">
-        <div class="featured-games header-text">
+      <div className="row">
+      <div className="col-lg-8">
+        <div className="featured-games header-text">
           
-          <div class="owl-features owl-carousel">
-            <div class="item">
-              <div class="thumb">
+          <div className="owl-features owl-carousel">
+            <div className="item">
+              <div className="thumb">
                 <img src="assets/images/featured-01.jpg" alt=""/>
-                <div class="hover-effect">
+                <div className="hover-effect">
                   <h6>2.4K Streaming</h6>
                 </div>
               </div>
               <h4>CS-GO<br/><span>249K Downloads</span></h4>
               <ul>
-                <li><i class="fa fa-star"></i> 4.8</li>
-                <li><i class="fa fa-download"></i> 2.3M</li>
+                <li><i className="fa fa-star"></i> 4.8</li>
+                <li><i className="fa fa-download"></i> 2.3M</li>
               </ul>
             </div>
-            <div class="item">
-              <div class="thumb">
+            <div className="item">
+              <div className="thumb">
                 <img src="assets/images/featured-02.jpg" alt=""/>
-                <div class="hover-effect">
+                <div className="hover-effect">
                   <h6>2.4K Streaming</h6>
                 </div>
               </div>
               <h4>Gamezer<br/><span>249K Downloads</span></h4>
               <ul>
-                <li><i class="fa fa-star"></i> 4.8</li>
-                <li><i class="fa fa-download"></i> 2.3M</li>
+                <li><i className="fa fa-star"></i> 4.8</li>
+                <li><i className="fa fa-download"></i> 2.3M</li>
               </ul>
             </div>
-            <div class="item">
-              <div class="thumb">
+            <div className="item">
+              <div className="thumb">
                 <img src="assets/images/featured-03.jpg" alt=""/>
-                <div class="hover-effect">
+                <div className="hover-effect">
                   <h6>2.4K Streaming</h6>
                 </div>
               </div>
               <h4>Island Rusty<br/><span>249K Downloads</span></h4>
               <ul>
-                <li><i class="fa fa-star"></i> 4.8</li>
-                <li><i class="fa fa-download"></i> 2.3M</li>
+                <li><i className="fa fa-star"></i> 4.8</li>
+                <li><i className="fa fa-download"></i> 2.3M</li>
               </ul>
             </div>
-            <div class="item">
-              <div class="thumb">
+            <div className="item">
+              <div className="thumb">
                 <img src="assets/images/featured-01.jpg" alt=""/>
-                <div class="hover-effect">
+                <div className="hover-effect">
                   <h6>2.4K Streaming</h6>
                 </div>
               </div>
               <h4>CS-GO<br/><span>249K Downloads</span></h4>
               <ul>
-                <li><i class="fa fa-star"></i> 4.8</li>
-                <li><i class="fa fa-download"></i> 2.3M</li>
+                <li><i className="fa fa-star"></i> 4.8</li>
+                <li><i className="fa fa-download"></i> 2.3M</li>
               </ul>
             </div>
-            <div class="item">
-              <div class="thumb">
+            <div className="item">
+              <div className="thumb">
                 <img src="assets/images/featured-02.jpg" alt=""/>
-                <div class="hover-effect">
+                <div className="hover-effect">
                   <h6>2.4K Streaming</h6>
                 </div>
               </div>
               <h4>Gamezer<br/><span>249K Downloads</span></h4>
               <ul>
-                <li><i class="fa fa-star"></i> 4.8</li>
-                <li><i class="fa fa-download"></i> 2.3M</li>
+                <li><i className="fa fa-star"></i> 4.8</li>
+                <li><i className="fa fa-download"></i> 2.3M</li>
               </ul>
             </div>
-            <div class="item">
-              <div class="thumb">
+            <div className="item">
+              <div className="thumb">
                 <img src="assets/images/featured-03.jpg" alt=""/>
-                <div class="hover-effect">
+                <div className="hover-effect">
                   <h6>2.4K Streaming</h6>
                 </div>
               </div>
               <h4>Island Rusty<br/><span>249K Downloads</span></h4>
               <ul>
-                <li><i class="fa fa-star"></i> 4.8</li>
-                <li><i class="fa fa-download"></i> 2.3M</li>
+                <li><i className="fa fa-star"></i> 4.8</li>
+                <li><i className="fa fa-download"></i> 2.3M</li>
               </ul>
             </div>
           </div>

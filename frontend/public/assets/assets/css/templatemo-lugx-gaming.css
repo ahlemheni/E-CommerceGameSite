@@ -161,20 +161,7 @@ Trending Style
   transition: all .3s;
 }
 
-.trending .item .down-content a {
-  position: absolute;
-  display: inline-block;
-  text-align: center;
-  line-height: 40px;
-  width: 40px;
-  height: 40px;
-  background-color: #ee626b;
-  color: #fff;
-  border-radius: 50%;
-  right: 25px;
-  bottom: 25px;
-  transition: all .3s;
-}
+
 
 .trending .item:hover .down-content h4 {
   color: #0071f8;
@@ -233,24 +220,7 @@ Most Played Style
   transition: all .3s;
 }
 
-.most-played .item .down-content a {
-  position: absolute;
-  display: inline-block;
-  text-align: center;
-  line-height: 40px;
-  height: 40px;
-  padding: 0px 15px;
-  background-color: #ee626b;
-  color: #fff;
-  border-radius: 20px;
-  font-size: 15px;
-  text-transform: uppercase;
-  font-weight: 600;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -20px;
-  transition: all .3s;
-}
+
 
 .most-played .item:hover .down-content h4 {
   color: #0071f8;

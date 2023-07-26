@@ -10,19 +10,21 @@ function LandingPage(){
     <div className="row">
       <div className="col-lg-12">
         <div className="page-content">
-          <div className="main-banner">
+          <div className="main-banner1">
             <div className="row">
               <div className="col-lg-7">
                 <div className="header-text">
-                  <h6>Welcome To Cyborg</h6>
-                  <h4><em>Browse</em> Our Popular Games Here</h4>
+                  
+                  <h6>Welcome To Gamer's zone</h6>
+                  <h4><em>Browse</em> Our Popular shop Here</h4>
                   <div className="main-button">
-                    <a href="browse.html">Browse Now</a>
+                    <a href="Shop.js">Browse Now</a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          
           <div className="most-popular">
             <div className="row">
               <div className="col-lg-12">

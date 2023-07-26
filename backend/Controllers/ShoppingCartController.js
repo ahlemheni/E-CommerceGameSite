@@ -4,8 +4,12 @@ const UserModel = require('../Models/UserModel');
 const assert=require('assert')
 const ProductModel = require('../Models/ProductModel');
 
+
 module.exports.save = async (req, res) => {
   const { items, totalprice, username, IdUser } = req.body;
+
+
+
 
   const client = username;
   // console.log(username);
@@ -125,6 +129,7 @@ module.exports.update = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
 
 
 module.exports.deleteAll =  async (req,res)=>{

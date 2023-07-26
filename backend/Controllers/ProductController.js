@@ -1,5 +1,6 @@
 const ProductModel=require('../Models/ProductModel')
 const GenreModel=require('../Models/GenreModel')
+const ReviewModel=require('../Models/ReviewModel')
 module.exports.get= async(req,res)=>{
 
     const products = await ProductModel.find()
@@ -53,12 +54,16 @@ module.exports.findone = async (req, res) => {
     const { id } =req.query;
     console.log( id);
   
+
     try {
       const product = await ProductModel.findOne({
-        
+
         _id: id
       });
+      console.log(product)
+      const reviews = await ReviewModel.find({ productId:product._id });
       console.log(product);
+      console.log(reviews); 
       if (!product) {
         res.status(404).json({ error: 'Product not found' });
       } else {
@@ -68,3 +73,24 @@ module.exports.findone = async (req, res) => {
       return res.status(500).json({ err: 'Internal server error' });
     }
   };
+
+module.exports.review= async (req,res)=>{
+  try {
+    const rating= req.body.rating;
+    const productId = req.params.productId;
+
+    const product = await ProductModel.findById(productId);
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    const review = new ReviewModel({ productId, rating });
+    await review.save();
+
+    res.status(201).json(review);
+  } catch (err) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+

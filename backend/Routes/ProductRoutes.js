@@ -6,6 +6,9 @@ router.get('/products/all',ProductController.get)
 router.post('/product/save',ProductController.save)
 router.post('/product/update',ProductController.update)
 router.post('/product/delete',ProductController.delete)
+
 router.get('/product/one',ProductController.findone)
+
+router.post('/product/:productId/reviews',ProductController.review)
 
 module.exports = router;

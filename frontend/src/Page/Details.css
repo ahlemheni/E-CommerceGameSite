@@ -1,0 +1,27 @@
+.main{
+    display: flex; 
+    justify-content: space-between;  
+    flex-wrap: wrap; 
+
+
+} 
+.img-container{
+    width: 400px; 
+    height: 400px; 
+    margin-top: 60px;
+} 
+.img-container img{
+    overflow: cover; 
+    background-color: transparent;
+} 
+.product-details-container{
+    margin-right: 100px;
+} 
+.product-details-container button{
+    border-radius: 10px; 
+    padding: 5px; 
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+} 
+input[type='number']{
+    width: 50px;
+} 

@@ -1,7 +1,9 @@
 import React, {  useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie'; 
+import Button from 'react-bootstrap/esm/Button'; 
+import Details from '../../Page/Details';
 
 export default function GameCard(props) {
   const [cookies] = useCookies();
@@ -20,7 +22,8 @@ export default function GameCard(props) {
             product: productId,
             name:props.game.name,
             quantity: quantity,
-            price: props.game.price,
+            price: props.game.price, 
+            game_name:props.game.game_title
           },
         ],
         totalprice: props.game.price * quantity,
@@ -46,7 +49,7 @@ export default function GameCard(props) {
     } 
   };
 
- 
+  const [modalShow,setModalShow]=useState(false)
 
   return (
     
@@ -66,8 +69,24 @@ export default function GameCard(props) {
           <Link onClick={() => addToCart(props.game._id)}>
             <i className="fa fa-shopping-bag"></i>
           </Link>
-          <details>
-            <summary>Details</summary>
+          
+          <Button variant="primary" onClick={() => setModalShow(true)} >
+       Details
+      </Button>
+
+      <Details name={props.game.name} 
+      price={props.game.price} 
+      game_name={props.game.game_title} 
+      cat={props.game.category} 
+      qte={props.game.qty} 
+      desc={props.game.description}
+      genre={props.game.genre}
+      image={props.game.image}
+
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
+            {/*<summary>Details</summary>
             <p className="text-primary">
               {props.game.name} - {props.game.id}
             </p>
@@ -90,9 +109,10 @@ export default function GameCard(props) {
                 </ul>
               </div>
             )}
-          </details>
+                  </details>*/}
         </div>
       </div>
     </div>
   );
-}
+} 
+

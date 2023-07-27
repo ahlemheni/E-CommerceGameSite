@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import GameCard from "../Components/GameCard/gameCard";
 import { MDBContainer, MDBCol, MDBRow, MDBIcon, MDBInput } from 'mdb-react-ui-kit';
 import axios from 'axios';
+import Details from "./Details"; 
+import Button from 'react-bootstrap/Button';
+
 
 function Shop() {
   
@@ -33,7 +36,9 @@ function Shop() {
       setGames(newList);
       setNotFound(newList.length === 0); 
     }
-  };
+  }; 
+
+  {/*const [modalShow,setModalShow]=useState(false)*/ }
     return (
       <div className="container">
       <div className="row">
@@ -90,6 +95,16 @@ function Shop() {
       </MDBRow>
       </div>
       </div>
+      
+      
+      {/*<Button variant="primary" onClick={() => setModalShow(true)}>
+       open
+      </Button>
+
+      <Details
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+                  />*/}
       </div>
 
          

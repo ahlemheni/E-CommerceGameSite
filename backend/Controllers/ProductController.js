@@ -1,12 +1,36 @@
 const ProductModel=require('../Models/ProductModel')
 const GenreModel=require('../Models/GenreModel')
 const ReviewModel=require('../Models/ReviewModel')
-module.exports.get= async(req,res)=>{
+module.exports.get = async (req, res) => {
+  try {
+    // Fetch all products
+    const products = await ProductModel.find().lean();
 
-    const products = await ProductModel.find()
-    
-    res.send(products)
-}
+    const productIds = products.map((product) => product._id);
+    const reviews = await ReviewModel.find({ productId:productIds });
+
+    const reviewsByProductId = {};
+    reviews.forEach((review) => {
+      if (!reviewsByProductId[review.productId]) {
+        reviewsByProductId[review.productId] = [];
+      }
+      reviewsByProductId[review.productId].push(review);
+    });
+
+    products.forEach((product) => {
+      const productReviews = reviewsByProductId[product._id];
+      if (productReviews) {
+        product.reviews = productReviews;
+      } else {
+        product.reviews = []; 
+      }
+    });
+
+    res.send(products);
+  } catch (err) {
+    return res.status(500).json({ err: 'Internal server error' });
+  }
+};
 
 
 module.exports.save= async(req,res)=>{

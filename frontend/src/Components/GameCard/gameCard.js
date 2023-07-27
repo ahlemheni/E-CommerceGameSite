@@ -13,7 +13,9 @@ export default function GameCard(props) {
   const navigate = useNavigate();
  
 
- 
+  const updateQuantity = (newQuantity) => {
+    setQuantity(newQuantity);
+  };
   const fetchShoppingCart = async () => {
     try {
 
@@ -92,14 +94,22 @@ export default function GameCard(props) {
       <div className="down-content">
         <span className="category">{props.game.category}</span>
         <h4>{props.game.name}</h4>
-        
-        <Link onClick={() => addToCart(props.game._id)}>
-          <i className="fa fa-shopping-bag"></i>
-        </Link>
-        
+
         <button  class="btn btn-outline-warning "  style={{  borderRadius:30,fontWeight:"bold"}}onClick={() => setModalShow(true)} >
         <MDBIcon fas icon="info-circle" /> Details
     </button>
+        {props.game.qty === 0 ? (
+             <span style={{ color: 'red', fontWeight: 'bold', marginLeft: '20px' }}>
+               Out of Stock
+           </span>      
+             ) : (
+            <Link onClick={() => addToCart(props.game._id)}>
+              <i className="fa fa-shopping-bag"></i>
+            </Link>
+          )}
+
+        
+  
 
     <Details name={props.game.name} 
     price={props.game.price} 
@@ -110,6 +120,9 @@ export default function GameCard(props) {
     genre={props.game.genre}
     image={props.game.image}
     game={props.game}
+review={props.reviews}
+quantity={quantity} // Pass the quantity to the Details component
+updateQuantity={updateQuantity} // Pass the updateQuantity function as a prop
 
     addToCart={addToCart} 
       show={modalShow}

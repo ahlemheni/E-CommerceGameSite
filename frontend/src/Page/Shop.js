@@ -135,7 +135,7 @@ function Shop() {
                     </div>
                   {games.length > 0 ? ( // Check if the games array is not empty
                 <div className="row trending-box">
-                  {games.map((gm) => (<GameCard game={gm} key={gm._id} />))}
+                  {games.map((gm) => (<GameCard game={gm} key={gm._id}  reviews={gm.reviews.map((review) => review.rating)}/>))}
                 </div>
                   ) : (
                     <div className="text-center">

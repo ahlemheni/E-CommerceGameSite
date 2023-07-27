@@ -132,7 +132,7 @@ function LandingPage(){
                 
                   <div className="mb-4">
                     <label
-                      htmlFor="confirmPasswordInput"
+                      htmlFor="messageInput"
                       className="form-label custom-label mb-2"
                       style={{ color: '#e75e8d', fontSize: '20px' }}
                     >
@@ -140,7 +140,7 @@ function LandingPage(){
                       Your Message :
                     </label>
                     <MDBTextArea 
-                      id="confirmPasswordInput"
+                      id="messageInput"
                       size="lg"
                       icon="lock"
                       iconClass="text-primary"

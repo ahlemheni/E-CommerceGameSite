@@ -1,11 +1,8 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'; 
-import image from '../logo.svg' 
 import './Details.css' 
-import shop from './Shop' 
-import { Link } from 'react-router-dom';  
-import GameCard from '../Components/GameCard/gameCard';
+
 
 
 
@@ -15,6 +12,7 @@ const handleAddToCart = () => {
     props.addToCart(props.game._id);
     props.onHide(); // Hide the modal after adding to cart
   };
+
 
   return (
     <div>
@@ -29,6 +27,7 @@ const handleAddToCart = () => {
           {props.name} details
         </Modal.Title>
       </Modal.Header>
+
       <Modal.Body className='body' >
         <div className='main'> 
                 <div className='img-container'>  
@@ -53,6 +52,7 @@ const handleAddToCart = () => {
                   <button className="btn btn-outline-success" onClick={handleAddToCart}>
               Add To Cart
             </button>
+
                 </div>
         
         </div>
@@ -66,3 +66,4 @@ const handleAddToCart = () => {
 }
 
 export default Details
+

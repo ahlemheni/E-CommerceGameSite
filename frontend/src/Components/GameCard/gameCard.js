@@ -2,8 +2,8 @@ import React, {  useState,useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-import Details from '../../Page/Details';
 import { MDBIcon } from 'mdb-react-ui-kit';
+import Details from '../../Page/Details';
 
 export default function GameCard(props) {
   const [cookies,setCookie] = useCookies();
@@ -16,6 +16,7 @@ export default function GameCard(props) {
  
   const fetchShoppingCart = async () => {
     try {
+
       const response = await axios.get('http://localhost:5000/cart/user', { params: { IdUser: cookies.id } });
      
       const totalItems = response.data.shoppingcart.items.length;
@@ -74,11 +75,12 @@ export default function GameCard(props) {
     }
   };
 
-  
+
 
   return (
     
     <div className="col-4">
+
     <div className="item">
       <div className="thumb">
         <img src="assets/images/trending-01.jpg" alt="" />
@@ -142,3 +144,4 @@ export default function GameCard(props) {
   </div>
 );
 } 
+

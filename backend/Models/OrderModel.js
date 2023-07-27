@@ -1,25 +1,26 @@
 const mongoose = require('mongoose')
+const shoppingcart = require('./ShoppingCartModel')
+const user=require('./UserModel')
 const orderSchema = new mongoose.Schema({
    
-      address: {
-        type: String,
-        required: true
-      },
-      shoppingcart: [
+      shoppingcart: 
         {
-          type: mongoose.ObjectId,
-          ref: "Shoppingcart",
+          type: shoppingcart.schema,
+          required:true
         },
-      ],
+      
       orderby: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type:user.schema,
+        require:true
       },
       orderStatus: {
         type: Boolean,
+        default:false
     },
         
             timestamps: true,
           
 
     })
+
+module.exports=mongoose.model('Order',orderSchema)

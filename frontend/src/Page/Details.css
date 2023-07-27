@@ -1,5 +1,6 @@
 .main{
     display: flex; 
+
     flex-wrap: wrap; 
 
 
@@ -29,7 +30,10 @@
     font-size: 15px;
     color: black;
     margin-left: 20px;
+
+  
 } 
+
 .product-details-container button{
     border-radius: 10px; 
     padding: 5px; 
@@ -38,13 +42,4 @@
 input[type='number']{
     width: 50px;
 } 
-/* Details.css */
 
-.unavailable {
-    color: red;
-  }
-  
-  .available {
-    color: green;
-  }
-  

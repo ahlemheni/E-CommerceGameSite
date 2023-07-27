@@ -8,11 +8,8 @@ const ProductModel = require('../Models/ProductModel');
 module.exports.save = async (req, res) => {
   const { items, totalprice, username, IdUser } = req.body;
 
-
-
-
   const client = username;
-  // console.log(username);
+ 
   const user = await UserModel.findOne({ username: client });
 
   if (!user || client !== user.username) {

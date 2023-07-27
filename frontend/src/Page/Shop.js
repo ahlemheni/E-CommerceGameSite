@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import GameCard from "../Components/GameCard/gameCard";
 import { MDBContainer, MDBCol, MDBRow, MDBIcon, MDBInput } from 'mdb-react-ui-kit';
 import axios from 'axios';
+import { NavLink } from "react-router-dom";
 
 function Shop() {
-  
+  const [selectedOption, setSelectedOption] = useState("0");
   const [games, setGames] = useState([]);
-  const [notFound, setNotFound] = useState(false); // Change the initial state to false
-
+  const [allGames, setAllGames] = useState([]); // Store all games to avoid refetching from the server
+  const [Price, setPrice] = useState(0);
   useEffect(() => {
     fetchGames();
   }, []);
@@ -16,65 +17,122 @@ function Shop() {
     try {
       const response = await axios.get('http://localhost:5000/products/all');
       setGames(response.data);
+      setAllGames(response.data); // Save all games to use for filtering later
     } catch (error) {
       console.error('Error fetching games:', error);
     }
   };
+  
 
- 
+  const filterByCategory = (selectedOption) => {
+    setSelectedOption(selectedOption);
+    let filteredArray = allGames;
+    if (selectedOption !== "0") {
+      filteredArray = allGames.filter((item) => item.category === selectedOption);
+    }
+    if (Price !== 0) {
+      filteredArray = filteredArray.filter((item) => item.price <= Price);
+    }
+    setGames(filteredArray);
+  };
 
-  const filterByName = () => {
+  const filterByNameAndCategory = () => {
     let input = document.getElementById("gameID").value.toUpperCase();
-    if (input === '') {
-      fetchGames();
-      setNotFound(false);
+    let selectedCategory = selectedOption;
+    if (input === '' && selectedCategory === "0" && Price === 0) {
+      setGames(allGames); 
     } else {
-      const newList = games.filter((item) => item.name.toUpperCase().indexOf(input) > -1);
-      setGames(newList);
-      setNotFound(newList.length === 0); 
+      let filteredArray = allGames;
+      if (selectedCategory !== "0") {
+        filteredArray = allGames.filter((item) => item.category === selectedCategory);
+      }
+      if (input !== '') {
+        filteredArray = filteredArray.filter((item) => item.name.toUpperCase().indexOf(input) > -1);
+      }
+      if (Price !== 0) {
+        filteredArray = filteredArray.filter((item) => item.price <= Price);
+      }
+      setGames(filteredArray);
     }
   };
+
+  const filterByPrice = (selectedPrice) => {
+    setPrice(selectedPrice);
+    let filteredArray = allGames;
+    if (selectedOption !== "0") {
+      filteredArray = allGames.filter((item) => item.category === selectedOption);
+    }
+    if (selectedPrice !== 0) {
+      filteredArray = filteredArray.filter((item) => item.price <= selectedPrice);
+    }
+
+    setGames(filteredArray);
+  };
+  
     return (
-      <div className="container">
+
+      <div className="container " >
       <div className="row">
         <div className="page-content" >
       <MDBRow>
 
-      <MDBCol md="3" >
-          <div className="top-downloaded">
+      <MDBCol md="3"  >
+          <div className="top-downloaded  ">
             <div className="heading-section">
-              <h4><em></em> Categories</h4>
+              <h4><MDBIcon fas icon="database" /> Categories</h4>
             </div>
-            <ul>
-            <li><a href="Clothes.js"><h6>All</h6></a></li>
+            
+            <nav className="main-nav">
+            <ul value={selectedOption} >
+                  <li><NavLink  value={"0"} onClick={() => filterByCategory("0")}  ><h6 style={{ color: selectedOption === "0" ? '' : 'rgba(255, 255, 255, 0.205)' }}><MDBIcon fas icon="align-justify" /> All</h6></NavLink></li>
+                  <li><NavLink  value={"clothes"} onClick={() => filterByCategory("clothes")}><h6 style={{ color: selectedOption === "clothes" ? '' : 'rgba(255, 255, 255, 0.205)' }}><MDBIcon fas icon="tshirt" /> Clothes</h6></NavLink></li>
+                  <li><NavLink  value={"cosmetics"} onClick={() => filterByCategory("cosmetics")}><h6 style={{ color: selectedOption === "cosmetics" ? '' : 'rgba(255, 255, 255, 0.205)' }}><MDBIcon fas icon="user-astronaut" /> Cosmetics</h6></NavLink></li>
+                  <li ><NavLink  value={"electronics"} onClick={() => filterByCategory("electronics")}><h6 style={{ color: selectedOption === "electronics" ? '' : 'rgba(255, 255, 255, 0.205)' }}><MDBIcon fas icon="headphones" /> Electronics</h6></NavLink></li>
+                </ul>
+                </nav>
 
-              <li><a href="Clothes.js"><h6>Clothes</h6></a></li>
-              <li><a href="Cosmetics"><h6>Cosmetics</h6></a></li>
-              <li><a href="Electronics"><h6>Electronics</h6></a></li>
-            </ul>
           </div>
         </MDBCol>
         <MDBCol md="9">
            
                   <div className="filters text-light my-4 d-flex justify-content-between"  > 
-                  <div className="d-flex mt-4">
-                      <span className="mx-2">Price :</span>
+                  <div className="d-flex mt-3">
+                      <span className="mx-1"><MDBIcon fas icon="dollar-sign" /> Price :</span>
                       <div className="d-flex justify-content-between">
-                        <span className="px-2">10$</span>
-                        <input type="range" className="form-range" id="customRange1" />
-                        <span className="px-2">100$</span>
-                      </div>
-                    </div>
-             
-                    <div className="row mt-4">
-                      <div className="col-6 text-end">
-                        <span className="mx-2">Game ID/Name :</span>
-                      </div>
-                      <div className="col-6">
-                      <input onChange={filterByName} type="text" id="gameID" className="form-control form-control-sm" />
-                      </div>
-                    </div>
+                      <span className="px-1">{Price}$</span>
+                      
+                      <input
+                        type="range"
+                        className="form-range"
+                        min={0}
+                        max={500}
+                        value={Price}
+                        onChange={(e) => filterByPrice(parseInt(e.target.value))}
+
+                      />
+                    <span className="px-1">500$</span>
                   </div>
+                  {/* <input
+                    type="text"
+                    id="priceRange"
+                    className=" form-control-sm"
+                    value={`${Price}$`}
+                    readOnly
+                    style={{width:"80px"}}
+                  /> */}
+                </div>
+           
+              
+                    <div className="d-flex mt-3">
+
+                    <span className="mx-1"> <MDBIcon  className="mx-1"fas icon="search" /> Game Name :</span>
+                        <div className="d-flex justify-content-between">
+
+                      <input onChange={filterByNameAndCategory} type="text" id="gameID"   placeholder="Search games..." className="form-control form-control-sm"  style={{ backgroundColor: '#e8d3d8', borderRadius: '25px' }} />
+                      </div>
+                      </div>
+
+                    </div>
                   {games.length > 0 ? ( // Check if the games array is not empty
                 <div className="row trending-box">
                   {games.map((gm) => (<GameCard game={gm} key={gm._id} />))}

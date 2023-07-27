@@ -1,20 +1,45 @@
 import { useCookies } from 'react-cookie';
 import {  MDBIcon } from 'mdb-react-ui-kit';
 
+
 import { NavLink } from 'react-router-dom';
 
 function Header() {
-  const [cookies, setCookie, removeCookie] = useCookies(['session','username','id']);
+  const [cookies, setCookie, removeCookie] = useCookies(['session','username','id','cartItemsCount']);
   const sessionCookie = cookies.session;
   const username = cookies.username;
+  const cartItemsCount = cookies.cartItemsCount;
 
   const handleLogout = () => {
     removeCookie('session');
     removeCookie('username');
     removeCookie('id');
+    removeCookie('cartItemsCount');
 
   };
 
+  // Fetch cart data and calculate the total number of products in the cart
+
+  // const fetchCartData = async () => {
+  //   try {
+  //     const response = await axios.get('http://localhost:5000/cart/user', { params: { IdUser: cookies.id } });
+
+  //     console.log('Cart Data:', response.data.shoppingcart.items);
+  //     const totalItems = response.data.shoppingcart.items.length;
+
+  //     setCartItemsCount(totalItems); // Update cartItemsCount state here
+  //   } catch (error) {
+  //     console.error('Error fetching cart data:', error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (sessionCookie) {
+  //     fetchCartData();
+  //   }
+  // },[]);
+  
+   
   return (
     <header className="header-area header-sticky">
       <div className="container">
@@ -37,7 +62,7 @@ function Header() {
                 
                 {sessionCookie ? (
                   <>
-                    <li><NavLink to="/card" ><MDBIcon fas icon="shopping-basket" /></NavLink></li>
+                    <li><NavLink to="/card" ><MDBIcon fas icon="shopping-basket" /><span className="notification"> {cartItemsCount}</span></NavLink></li>
                     <li><NavLink to="/Login" onClick={handleLogout}><MDBIcon fas icon="sign-out-alt" /> Logout</NavLink></li>
                     <li><NavLink to={`/profile/${username}`}>Profile <img src="../assets/images/profile-header.jpg" alt="" /></NavLink></li>
                   </>

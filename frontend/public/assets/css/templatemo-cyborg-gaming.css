@@ -1637,6 +1637,21 @@ Profile Style
   margin-top: 10px;
   text-align: center;
 }
+ .notification {
+  position: absolute;
+  top: 2px;
+  background-color: rgba(255, 0, 128, 0.705);
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: system-ui;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
+
+/* styles.css (ou tout autre fichier de styles) */
+
+
 
 /* 
 ---------------------------------------------

@@ -15,6 +15,7 @@ function Login() {
   useEffect(() => {
     if (cookies.session) {
       navigate(`/profile/${cookies.username}`);
+      
     }
   }, [cookies.session, cookies.username, navigate]);
 
@@ -45,6 +46,7 @@ function Login() {
 
           alert('Welcome, ' + user.username);
           navigate(`/profile/${user.username}`);
+
         }
       })
       .catch((error) => {

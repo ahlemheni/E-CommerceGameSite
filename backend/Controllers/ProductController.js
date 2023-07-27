@@ -4,6 +4,7 @@ const ReviewModel=require('../Models/ReviewModel')
 module.exports.get= async(req,res)=>{
 
     const products = await ProductModel.find()
+    
     res.send(products)
 }
 

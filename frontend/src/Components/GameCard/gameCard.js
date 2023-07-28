@@ -17,6 +17,7 @@ export default function GameCard(props) {
     setQuantity(newQuantity);
   };
   const fetchShoppingCart = async () => {
+    if (cookies.id) {
     try {
 
       const response = await axios.get('http://localhost:5000/cart/user', { params: { IdUser: cookies.id } });
@@ -28,6 +29,7 @@ export default function GameCard(props) {
     } catch (error) {
       console.error(error);
     }
+  }
   };
   useEffect(() => {
  

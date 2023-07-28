@@ -5,6 +5,8 @@ const UserRoutes = require('./Routes/UserRoutes');
 const ProductRoutes = require('./Routes/ProductRoutes');
 const GenreRoutes = require('./Routes/GenreRoutes');
 const ShoppingRoutes = require('./Routes/ShoppingCartRoutes');
+const ContactRoutes = require('./Routes/ContactRoutes');
+
 const cookieParser = require('cookie-parser');
 
 const cors = require('cors');
@@ -32,6 +34,7 @@ app.use(UserRoutes);
 app.use(ProductRoutes);
 app.use(GenreRoutes);
 app.use(ShoppingRoutes);
+app.use(ContactRoutes);
 
 
 

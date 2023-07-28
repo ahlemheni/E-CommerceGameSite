@@ -6,7 +6,37 @@ import { MDBContainer, MDBCol, MDBRow, MDBIcon, MDBInput,MDBTextArea } from 'mdb
 
 function LandingPage(){
   const [games, setGames] = useState([]);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [msg, setmsg] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
+  const send = async () => {
+    if (!username || !email || !msg) {
+      setErrorMessage('All fields are required.');
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setErrorMessage('Invalid email format.');
+      return;
+    }
+    try {
+      const response = await axios.post('http://localhost:5000/contact', {
+        usernameInput: username,
+        emailInput: email, 
+        messageInput: msg,
+      });
+      alert('Your message has been sent successfully! A reply will be sent to your provided email.');
+      setUsername('');
+      setEmail('');
+      setmsg('');
+      setErrorMessage('');
+    } catch (error) {
+      setErrorMessage(error.response?.data?.error || 'An error occurred while sending the email.');
+    }
+  };
+  
   const fetchGames = async () => {
     try {
       const response = await axios.get('http://localhost:5000/products/all');
@@ -104,7 +134,8 @@ function LandingPage(){
                       icon="envelope"
                       iconClass="text-primary"
                       placeholder="Enter your name"
-                     
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                       style={{ backgroundColor: '#e8d3d8', borderRadius: '25px' }}
                     />
                   </div>
@@ -120,10 +151,11 @@ function LandingPage(){
                       id="emailInput"
                       type="email"
                       size="lg"
-                      icon={<i className="bi bi-envelope"></i>}
+                   
                          iconClass="text-primary"
                       placeholder=" Enter your email"
-                     
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       style={{ backgroundColor: '#e8d3d8', borderRadius: '25px' }}
                     />
                   </div>
@@ -145,16 +177,20 @@ function LandingPage(){
                       icon="lock"
                       iconClass="text-primary"
                       placeholder="Message"
-                      
+                      value={msg}
+                      onChange={(e) => setmsg(e.target.value)}
                       style={{ backgroundColor: '#e8d3d8', borderRadius: '25px' }}
                     />
                   </div>
+                  {errorMessage && <div className="text-danger mb-3">{errorMessage}</div>}
 
                   <div class="d-grid gap-2 d-md-flex ">
                     <button
                       className="btn btn-primary btn-lg"
                       size="lg"
                       style={{ backgroundColor: '#e75e8e5b' }}
+                      onClick={send}
+
                     >
                       <MDBIcon fas icon="paper-plane" className="me-2"/>
                       Send

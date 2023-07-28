@@ -3,14 +3,19 @@ import GameCard from "../Components/GameCard/gameCard";
 import { MDBContainer, MDBCol, MDBRow, MDBIcon, MDBInput } from 'mdb-react-ui-kit';
 import axios from 'axios';
 import { NavLink } from "react-router-dom";
+import Form from 'react-bootstrap/Form';
 
 function Shop() {
   const [selectedOption, setSelectedOption] = useState("0");
   const [games, setGames] = useState([]);
   const [allGames, setAllGames] = useState([]); // Store all games to avoid refetching from the server
   const [Price, setPrice] = useState(0);
+  const [Genre, setGenre] = useState([]);
+  const [selectedGenreId, setSelectedGenre] = useState("0");
+
   useEffect(() => {
     fetchGames();
+    fetchGenre();
   }, []);
 
   const fetchGames = async () => {
@@ -23,7 +28,14 @@ function Shop() {
     }
   };
   
-
+  const fetchGenre = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/genres/all');
+      setGenre(response.data);
+    } catch (error) {
+      console.error('Error fetching games:', error);
+    }
+  };
   const filterByCategory = (selectedOption) => {
     setSelectedOption(selectedOption);
     let filteredArray = allGames;
@@ -66,6 +78,20 @@ function Shop() {
       filteredArray = filteredArray.filter((item) => item.price <= selectedPrice);
     }
 
+    setGames(filteredArray);
+  };
+  const filterByGenre = (selectedGenreId) => {
+    setSelectedGenre(selectedGenreId);
+    let filteredArray = allGames;
+  
+    if (selectedGenreId !== "0") {
+      filteredArray = allGames.filter((item) => item.genre === selectedGenreId);
+    }
+  
+    if (Price !== 0) {
+      filteredArray = filteredArray.filter((item) => item.price <= Price);
+    }
+  
     setGames(filteredArray);
   };
   
@@ -121,7 +147,17 @@ function Shop() {
                     style={{width:"80px"}}
                   /> */}
                 </div>
-           
+       
+     
+                <Form.Select value={selectedGenreId} className="d-flex mt-3" style={{ width: "150px", backgroundColor: '#e8d3d8', borderRadius: '25px', height: "30px", fontSize: "14px" }}>
+  <option value="0" onClick={() => filterByGenre("0")}>All Genres</option>
+  {Genre && Genre.map((genre) => (
+    <option key={genre._id} value={genre._id}> {/* Use the genre ID as the value */}
+      {genre.name}
+    </option>
+  ))}
+</Form.Select>
+    
               
                     <div className="d-flex mt-3">
 

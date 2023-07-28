@@ -275,8 +275,8 @@ export default function Profile() {
                                     backgroundColor: "#e8d3d8",
                                     borderRadius: "25px",
                                     marginTop: 5,
-                                    marginBottom:20
-
+                                    marginBottom:20,
+                                      width:"100%"
                                   }}
                                 />
                                   <label className="form-label custom-label mb-2" style={{ color: '#e75e8d', fontSize: "18px" }}>

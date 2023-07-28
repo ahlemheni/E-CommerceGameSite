@@ -32,12 +32,21 @@
     object-fit:contain;
   }
   .main-banner {
-    position: relative;
+  
+  background-position: center center;
+  background-size: cover;
+  min-height: 380px;
+  border-radius: 23px;
+  padding: 80px 60px;
+    
+    
   }
   
   .main-banner img {
     width: 100%;
     height: auto;
+    
+    
   }
   
   .banner-text {

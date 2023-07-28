@@ -124,8 +124,14 @@ const Card = () => {
         <Spinner />
       ) : (
         <section>
+          <div className="container">
+          <div className="row">
+          <div className="page-content">
           <div className="mainbanner">
-            <img src='./assets/images/Game Banner.jpg' alt='' />
+            <img src='./assets/images/GameBanner.jpg' alt='' />
+            </div>
+            </div>
+            </div>
           </div>
           <div className="container">
             <div className="page-content">
@@ -195,7 +201,7 @@ const Card = () => {
                               <MDBIcon icon="angle-double-left" className="me-2" /> <Link to="/shop" className="lead fw-normal" style={{ color: "black" }}>Back to shopping</Link>
                             </button>
                             <button className="btn" style={{ backgroundColor: "rgba(17, 238, 28, 0.453)", borderRadius: 30, fontSize: "16px" }}>
-                              <span className="lead fw-normal">{totalPrice}</span> / <MDBIcon icon="credit-card" className="me-2" />Buy Now
+                              <span className="lead fw-normal">{totalPrice}</span> / <MDBIcon icon="credit-card" className="me-2" /><Link to="/Pay" className="lead fw-normal" style={{ color: "black" }}>Buy Now</Link>
                             </button>
                           </div>
                         </MDBCardBody>

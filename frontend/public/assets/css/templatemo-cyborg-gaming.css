@@ -1742,3 +1742,15 @@ body {
 }
 h6:hover {
   color: #e75e8d !important;}
+  .page-container-pay{
+  
+    background-position: center center;
+    background-size: cover;
+    min-height: 380px;
+    border-radius: 23px;
+    padding: 80px 60px;
+   
+      
+      
+    }
+  

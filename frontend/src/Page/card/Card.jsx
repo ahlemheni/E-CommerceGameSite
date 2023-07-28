@@ -24,7 +24,9 @@ const Card = () => {
   const [quantity, setQuantity] = useState(); // Default quantity
   const [ShoppingCart, setShoppingCart] = useState([]); // Initialize as an empty array, not an object
   const [totalPrice, setTotalPrice] = useState(0); // Initialize total price as 0
-  const [cookies] = useCookies();
+  const [cookies,setCookie] = useCookies();
+
+
   const fetchShoppingCart = async () => {
     try {
       const response = await axios.get('http://localhost:5000/cart/user', { params: { IdUser: cookies.id } });
@@ -33,6 +35,10 @@ const Card = () => {
       setCardId(response.data.shoppingcart._id);
       setShoppingCart(response.data.shoppingcart.items);
       setTotalPrice(response.data.shoppingcart.totalprice);
+
+      const totalItems = response.data.shoppingcart.items.length;
+      setCookie('cartItemsCount', totalItems);
+
     } catch (error) {
       setIsLoading(false);
       console.error(error);
@@ -40,7 +46,6 @@ const Card = () => {
   };
   useEffect(() => {
  
-  
     fetchShoppingCart();
   }, [cookies.id]);
   
@@ -49,8 +54,19 @@ const Card = () => {
   const handleIncrement = async (cartItemId) => {
 
     try {
+
+      const cartItem = ShoppingCart.find((item) => item._id === cartItemId);
+
+      const productResponse = await axios.get('http://localhost:5000/product/one', { params: { id: cartItem.product } });
+      const productQty = productResponse.data.qty;
+  console.log(productQty)
+      // const updatedQuantity = productQty - 1; // Decrement quantity by 1
+      //  await axios.post('http://localhost:5000/product/update', {
+      //   _id: cartItem.product,
+      //   qty: updatedQuantity,
+      // });
       // Find the cart item in the ShoppingCart array by its ID
-      const cartItem = ShoppingCart.find(item => item._id === cartItemId);
+      if (cartItem.quantity < productQty) {
 
       cartItem.quantity += 1;
 
@@ -62,9 +78,13 @@ const Card = () => {
 
       setShoppingCart(response.data.items);
       setTotalPrice(response.data.totalprice);
-    } catch (error) {
-      console.error(error);
+    }else{
+      alert("You have reached maximum limit of this Product")
+
     }
+  } catch (error) {
+    console.error(error);
+  }
 
   };
 
@@ -73,9 +93,18 @@ const Card = () => {
     try {
       // Find the cart item in the ShoppingCart array by its ID
       const cartItem = ShoppingCart.find(item => item._id === cartItemId);
-  
+      // const productResponse = await axios.get('http://localhost:5000/product/one', { params: { id: cartItem.product } });
+      // const productQty = productResponse.data.qty;
+
+
       // Check if the quantity is greater than 0 before decrementing
       if (cartItem.quantity > 1) {
+        
+        // const updatedQuantity = productQty + 1; // Decrement quantity by 1
+        // await axios.post('http://localhost:5000/product/update', {
+        //   _id: cartItem.product,
+        //   qty: updatedQuantity,
+        // });
         cartItem.quantity -= 1;
   
         const response = await axios.post('http://localhost:5000/cart/update', {
@@ -86,6 +115,7 @@ const Card = () => {
 
         setShoppingCart(response.data.items);
         setTotalPrice(response.data.totalprice);
+
       }
     } catch (error) {
       console.error(error);
@@ -123,6 +153,7 @@ const Card = () => {
       {isLoading ? (
         <Spinner />
       ) : (
+
         <section>
           <div className="container">
           <div className="row">
@@ -133,48 +164,49 @@ const Card = () => {
             </div>
             </div>
           </div>
+
           <div className="container">
-            <div className="page-content">
-              <MDBContainer>
+          <div className="row">
+        <div className="col-lg-12">
+        <div className="page-content" style={{backgroundImage: "url('./assets/images/top-view-black-friday-sales-assortment-with-copy-space.jpg')",  backgroundSize: "cover", backgroundRepeat: "no-repeat",backgroundPosition: "center",}}>
+          
+              <MDBContainer style={{backgroundColor:"rgba(255,255,255,0.3086484593837535)",borderRadius:"10%"}}>
                 <MDBRow className="justify-content-center align-items-center h-100">
                   <MDBCol md="10">
-                    <h1 className="mb-4" style={{ color: 'rgba(105, 255, 235, 0.593)', textAlign: 'center', fontFamily: 'Comic Sans MS' }}>
+                  <br/>
+                    <h1 className="mb-4" style={{ color: 'rgba(255,101,182,0.8380602240896359)', textAlign: 'center', fontFamily: 'Comic Sans MS' }}>
                       <MDBIcon fas icon="shopping-basket" /> Shopping <span style={{ color: '#fff' }}>Cart</span>
                     </h1>
 
                     { ShoppingCart && ShoppingCart.length > 0 ?(
                       ShoppingCart.map((item, index) => (
                         <>
-                        <MDBCard className="rounded-3 mb-4" key={index}>
-                          <MDBCardBody className="p-4">
+                        <MDBCard className="rounded-5 mb-1" key={index} style={{backgroundColor:"rgba(0,0,0,0.7008053221288515)"}}>
+                          <MDBCardBody className="p-3">
                             <MDBRow className="justify-content-between align-items-center">
-                              <MDBCol md="2" lg="2" xl="2">
+                              <MDBCol md="1" lg="1" xl="2">
                                 <MDBCardImage className="rounded-3" fluid
                                   src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
                                   alt="Cotton T-shirt"
                                 />
                               </MDBCol>
-                              <MDBCol md="3" lg="3" xl="3">
-                                <p className="lead fw-normal mb-2">{item.name}</p>
-                                <p>
-                                  <span className="text-muted">Price: </span>{item.price}
+                              <MDBCol md="2" lg="2" xl="3">
+                                <p className="lead fw-normal mb-3" style={{ color: 'rgba(255,101,182,0.8380602240896359)', fontFamily: 'Comic Sans MS',fontSize:"25px" }}>{item.name}</p>
+                                <p style={{  color: 'rgba(255,255,255,0.7512254901960784)',fontFamily: 'Comic Sans MS',fontSize:"15px",fontWeight:"bold" }}>
+                                  <span style={{  color: '#fff',fontFamily: 'Comic Sans MS',fontSize:"15px" }}>Price/U : </span>{item.price} $
                                 </p>
                               </MDBCol>
-                              <MDBCol md="3" lg="3" xl="2" className="d-flex align-items-center justify-content-around">
-                              <button className="btn" onClick={() => handleDecrement(item._id)}>
+                              <MDBCol md="1" lg="1" xl="2" className="d-flex align-items-center justify-content-around">
+                              <button className="btn btn-outline-primary btn-sm" onClick={() => handleDecrement(item._id)}>
                                   <MDBIcon fas icon="minus" />
                                 </button>
-                                <MDBInput min={0} value={item.quantity} type="number" size="sm" onChange={(e) => setQuantity(parseInt(e.target.value))} />
-                                <button className="btn" onClick={() => handleIncrement(item._id)}>
+                                <MDBInput style={{  fontFamily: 'Comic Sans MS',fontSize:"15px",textAlign:"center" }} min={0} value={item.quantity} type="number" size="sm" onChange={(e) => setQuantity(parseInt(e.target.value))} />
+                                <button className="btn btn-outline-primary btn-sm" onClick={() => handleIncrement(item._id)}>
                                   <MDBIcon fas icon="plus" />
                                 </button>
                               </MDBCol>
-                              <MDBCol md="3" lg="2" xl="2" className="offset-lg-1">
-                                <MDBTypography tag="h5" className="mb-0">
-                                  {item.totalprice}
-                                </MDBTypography>
-                              </MDBCol>
-                              <MDBCol md="1" lg="1" xl="1" className="text-end">
+                            
+                              <MDBCol md="1" lg="1" xl="4" className="text-end">
                                 <button  className="btn" onClick={() => deleteone(item._id)}>
                                   <MDBIcon fas icon="trash text-danger" size="lg" />
                                 </button>
@@ -187,23 +219,29 @@ const Card = () => {
                       ))
                  
                     ) : (
-                      <div className="text-center">
-                        <p className="lead">Your shopping cart is empty.</p>
-                        <Link to="/shop" className="btn btn-primary">Start Shopping</Link>
+                      <div className="text-center mb-3">
+                        <p className="lead" style={{ color: '#fff' ,fontFamily: 'Comic Sans MS'}}>Your shopping cart is empty. <MDBIcon far icon="frown" /></p>
+                        <Link to="/shop" className="btn btn-outline-info"style={{  borderRadius: 30, fontSize: "18px"}}> <MDBIcon fas icon="cart-plus" /> Start Shopping <MDBIcon far icon="smile-wink" /></Link>
                       </div>
                     )}
 
 {ShoppingCart && ShoppingCart.length > 0 && (
-                      <MDBCard className="mb-5">
-                        <MDBCardBody className="p-4">
+                      <MDBCard className="mb-5" style={{backgroundColor:"rgba(0,0,0,0.6055672268907564)"}}>
+                        <MDBCardBody className="p-4" >
                           <div className="d-flex justify-content-between">
-                            <button className="btn" style={{ backgroundColor: '#FF5DBF5E', borderRadius: 30, fontSize: "16px" }}>
-                              <MDBIcon icon="angle-double-left" className="me-2" /> <Link to="/shop" className="lead fw-normal" style={{ color: "black" }}>Back to shopping</Link>
+                            <button className="btn btn-outline-dark" style={{  borderRadius: 30, fontSize: "16px" ,color: 'rgba(255,255,255,0.7512254901960784)'}}>
+                              <MDBIcon icon="angle-double-left" className="me-2" /> <Link to="/shop" className="lead fw-normal" style={{ color: "rgba(255,255,255,0.7512254901960784)" }}>Back to shopping <MDBIcon fas icon="shopping-cart" /></Link>
                             </button>
+
                             <button className="btn" style={{ backgroundColor: "rgba(17, 238, 28, 0.453)", borderRadius: 30, fontSize: "16px" }}>
-                              <span className="lead fw-normal">{totalPrice}</span> / <MDBIcon icon="credit-card" className="me-2" /><Link to="/Pay" className="lead fw-normal" style={{ color: "black" }}>Buy Now</Link>
+                              <span className="lead fw-normal">{totalPrice}</span> / <MDBIcon icon="credit-card" className="me-2" /><Link to="/Pay" className="lead fw-normal" style={{ color: "black" }}>Buy Now</Link> </button>
+
+                            <button className="btn btn-outline-success" style={{  borderRadius: 30, fontSize: "20px", color: 'rgba(255,255,255,0.7512254901960784)' }}>
+                              <span className="lead fw-normal">Total: {totalPrice} $</span> / <MDBIcon icon="credit-card" className="me-2" />Buy Now <MDBIcon  icon="angle-double-right" />
+
                             </button>
                           </div>
+                          
                         </MDBCardBody>
                       </MDBCard>
                     )}
@@ -213,10 +251,11 @@ const Card = () => {
               </MDBContainer>
             </div>
           </div>
-
-        </section>
+          </div>
+          </div>
+          </section>
       )}
     </>
-  );
+  )
 };
-export default Card
+export default Card ;

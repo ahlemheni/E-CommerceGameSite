@@ -8,11 +8,8 @@ const ProductModel = require('../Models/ProductModel');
 module.exports.save = async (req, res) => {
   const { items, totalprice, username, IdUser } = req.body;
 
-
-
-
   const client = username;
-  // console.log(username);
+ 
   const user = await UserModel.findOne({ username: client });
 
   if (!user || client !== user.username) {
@@ -176,7 +173,7 @@ module.exports.deleteOne =  async (req,res)=>{
 
 //admin 
 module.exports.get =  async (req,res)=>{
-    const cart = await cartModel.find()
+    const cart = await ShoppingCart.find()
     res.send(cart)
 }
 module.exports.findone= async(req,res)=>{
@@ -186,7 +183,7 @@ module.exports.findone= async(req,res)=>{
    
     try {
     
-        const shoppingcart = await cartModel.find({
+        const shoppingcart = await ShoppingCart.find({
             _id:id,
             client:username
 

@@ -1,0 +1,45 @@
+.main{
+    display: flex; 
+
+    flex-wrap: wrap; 
+
+
+} 
+.img-container{
+    
+    margin-top: 60px;
+    margin-left: 60px;
+
+} 
+.img-container img{
+  
+    border-radius: 10% / 50%;
+    
+    margin-right: 50px;
+
+} 
+.product-details-container{
+    margin-left: 60px;
+
+}
+.product-details-container p{
+    font-size: 18px;
+    color: rgb(239, 6, 181);
+} 
+.product-details-container span{
+    font-size: 15px;
+    color: black;
+    margin-left: 20px;
+
+  
+} 
+
+.product-details-container button{
+    border-radius: 10px; 
+    padding: 5px; 
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+} 
+input[type='number']{
+    width: 50px;
+} 
+

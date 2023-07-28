@@ -5,7 +5,7 @@ module.exports.get = async (req,res)=>{
 
 
    const genres= await GenreModel.find()
-   console.log(await GenreModel.find())
+//    console.log(await GenreModel.find())
    res.send(genres)
 }
 

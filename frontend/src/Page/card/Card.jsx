@@ -233,11 +233,10 @@ const Card = () => {
                               <MDBIcon icon="angle-double-left" className="me-2" /> <Link to="/shop" className="lead fw-normal" style={{ color: "rgba(255,255,255,0.7512254901960784)" }}>Back to shopping <MDBIcon fas icon="shopping-cart" /></Link>
                             </button>
 
-                            <button className="btn" style={{ backgroundColor: "rgba(17, 238, 28, 0.453)", borderRadius: 30, fontSize: "16px" }}>
-                              <span className="lead fw-normal">{totalPrice}</span> / <MDBIcon icon="credit-card" className="me-2" /><Link to="/Pay" className="lead fw-normal" style={{ color: "black" }}>Buy Now</Link> </button>
+                            
 
                             <button className="btn btn-outline-success" style={{  borderRadius: 30, fontSize: "20px", color: 'rgba(255,255,255,0.7512254901960784)' }}>
-                              <span className="lead fw-normal">Total: {totalPrice} $</span> / <MDBIcon icon="credit-card" className="me-2" />Buy Now <MDBIcon  icon="angle-double-right" />
+                            <Link to="/Pay" ><span className="lead fw-normal">Total: {totalPrice} $</span> / <MDBIcon icon="credit-card" className="me-2" />Buy Now <MDBIcon  icon="angle-double-right" /></Link>
 
                             </button>
                           </div>

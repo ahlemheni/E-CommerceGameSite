@@ -7,6 +7,7 @@ const GenreRoutes = require('./Routes/GenreRoutes');
 const ShoppingRoutes = require('./Routes/ShoppingCartRoutes');
 const ContactRoutes = require('./Routes/ContactRoutes');
 
+const OrderRoutes=require('./Routes/OrderRoutes')
 const cookieParser = require('cookie-parser');
 
 const cors = require('cors');
@@ -35,6 +36,7 @@ app.use(ProductRoutes);
 app.use(GenreRoutes);
 app.use(ShoppingRoutes);
 app.use(ContactRoutes);
+app.use(OrderRoutes)
 
 
 

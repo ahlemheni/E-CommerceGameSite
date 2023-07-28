@@ -1,5 +1,6 @@
 const OrderModel = require("../Models/OrderModel");
 const UserModel = require("../Models/UserModel")
+const {ShoppingCart} =require("../Models/ShoppingCartModel")
 const {assert}= require("assert")
 module.exports.get=async (req,res)=>{
     const orders= await OrderModel.find()
@@ -10,10 +11,10 @@ module.exports.save =async (req,res)=>{
     const {shoppingcart,orderby} = req.body
     try{
       const client= await UserModel.findOne({username:orderby})
-      console.log(client)
-      const cart=await cartModel.find({_id:shoppingcart})
+      const cart=await ShoppingCart.findOne({_id:shoppingcart})
+      if(cart){console.log("couldn't find anything")}
     OrderModel
-    .create({shoppingcart:cart,orderby:client})
+    .create({shoppingcart:cart._id,orderby:client._id})
     .then((data)=>{
         console.log("Product has been added to the inventory...")
         console.log(data)
@@ -48,9 +49,12 @@ module.exports.findone=async (req,res)=>{
     console.log(orderby, id);
 
     const client= await UserModel.findOne({username:orderby})
-    if (assert.ok(client,"No Client by this name exists"))
+    if (client){
+        console.log(`Client found :${client}`)
+    
     {
         try {
+            
             const order = await OrderModel.findById({
                 _id:id,
                 orderby:orderby
@@ -64,18 +68,20 @@ module.exports.findone=async (req,res)=>{
             }
             } catch (err) {
             return res.status(500).json({ err: 'Internal server error' });
-            }
+            }}
         }}
 module.exports.findmany=async (req,res)=>{
         const { orderby} = req.params;
         console.log(orderby);
         
         const client= await UserModel.findOne({username:orderby})
-        if (assert.ok(client,"No Client by this name exists"))
+        if (client){
+            console.log(`Client found ${client}`)
+        
             {
              try {
-                    const order = await OrderModel.findById({
-                        orderby:orderby
+                    const order = await OrderModel.find({
+                       orderby:client._id
         
                     });
                     console.log(order);
@@ -86,5 +92,5 @@ module.exports.findmany=async (req,res)=>{
                     }
                     } catch (err) {
                     return res.status(500).json({ err: 'Internal server error' });
-                    }
+                    }}
                 }}

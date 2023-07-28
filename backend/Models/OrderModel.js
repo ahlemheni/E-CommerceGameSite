@@ -5,18 +5,18 @@ const orderSchema = new mongoose.Schema({
    
       shoppingcart: 
         {
-          type: shoppingcart.schema,
+          type: mongoose.Schema.Types.ObjectId,
           required:true
         },
       
       orderby: {
-        type:user.schema,
+        type:mongoose.Schema.Types.ObjectId,
         require:true
       },
       orderStatus: {
         type: Boolean,
         default:false
-    },
+    }},{
         
             timestamps: true,
           

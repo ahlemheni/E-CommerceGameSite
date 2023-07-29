@@ -49,8 +49,9 @@ function Register() {
       return;
     }
 
-    if (phoneValue.length < 8) {
-      setErrorMessage('Phone number should be at least 8 digits long.');
+    const phoneRegex = /^[0-9]+$/;
+    if (!phoneRegex.test(phoneValue) || phoneValue.length < 8) {
+      setErrorMessage('Phone number should contain only numbers and be at least 8 digits long.');
       return;
     }
 
@@ -174,7 +175,6 @@ function Register() {
                     </label>
                     <MDBInput
                       id="PhoneInput"
-                      type="number"
                       size="lg"
                       icon="envelope"
                       iconClass="text-primary"

@@ -155,16 +155,7 @@ const Card = () => {
       ) : (
 
         <section>
-          <div className="container">
-          <div className="row">
-          <div className="page-content">
-          <div className="mainbanner">
-            <img src='./assets/images/GameBanner.jpg' alt='' />
-            </div>
-            </div>
-            </div>
-          </div>
-
+       
           <div className="container">
           <div className="row">
         <div className="col-lg-12">
@@ -236,7 +227,7 @@ const Card = () => {
                             
 
                             <button className="btn btn-outline-success" style={{  borderRadius: 30, fontSize: "20px", color: 'rgba(255,255,255,0.7512254901960784)' }}>
-                            <Link to="/Pay" ><span className="lead fw-normal">Total: {totalPrice} $</span> / <MDBIcon icon="credit-card" className="me-2" />Buy Now <MDBIcon  icon="angle-double-right" /></Link>
+                            <Link style={{ color: "rgba(255,255,255,0.7512254901960784)" }} to="/Pay" ><span className="lead fw-normal">Total: {totalPrice} $</span> / <MDBIcon icon="credit-card" className="me-2" />Buy Now <MDBIcon  icon="angle-double-right" /></Link>
 
                             </button>
                           </div>

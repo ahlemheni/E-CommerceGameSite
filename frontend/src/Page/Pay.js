@@ -11,10 +11,12 @@ import {
   MDBBtn,
   MDBListGroup,
   MDBListGroupItem,
+  MDBIcon
 } from "mdb-react-ui-kit";
 import { FaCcVisa, FaCcMastercard, FaPaypal } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
-export default function App() {
+export default function Pay() {
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
 
   const handlePaymentMethodChange = (e) => {
@@ -26,8 +28,15 @@ export default function App() {
   }
 
   return (
-    <div className="container-pay">
+    
+    <div className="container">
+    <div className="row">
+  <div className="col-lg-12">
       <div className="page-content">
+      <button    className="btn btn-danger " style={{ backgroundColor: '#e75e8e5b',  borderRadius: 30, fontSize: "20px", color: 'rgba(255,255,255,0.7512254901960784)' }}>
+       <Link style={{ color: "rgba(255,255,255,0.7512254901960784)" }} to="/Card" ><MDBIcon  icon="angle-double-left" /> Go back </Link>
+
+         </button>
         <MDBContainer className="py-5">
           <MDBRow>
             <MDBCol md="8" className="mb-4">
@@ -207,5 +216,8 @@ export default function App() {
         </MDBContainer>
       </div>
     </div>
+    </div>
+    </div>
+
   );
 }

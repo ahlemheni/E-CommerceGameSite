@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 function Shop() {
   const [selectedOption, setSelectedOption] = useState("0");
   const [games, setGames] = useState([]);
-  const [allGames, setAllGames] = useState([]); // Store all games to avoid refetching from the server
+  const [allGames, setAllGames] = useState([]); 
   const [Price, setPrice] = useState(0);
   const [Genre, setGenre] = useState([]);
   const [selectedGenreId, setSelectedGenre] = useState("0");
@@ -16,7 +16,7 @@ function Shop() {
   useEffect(() => {
     fetchGames();
     fetchGenre();
-  }, []);
+  }, [])
 
   const fetchGames = async () => {
     try {
@@ -37,55 +37,85 @@ function Shop() {
     }
   };
   const filterByCategory = (selectedOption) => {
+    
+    let selectedGenre = selectedGenreId;
+
     setSelectedOption(selectedOption);
+    document.getElementById("gameID").value = ""; 
+
     let filteredArray = allGames;
+
     if (selectedOption !== "0") {
       filteredArray = allGames.filter((item) => item.category === selectedOption);
     }
     if (Price !== 0) {
       filteredArray = filteredArray.filter((item) => item.price <= Price);
     }
+    if (selectedGenre !== "0") {
+      filteredArray = filteredArray.filter((item) => item.genre === selectedGenre);
+    }
+
     setGames(filteredArray);
   };
-
   const filterByNameAndCategory = () => {
     let input = document.getElementById("gameID").value.toUpperCase();
     let selectedCategory = selectedOption;
-    if (input === '' && selectedCategory === "0" && Price === 0) {
-      setGames(allGames); 
+    let selectedGenre = selectedGenreId;
+  
+    if (input === '' && selectedCategory === "0" && Price === 0 && selectedGenre === "0") {
+      setGames(allGames);
     } else {
       let filteredArray = allGames;
+  
       if (selectedCategory !== "0") {
-        filteredArray = allGames.filter((item) => item.category === selectedCategory);
+        filteredArray = filteredArray.filter((item) => item.category === selectedCategory);
+        
       }
+  
+      if (selectedGenre !== "0") {
+        filteredArray = filteredArray.filter((item) => item.genre === selectedGenre);
+      }
+  
       if (input !== '') {
         filteredArray = filteredArray.filter((item) => item.name.toUpperCase().indexOf(input) > -1);
       }
+  
       if (Price !== 0) {
         filteredArray = filteredArray.filter((item) => item.price <= Price);
       }
+  
       setGames(filteredArray);
     }
   };
+  
 
   const filterByPrice = (selectedPrice) => {
     setPrice(selectedPrice);
     let filteredArray = allGames;
+  
     if (selectedOption !== "0") {
-      filteredArray = allGames.filter((item) => item.category === selectedOption);
+      filteredArray = filteredArray.filter((item) => item.category === selectedOption);
     }
     if (selectedPrice !== 0) {
       filteredArray = filteredArray.filter((item) => item.price <= selectedPrice);
     }
-
+    if (selectedGenreId !== "0") {
+      filteredArray = filteredArray.filter((item) => item.genre === selectedGenreId);
+    }
+  
     setGames(filteredArray);
   };
+  
   const filterByGenre = (selectedGenreId) => {
     setSelectedGenre(selectedGenreId);
     let filteredArray = allGames;
   
     if (selectedGenreId !== "0") {
-      filteredArray = allGames.filter((item) => item.genre === selectedGenreId);
+      filteredArray = filteredArray.filter((item) => item.genre === selectedGenreId);
+    }
+  
+    if (selectedOption !== "0") {
+      filteredArray = filteredArray.filter((item) => item.category === selectedOption);
     }
   
     if (Price !== 0) {
@@ -94,7 +124,6 @@ function Shop() {
   
     setGames(filteredArray);
   };
-  
     return (
 
       <div className="container " >
@@ -147,12 +176,13 @@ function Shop() {
                     style={{width:"80px"}}
                   /> */}
                 </div>
-       
-     
-                <Form.Select value={selectedGenreId} className="d-flex mt-3" style={{ width: "150px", backgroundColor: '#e8d3d8', borderRadius: '25px', height: "30px", fontSize: "14px" }}>
-  <option value="0" onClick={() => filterByGenre("0")}>All Genres</option>
+          
+
+<Form.Select value={selectedGenreId}  onChange={(e) => filterByGenre(e.target.value)} className="d-flex mt-3" style={{ width: "150px", backgroundColor: '#e8d3d8', borderRadius: '25px', height: "30px", fontSize: "14px" }}>
+ 
+  <option value="0">All Genres</option>
   {Genre && Genre.map((genre) => (
-    <option key={genre._id} value={genre._id}> {/* Use the genre ID as the value */}
+    <option  key={genre._id} value={genre._id}>
       {genre.name}
     </option>
   ))}

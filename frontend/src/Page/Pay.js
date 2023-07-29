@@ -12,6 +12,7 @@ import {
   MDBListGroup,
   MDBListGroupItem,
 } from "mdb-react-ui-kit";
+import { FaCcVisa, FaCcMastercard, FaPaypal } from "react-icons/fa";
 
 export default function App() {
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
@@ -19,6 +20,10 @@ export default function App() {
   const handlePaymentMethodChange = (e) => {
     setPaymentMethod(e.currentTarget.value);
   };
+  const [CardType,setCardType] = useState("visa")
+  const handleCardTypeChange = (e) =>{
+    setCardType(e.currentTarget.value);
+  }
 
   return (
     <div className="container-pay">
@@ -70,6 +75,50 @@ export default function App() {
 
                   {paymentMethod === "credit-card" && (
                     <>
+                     <div>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "40px" }}>
+          <FaCcVisa size={50} />
+          <label htmlFor="visaOption">
+            <input
+              type="radio"
+              id="visaOption"
+              value="visa"
+              checked={CardType === "visa"}
+              onChange={handleCardTypeChange}
+            />
+            Visa
+          </label>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "40px" }}>
+          <FaCcMastercard size={50} />
+          <label htmlFor="mastercardOption">
+            <input
+              type="radio"
+              id="mastercardOption"
+              value="mastercard"
+              checked={CardType === "mastercard"}
+              onChange={handleCardTypeChange}
+            />
+            Mastercard
+          </label>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "40px" }}>
+          <FaPaypal size={50} />
+          <label htmlFor="paypalOption">
+            <input
+              type="radio"
+              id="paypalOption"
+              value="paypal"
+              checked={CardType === "paypal"}
+              onChange={handleCardTypeChange}
+            />
+            Paypal
+          </label>
+        </div>
+      </div>
+    </div>
+  
                       <MDBRow>
                         <MDBCol>
                           <h6>Card Name</h6>

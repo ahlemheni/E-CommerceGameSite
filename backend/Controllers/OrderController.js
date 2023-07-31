@@ -1,7 +1,7 @@
 const OrderModel = require("../Models/OrderModel");
 const UserModel = require("../Models/UserModel")
 const {ShoppingCart} =require("../Models/ShoppingCartModel")
-const {assert}= require("assert")
+
 module.exports.get=async (req,res)=>{
     const orders= await OrderModel.find()
     console.log(orders)
@@ -94,3 +94,37 @@ module.exports.findmany=async (req,res)=>{
                     return res.status(500).json({ err: 'Internal server error' });
                     }}
                 }}
+module.exports.History=async (req,res)=>{
+    const { orderby} = req.body;
+    const carts=[]
+    console.log(orderby);    
+         try {  
+            const client= await UserModel.findOne({username:orderby})
+            if (client){
+                console.log(`Client found ${client}`)}
+                const order = await OrderModel.find({
+                   orderby:client._id,
+                   orderStatus:true
+    
+                });
+
+                
+               
+                
+                if (!order) {
+                    res.status(404).json({ error: 'order not found' });
+                } else {
+                    await Promise.all(order.map(async(item)=>{
+                        const cart =await ShoppingCart.findById(item.shoppingcart)
+                        if (cart){
+                            carts.push(cart)
+
+                        }
+                    }))
+                   
+                    res.send(carts)
+                }
+                } catch (err) {
+                return res.status(500).json({ err: 'Internal server error' });
+                }
+            }

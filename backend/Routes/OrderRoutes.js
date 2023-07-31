@@ -6,8 +6,11 @@ router.get('/Order/all',OrderController.get)
 router.post('/Order/save',OrderController.save)
 router.post('/Order/update',OrderController.update)
 router.post('/Order/delete',OrderController.delete)
-router.get('/Order/:orderby/:id',OrderController.findone)
+router.get('/Order/history',OrderController.History)
 router.get('/Order/:orderby',OrderController.findmany)
+router.get('/Order/:orderby/:id',OrderController.findone)
+
+
 
 
 

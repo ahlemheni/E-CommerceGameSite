@@ -8,9 +8,9 @@ function Footer(){
     <div className="container">
       <div className="row">
         <div className="col-lg-12">
-          <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved. 
+          <p>Copyright © 2033 <a href="#">Gamer's Zone</a> Company. All rights reserved. </p>
           
-          <br/>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>  Distributed By <a href="https://themewagon.com" target="_blank" >ThemeWagon</a></p>
+
         </div>
       </div>
     </div>

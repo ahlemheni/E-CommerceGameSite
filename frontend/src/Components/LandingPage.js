@@ -40,8 +40,16 @@ function LandingPage(){
   const fetchGames = async () => {
     try {
       const response = await axios.get('http://localhost:5000/products/all');
-      
-      setGames(response.data);
+      const gamesWithRatings = response.data.filter((game) => game.reviews.length > 0);
+
+     const sortedGames = gamesWithRatings.sort((a, b) => {
+      const ratingA = (a.reviews[0].rating); 
+      const ratingB = (b.reviews[0].rating);
+
+      return ratingB - ratingA;
+
+    });
+      setGames(sortedGames.slice(0, 4));
     } catch (error) {
       console.error('Error fetching games:', error);
     }
@@ -81,24 +89,25 @@ function LandingPage(){
                 <h4><em>Most Reviwed</em> Product</h4>
                 </div>
                 <div className="row">
-                {games.slice(0, 4).map((game, index) => (
-                  <div className="col-lg-3 col-sm-6" key={index}>
-                    <div className="item">
-                      <img  src="assets/images/game-02.jpg" alt={game.name} />
-                      <h4 style={{ color: 'rgba(255, 0, 128, 0.705)' }}> 
-                        <i className="fa-solid fa-barcode"></i> {game.name}
-                        <br />
-                        <span>Category : {game.category}</span>
-                      </h4>
-                      <ul>
-                        <li>
-                          <i className="fa fa-star"></i> {game.rating}
-                        </li>
-                       
-                      </ul>
-                    </div>
-                  </div>
-                ))}
+                      {games.map((game, index) => (
+                        <div className="col-lg-3 col-sm-6" key={index}>
+                          <div className="item">
+                            <img src="assets/images/game-02.jpg" alt={game.name} />
+                            <h4 style={{ color: 'rgba(255, 0, 128, 0.705)' }}>
+                              <i className="fa-solid fa-barcode"></i> {game.name}
+                              <br />
+                              <span>Category: {game.category}</span>
+                            </h4>
+                            <ul>
+                              {game.reviews.map((review, index) => (
+                                <li key={index}>
+                                  <i className="fa fa-star"></i> {review.rating}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      ))}
                 
                   <div className="col-lg-12">
                     <div className="main-button my-4">

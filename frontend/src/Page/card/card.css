@@ -72,4 +72,7 @@
     margin-left: 20%;
     margin-right: auto;
   }
-  
+  /* styles.css (ou tout autre fichier de styles de votre choix) */
+.small-modal .modal-dialog {
+  max-width: 300px; /* La taille que vous souhaitez pour le modal (ici, 400px) */
+}

@@ -1,6 +1,7 @@
 const ProductModel=require('../Models/ProductModel')
 const GenreModel=require('../Models/GenreModel')
 const ReviewModel=require('../Models/ReviewModel')
+
 module.exports.get = async (req, res) => {
   try {
     // Fetch all products
@@ -99,23 +100,40 @@ module.exports.findone = async (req, res) => {
     }
   };
 
-module.exports.review= async (req,res)=>{
-  try {
-    const rating= req.body.rating;
-    const productId = req.params.productId;
-
-    const product = await ProductModel.findById(productId);
-    if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
+  module.exports.review = async (req, res) => {
+    try {
+      const rating = req.body.rating;
+      const productId = req.params.productId;
+      const userId = req.body.id; // Assuming you have a middleware that sets the authenticated user ID in req.user.id
+  
+      const product = await ProductModel.findById(productId);
+      if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+  
+      let review = await ReviewModel.findOne({ productId });
+  
+      if (review) {
+        if (review.userId.includes(userId)) {
+          return res.status(400).json({ error: 'You have already rated this product' });
+        }
+  
+        review.totalReviews += 1;
+        review.ratingtotal += rating;
+        review.rating = (review.ratingtotal / review.totalReviews).toFixed(1);
+        review.userId.push(userId);
+      } else {
+        review = new ReviewModel({ productId, rating });
+        review.totalReviews = 1;
+        review.ratingtotal = rating;
+        review.userId = [userId];
+      }
+  
+      await review.save();
+  
+      res.status(201).json(review);
+    } catch (err) {
+      res.status(500).json({ error: 'Internal server error' });
     }
-
-    const review = new ReviewModel({ productId, rating });
-    await review.save();
-
-    res.status(201).json(review);
-  } catch (err) {
-    res.status(500).json({ error: 'Internal server error' });
-  }
-}
-
-
+  };
+  

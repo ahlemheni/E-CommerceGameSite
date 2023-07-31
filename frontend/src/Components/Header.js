@@ -2,19 +2,24 @@ import { useCookies } from 'react-cookie';
 import {  MDBIcon } from 'mdb-react-ui-kit';
 
 
-import { NavLink } from 'react-router-dom';
+import { NavLink ,useNavigate} from 'react-router-dom';
 
 function Header() {
   const [cookies, setCookie, removeCookie] = useCookies(['session','username','id','cartItemsCount']);
   const sessionCookie = cookies.session;
   const username = cookies.username;
   const cartItemsCount = cookies.cartItemsCount;
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    removeCookie('session');
-    removeCookie('username');
-    removeCookie('id');
-    removeCookie('cartItemsCount');
+    const confirmLogout = window.confirm('Are you sure you want to logout ?');
+
+    if (confirmLogout) {
+      removeCookie('session');
+      removeCookie('username');
+      removeCookie('id');
+      removeCookie('cartItemsCount');
+    }
 
   };
 

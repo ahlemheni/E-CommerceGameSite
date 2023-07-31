@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Spinner from "../../Components/spinner/spinner";
 import {
-  MDBBtn,
   MDBCard,
   MDBCardBody,
   MDBCardImage,
@@ -12,12 +11,20 @@ import {
   MDBIcon,
   MDBInput,
   MDBRow,
-  MDBTypography,
+  MDBBtn,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter,
 } from "mdb-react-ui-kit";
 import { useCookies } from 'react-cookie';
 
 import { Link } from 'react-router-dom';
 const Card = () => {
+
   const [isLoading, setIsLoading] = useState(true);
   const [CardId, setCardId] = useState(); // Default quantity
 
@@ -25,6 +32,8 @@ const Card = () => {
   const [ShoppingCart, setShoppingCart] = useState([]); // Initialize as an empty array, not an object
   const [totalPrice, setTotalPrice] = useState(0); // Initialize total price as 0
   const [cookies,setCookie] = useCookies();
+  const [basicModal, setBasicModal] = useState(false);
+  const toggleShow = () => setBasicModal(!basicModal);
 
 
   const fetchShoppingCart = async () => {
@@ -141,6 +150,7 @@ const Card = () => {
         setShoppingCart([]);
         setTotalPrice(0);
       }
+      setBasicModal(false)
     } catch (error) {
       console.error(error);
     }
@@ -198,9 +208,30 @@ const Card = () => {
                               </MDBCol>
                             
                               <MDBCol md="1" lg="1" xl="4" className="text-end">
-                                <button  className="btn" onClick={() => deleteone(item._id)}>
+                                <button  className="btn" onClick={toggleShow}>
                                   <MDBIcon fas icon="trash text-danger" size="lg" />
                                 </button>
+                                <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-2' className="small-modal">
+                                <MDBModalDialog >
+                                <MDBModalContent  className='text-center'>
+                                  <MDBModalHeader className=' bg-danger text-white d-flex justify-content-center'>
+                                    <MDBModalTitle> <MDBIcon fas icon="minus-circle" /> Delete {item.name} <MDBIcon fas icon="exclamation" /></MDBModalTitle>
+                                    <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
+                                  </MDBModalHeader>
+                                  <MDBModalBody> <h5>Are you Sure ?</h5></MDBModalBody>
+
+                                  <MDBModalFooter style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                   
+                                    <button className="btn btn-outline-success" style={{ borderRadius: 30}} onClick={toggleShow}>
+                                    <MDBIcon fas icon="times-circle" /> No 
+                                    </button>
+                                    <button className="btn btn-outline-danger" style={{ borderRadius: 30}} onClick={() => deleteone(item._id)}>
+                                    Yes <MDBIcon fas icon="trash" />
+                                    </button>
+                                  </MDBModalFooter>
+                                </MDBModalContent>
+                              </MDBModalDialog>
+                            </MDBModal>
                               </MDBCol>
                             </MDBRow>
                           </MDBCardBody>

@@ -2,16 +2,28 @@ import React, {  useState,useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-import { MDBIcon } from 'mdb-react-ui-kit';
+import { MDBIcon,  MDBBtn,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter, } from 'mdb-react-ui-kit';
 import Details from '../../Page/Details';
 
 export default function GameCard(props) {
   const [cookies,setCookie] = useCookies();
   const [quantity, setQuantity] = useState(1); // Initial quantity set to 1
   const [modalShow,setModalShow]=useState(false)
+  const [topRightModal, setTopRightModal] = useState(false);
+  const toggleShow = () => setTopRightModal(!topRightModal);
 
   const navigate = useNavigate();
+  const handleBackToShopping = () => {
  
+    navigate("/card");
+  };
 
   const updateQuantity = (newQuantity) => {
     setQuantity(newQuantity);
@@ -33,13 +45,12 @@ export default function GameCard(props) {
   };
   useEffect(() => {
  
-  
     fetchShoppingCart();
   }, [cookies.cartItemsCount]);
   const addToCart = async (productId) => {
+
     try {
       
-  
       // const updatedQuantity = props.game.qty - 1; // Decrement quantity by 1
   
       // // Update the product quantity on the server
@@ -63,9 +74,9 @@ export default function GameCard(props) {
           IdUser: cookies.id,
         });
   
-        console.log(response.data); // This will log the cart data returned from the server
-  
-        alert('New product added to Shopping Cart successfully!');
+        console.log(response.data); 
+        setTopRightModal(!topRightModal);
+
         fetchShoppingCart();
     
     } catch (error) {
@@ -76,6 +87,17 @@ export default function GameCard(props) {
         console.error('Error adding item to cart:', error);
         alert('Failed to add item to cart. Please try again.');
       }
+    }
+  };
+  const renderRating = () => {
+    if (props.reviews[0]) {
+      return (
+        <span>
+          {props.reviews} <MDBIcon fas icon="star-half-alt" />
+        </span>
+      );
+    } else {
+      return <span> -- <MDBIcon fas icon="star-half-alt" /></span>;
     }
   };
 
@@ -89,8 +111,9 @@ export default function GameCard(props) {
       <div className="thumb">
         <img src="assets/images/trending-01.jpg" alt="" />
         <span className="price">
-          <em>$36</em>
-          {props.game.price}$
+          {props.game.price}$ <br/>
+          {renderRating()}
+
         </span>
       </div>
       <div className="down-content">
@@ -100,14 +123,58 @@ export default function GameCard(props) {
         <button  class="btn btn-outline-warning "  style={{  borderRadius:30,fontWeight:"bold"}}onClick={() => setModalShow(true)} >
         <MDBIcon fas icon="info-circle" /> Details
     </button>
+
         {props.game.qty === 0 ? (
              <span style={{ color: 'red', fontWeight: 'bold', marginLeft: '20px' }}>
                Out of Stock
            </span>      
              ) : (
-            <Link onClick={() => addToCart(props.game._id)}>
+              <>
+              <Link onClick={() => addToCart(props.game._id)}>
               <i className="fa fa-shopping-bag"></i>
             </Link>
+              <MDBModal
+              animationDirection='right'
+              show={topRightModal}
+              tabIndex='-1'
+              setShow={setTopRightModal}
+            >
+              <MDBModalDialog position='top-right' side>
+                <MDBModalContent>
+                  <MDBModalHeader className='bg-success text-white'>
+                    <MDBModalTitle>Product in the cart</MDBModalTitle>
+                    <MDBBtn
+                      color='none'
+                      className='btn-close btn-close-white'
+                      onClick={toggleShow}
+                    ></MDBBtn>
+                  </MDBModalHeader>
+                  <MDBModalBody>
+                    <div className='row'>
+                      <div className='col-3 text-center'>
+                        <i className='fas fa-shopping-cart fa-4x text-success'></i>
+                      </div>
+      
+                      <div className='col-9'>
+                        <p>Do you need more time to make a purchase decision?</p>
+                        <p>No pressure, your product will be waiting for you in the cart.</p>
+                      </div>
+                    </div>
+                  </MDBModalBody>
+                  <MDBModalFooter style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    
+                  <button className="btn btn-outline-dark" style={{ borderRadius: 30}} onClick={toggleShow}>
+                  Back to shopping <MDBIcon fas icon="shopping-cart" />
+              </button>
+                        <button className="btn btn-outline-success" style={{ borderRadius: 30}} onClick={handleBackToShopping}>
+                        Go to the cart <MDBIcon icon="angle-double-right" className="me-2" /> 
+                      </button>
+                     
+                  </MDBModalFooter>
+                </MDBModalContent>
+              </MDBModalDialog>
+            </MDBModal>
+            </>
           )}
 
         
@@ -119,12 +186,12 @@ export default function GameCard(props) {
     cat={props.game.category} 
     qte={props.game.qty} 
     desc={props.game.description}
-    genre={props.game.genre}
+    ID={props.game._id}
     image={props.game.image}
     game={props.game}
 review={props.reviews}
-quantity={quantity} // Pass the quantity to the Details component
-updateQuantity={updateQuantity} // Pass the updateQuantity function as a prop
+quantity={quantity} 
+updateQuantity={updateQuantity} 
 
     addToCart={addToCart} 
       show={modalShow}

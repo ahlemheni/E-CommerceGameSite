@@ -7,12 +7,13 @@ body{
     width: auto;
   
     display: inline-block;
-  
+    margin-top: -20px;
+
   }
-  
-   .mt-200{
-       margin-top:200px;  
-   }
+  .result-message{
+    margin-top: 30px;
+  }
+   
   
   input.star { display: none; }
   
@@ -55,7 +56,6 @@ body{
   
    
   
-  input.star-1:checked ~ label.star:before { color: #F62; }
   
       
   

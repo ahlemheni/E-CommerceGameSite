@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import './Details.css' 
 import { MDBIcon,MDBCol,MDBInput } from 'mdb-react-ui-kit';
 
-
+import Rating from '../Components/ProductRating/Rating';
 
 
 const Details = (props,detail) => { 
@@ -50,17 +50,21 @@ const handleAddToCart = () => {
         <div className='main'> 
                 <div className='img-container'>  
                 <img src="assets/images/trending-01.jpg" alt='product image' /> 
+<Rating
+    IDProduct={props.ID}
 
+/>
                 </div> 
                 <div className='product-details-container'> 
                 <p>Name : <span>{props.name}</span></p> 
-                <p>descr:<span>{props.desc}</span></p> 
-                <p>category :<span>{props.cat}</span></p> 
+                <p >
+  descr:<span style={props.desc.length > 20 ? { fontSize: '10px' } : null}>{props.desc}</span>
+</p> 
+                  <p>category :<span>{props.cat}</span></p> 
                 <p>game title :<span>{props.game_name}</span></p> 
                 <p>price :<span>{props.price} $</span></p> 
-                <p>ID :<span>{props.genre}</span></p>  
+                <p>ID :<span>{props.ID}</span></p>  
                 
-                <p> Rating :<span>{props.review} <MDBIcon far icon="star" /></span></p>  
 
                 <p>
                 Availablity:{" "}

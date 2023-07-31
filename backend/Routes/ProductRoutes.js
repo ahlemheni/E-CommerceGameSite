@@ -9,6 +9,6 @@ router.post('/product/delete',ProductController.delete)
 
 router.get('/product/one',ProductController.findone)
 
-router.post('/product/:productId/reviews',ProductController.review)
+router.post('/product/review/:productId',ProductController.review)
 
 module.exports = router;

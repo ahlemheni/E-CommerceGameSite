@@ -11,7 +11,10 @@ function Login() {
   const emailOrUsername = useRef();
   const password = useRef();
   const [errorMessage, setErrorMessage] = useState('');
-
+  const [showPassword, setShowPassword] = useState(false); 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   useEffect(() => {
     if (cookies.session) {
       navigate(`/profile/${cookies.username}`);
@@ -95,15 +98,34 @@ function Login() {
                     <label htmlFor="passwordInput" className="form-label custom-label mb-2" style={{ color: '#e75e8d',fontSize:"20px" }}><MDBIcon icon="lock" className="me-2"/>Password :</label>
                     <MDBInput
                       id="passwordInput"
-                      type="password"
+                      type={showPassword ? 'text' : 'password'} 
                       size="lg"
                       icon="lock"
                       iconClass="text-primary"
                       placeholder="Enter your password"
                       ref={password}
-                      style={{ backgroundColor:"#e8d3d8" ,borderRadius:"25px"}}
+                      style={{ backgroundColor:"#e8d3d8" ,borderRadius:"25px"}}>
 
-                    />
+                        <div className="position-relative">
+                              <button
+                                className="btn btn-link btn-sm"
+                                type="button"
+                                onClick={togglePasswordVisibility}
+                                style={{
+                                  position: 'absolute',
+                                  right: '10px',
+                                  transform: 'translateY(-120%)',
+                                }}
+                              >
+                                {showPassword ? (
+                                  <MDBIcon icon="eye" />
+                                ) : (
+                                  <MDBIcon icon="eye-slash" />
+                                )}
+                              </button>
+                            </div>
+                            </MDBInput>
+
                   </div>
                   {errorMessage && <div className="text-danger mb-3">{errorMessage}</div>}
 
@@ -120,9 +142,6 @@ function Login() {
                 <MDBIcon icon="sign-in-alt" className="me-2" /> Login
                 </button>
                 </div>
-
-            
-        
                 </MDBCol>
 
               </MDBRow>

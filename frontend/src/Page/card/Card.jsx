@@ -214,8 +214,8 @@ const Card = () => {
                                 <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-2' className="small-modal">
                                 <MDBModalDialog >
                                 <MDBModalContent  className='text-center'>
-                                  <MDBModalHeader className=' bg-danger text-white d-flex justify-content-center'>
-                                    <MDBModalTitle> <MDBIcon fas icon="minus-circle" /> Delete {item.name} <MDBIcon fas icon="exclamation" /></MDBModalTitle>
+                                  <MDBModalHeader className=' bg-danger text-white '>
+                                    <MDBModalTitle> <MDBIcon fas icon="minus-circle" /> Remove {item.name} from cart</MDBModalTitle>
                                     <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
                                   </MDBModalHeader>
                                   <MDBModalBody> <h5>Are you Sure ?</h5></MDBModalBody>

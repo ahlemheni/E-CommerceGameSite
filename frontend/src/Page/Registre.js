@@ -14,7 +14,10 @@ function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
+  const [showPassword, setShowPassword] = useState(false); 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const handleImagePreview = (pic) => {
    
     const reader = new FileReader();
@@ -195,7 +198,7 @@ function Register() {
                     </label>
                     <MDBInput
                       id="passwordInput"
-                      type="password"
+                      type={showPassword ? 'text' : 'password'} 
                       size="lg"
                       icon="lock"
                       iconClass="text-primary"
@@ -204,6 +207,9 @@ function Register() {
                       onChange={(e) => setPassword(e.target.value)}
                       style={{ backgroundColor: '#e8d3d8', borderRadius: '25px' }}
                     />
+           
+
+
                   </div>
                   <div className="mb-4">
                     <label
@@ -216,7 +222,7 @@ function Register() {
                     </label>
                     <MDBInput
                       id="confirmPasswordInput"
-                      type="password"
+                      type={showPassword ? 'text' : 'password'} 
                       size="lg"
                       icon="lock"
                       iconClass="text-primary"
@@ -226,6 +232,16 @@ function Register() {
                       style={{ backgroundColor: '#e8d3d8', borderRadius: '25px' }}
                     />
                   </div>
+                  <div className="form-check my-2">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            onChange={togglePasswordVisibility}
+          />
+                   <label className="form-check-label" htmlFor="showPassword" style={{ color: '#e75e8d' }}>
+                          <MDBIcon far icon="eye" /> Show Password
+                    </label>
+        </div>
                   {errorMessage && <div className="text-danger mb-3">{errorMessage}</div>}
 
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">

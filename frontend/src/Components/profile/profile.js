@@ -1,7 +1,18 @@
 import Spinner from "../spinner/spinner";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { MDBIcon,MDBBtn,MDBInput } from 'mdb-react-ui-kit';
+import { 
+  MDBIcon,
+  MDBInput,
+  MDBBtn,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter, } 
+  from 'mdb-react-ui-kit';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
@@ -27,6 +38,8 @@ export default function Profile() {
   const [PasswordError, setPasswordError] = useState('');
   const [CPasswordError, setCPasswordError] = useState('');
   const [CurrentPasswordError, setCurrentPasswordError] = useState('');
+  const [topRightModal, setTopRightModal] = useState(false);
+  const toggleShow = () => setTopRightModal(!topRightModal);
 
   const handlePasswordFormToggle = () => {
     setShowPasswordForm(!showPasswordForm);
@@ -155,8 +168,8 @@ export default function Profile() {
       const updatedUser = { ...user, ...updatedFields };
       setUser(updatedUser);
       await axios.put(`http://localhost:5000/update/` + id, updatedUser);
-      alert('Updated  successfully...');
       setShowModal(false);
+      setTopRightModal(!topRightModal);
 
     } catch (error) {
       alert('Error updating user information!');
@@ -175,7 +188,6 @@ export default function Profile() {
           <div className="row">
             <div className="col-lg-12">
               <div className="page-content">
-                {/* ***** Banner Start ***** */}
                 <div className="row">
                   <div className="col-lg-12">
                     <div className="main-profile ">
@@ -375,15 +387,50 @@ export default function Profile() {
                                 </Button>
                               </Modal.Footer>
                             </Modal>
+
+                            <MDBModal
+                              animationDirection='right'
+                              show={topRightModal}
+                              tabIndex='-1'
+                              setShow={setTopRightModal}
+                              className="small-modal"
+                            >
+                              <MDBModalDialog position='top-right' side> 
+                                <MDBModalContent>
+                                  <MDBModalHeader className='bg-success text-white'>
+                                    <MDBModalTitle ><MDBIcon far icon="bell" /> Notification</MDBModalTitle>
+                                    <MDBBtn
+                                      color='none'
+                                      className='btn-close btn-close-white'
+                                      onClick={toggleShow}
+                                    ></MDBBtn>
+                                  </MDBModalHeader>
+                                  <MDBModalBody>
+                                    <div className='row'>
+                                      <div className='col-4 '>
+                                        <i className='fa-solid fa-check-double fa-4x text-success'></i>
+
+                                      </div>
+
+                                      <div className='col-5'>
+                                        <p>Updated  successfully....</p>
+                                      </div>
+                                    </div>
+                                  </MDBModalBody>
+                                  <MDBModalFooter>
+                                  <button className="btn btn-outline-success" style={{ borderRadius: 30}} onClick={toggleShow}>
+                                        Ok <MDBIcon far icon="check-circle" />
+                                    </button>
+                                  </MDBModalFooter>
+                                </MDBModalContent>
+                              </MDBModalDialog>
+                            </MDBModal>
                           </div>
                         </div>
-                        {/* Rest of the code */}
                       </div>
                     </div>
                   </div>
                 </div>
-                {/* ***** Banner End ***** */}
-                {/* Rest of the code */}
               </div>
             </div>
           </div>

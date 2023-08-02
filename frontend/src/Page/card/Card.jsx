@@ -22,9 +22,11 @@ import {
 } from "mdb-react-ui-kit";
 import { useCookies } from 'react-cookie';
 
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
+import { CheckoutForm } from '../Scripe/pay';
+import Stripe from '../Scripe/Stripe';
 const Card = () => {
-
+const navigate=useNavigate()
   const [isLoading, setIsLoading] = useState(true);
   const [CardId, setCardId] = useState(); // Default quantity
 
@@ -33,7 +35,10 @@ const Card = () => {
   const [totalPrice, setTotalPrice] = useState(0); // Initialize total price as 0
   const [cookies,setCookie] = useCookies();
   const [basicModal, setBasicModal] = useState(false);
+  const [PaymentModal, setPaymentModal] = useState(false);
+
   const toggleShow = () => setBasicModal(!basicModal);
+  const MethodedePayment = () => setPaymentModal(!PaymentModal);
 
 
   const fetchShoppingCart = async () => {
@@ -157,6 +162,9 @@ const Card = () => {
     setIsLoading(false);
 
   };
+  const Pay =()=>{
+    navigate(`/pay/${CardId}`)
+  }
   
   return (
     <>
@@ -257,12 +265,46 @@ const Card = () => {
 
                             
 
-                            <button className="btn btn-outline-success" style={{  borderRadius: 30, fontSize: "20px", color: 'rgba(255,255,255,0.7512254901960784)' }}>
-                            <Link style={{ color: "rgba(255,255,255,0.7512254901960784)" }} to="/Pay" ><span className="lead fw-normal">Total: {totalPrice} $</span> / <MDBIcon icon="credit-card" className="me-2" />Buy Now <MDBIcon  icon="angle-double-right" /></Link>
+                            <button className="btn btn-outline-success" style={{  borderRadius: 30, fontSize: "20px", color: 'rgba(255,255,255,0.7512254901960784)' }} onClick={MethodedePayment}>
+                         <span className="lead fw-normal">Total: {totalPrice} $</span> / <MDBIcon icon="credit-card" className="me-2" />Buy Now <MDBIcon  icon="angle-double-right" />
 
                             </button>
                           </div>
-                          
+
+                            
+                          <MDBModal
+              show={PaymentModal}
+              tabIndex='-1'
+              setShow={setPaymentModal}
+
+              
+            >
+              <MDBModalDialog >
+                <MDBModalContent>
+                <MDBModalHeader className='text-white' style={{backgroundColor:"rgba(237,73,134,0.7176120448179272)"}}>
+                  <MDBModalTitle className="mx-auto "><MDBIcon fas icon="money-check-alt" /> Select your payment method</MDBModalTitle>
+                    <MDBBtn
+                      color='none'
+                      className='btn-close btn-close-white'
+                      onClick={MethodedePayment}
+                      style={{ marginLeft:"-30px"}}
+                    ></MDBBtn>
+                  </MDBModalHeader>
+                  <MDBModalBody>
+                  <div style={{ display: 'flex', justifyContent: 'center', gap: '30px' }}>
+                    <button className="btn btn-outline-success btn-lg" style={{ borderRadius: 30}} onClick={Pay}>
+                  Card <MDBIcon fas icon="credit-card" />
+              </button>
+              <button className="btn btn-outline-success btn-lg" style={{ borderRadius: 30}} >
+                  Cash <MDBIcon fas icon="hand-holding-usd" />
+              </button>
+                    </div>
+                  </MDBModalBody>
+                
+                </MDBModalContent>
+              </MDBModalDialog>
+            </MDBModal>
+
                         </MDBCardBody>
                       </MDBCard>
                     )}
@@ -276,6 +318,7 @@ const Card = () => {
           </div>
           </section>
       )}
+
     </>
   )
 };

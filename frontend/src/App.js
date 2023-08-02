@@ -13,6 +13,8 @@ import Card from './Page/card/Card';
 import Pay from  './Page/Pay';
 import ResetPassword from './Page/ResetPassword';
 import Nav from './Components/ShopNavbar/Nav';
+import { CheckoutForm } from './Page/Scripe/pay';
+import Stripe from './Page/Scripe/Stripe';
 
 
 function App() {
@@ -37,7 +39,7 @@ function App() {
            
              
             <Route path="card" element={<Card />} />
-            <Route path="Pay" element={<Pay />} />
+            <Route path="pay/:CardId" element={<Stripe />} />
             <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

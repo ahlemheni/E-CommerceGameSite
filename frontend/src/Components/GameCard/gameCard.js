@@ -138,6 +138,7 @@ export default function GameCard(props) {
               show={topRightModal}
               tabIndex='-1'
               setShow={setTopRightModal}
+              
             >
               <MDBModalDialog position='top-right' side>
                 <MDBModalContent>

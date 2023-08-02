@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 const UserRoutes = require('./Routes/UserRoutes');
@@ -6,6 +7,7 @@ const ProductRoutes = require('./Routes/ProductRoutes');
 const GenreRoutes = require('./Routes/GenreRoutes');
 const ShoppingRoutes = require('./Routes/ShoppingCartRoutes');
 const ContactRoutes = require('./Routes/ContactRoutes');
+const PaymentRoutes = require('./Routes/PaymentRoutes');
 
 const OrderRoutes=require('./Routes/OrderRoutes')
 const cookieParser = require('cookie-parser');
@@ -16,7 +18,11 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(express.json({ limit: '10mb' })); 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }))
+
+// parse application/json
+app.use(bodyParser.json())
 app.use(cookieParser());
 
 app.use(cors());
@@ -36,7 +42,8 @@ app.use(ProductRoutes);
 app.use(GenreRoutes);
 app.use(ShoppingRoutes);
 app.use(ContactRoutes);
-app.use(OrderRoutes)
+app.use(OrderRoutes);
+app.use(PaymentRoutes);
 
 
 

@@ -21,10 +21,11 @@ import {
   MDBModalFooter,
 } from "mdb-react-ui-kit";
 import { useCookies } from 'react-cookie';
-
+import CashForm from '../CashForm/CashForm'
 import { Link ,useNavigate} from 'react-router-dom';
-import { CheckoutForm } from '../Scripe/pay';
-import Stripe from '../Scripe/Stripe';
+import { Modal } from "react-bootstrap";
+import { FaDollarSign } from "react-icons/fa";
+
 const Card = () => {
 const navigate=useNavigate()
   const [isLoading, setIsLoading] = useState(true);
@@ -36,6 +37,15 @@ const navigate=useNavigate()
   const [cookies,setCookie] = useCookies();
   const [basicModal, setBasicModal] = useState(false);
   const [PaymentModal, setPaymentModal] = useState(false);
+  const [showModal,setShowModal]=useState(false );
+  const handleModalOpen = () => {
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
 
   const toggleShow = () => setBasicModal(!basicModal);
   const MethodedePayment = () => setPaymentModal(!PaymentModal);
@@ -168,6 +178,22 @@ const navigate=useNavigate()
   
   return (
     <>
+    <style>
+        {`
+          .custom-modal-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .dollar-sign {
+            font-size: 2rem; /* Adjust the size of the dollar sign */
+            margin: 0 0.5rem; /* Add some spacing between the dollar signs */
+          }
+        `}
+      </style>
+
+       
       {isLoading ? (
         <Spinner />
       ) : (
@@ -295,9 +321,22 @@ const navigate=useNavigate()
                     <button className="btn btn-outline-success btn-lg" style={{ borderRadius: 30}} onClick={Pay}>
                   Card <MDBIcon fas icon="credit-card" />
               </button>
-              <button className="btn btn-outline-success btn-lg" style={{ borderRadius: 30}} >
+              <button className="btn btn-outline-success btn-lg" style={{ borderRadius: 30}} onClick={handleModalOpen} >
                   Cash <MDBIcon fas icon="hand-holding-usd" />
               </button>
+              <Modal show={showModal} onHide={handleModalClose}>
+                <Modal.Header closeButton>
+                <Modal.Title className="custom-modal-title">
+        <FaDollarSign className="dollar-sign" />
+        Cash Form
+        <FaDollarSign className="dollar-sign" />
+      </Modal.Title>
+                   </Modal.Header>
+                    <Modal.Body>
+                     <CashForm />
+                    </Modal.Body>
+                {/* You can add a footer here if needed */}
+              </Modal>
                     </div>
                   </MDBModalBody>
                 

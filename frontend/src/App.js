@@ -10,11 +10,11 @@ import Login from './Page/Login';
 
 import Shop from './Page/Shop';
 import Card from './Page/card/Card';
-import Pay from  './Page/Pay';
+
 import ResetPassword from './Page/ResetPassword';
-import Nav from './Components/ShopNavbar/Nav';
-import { CheckoutForm } from './Page/Scripe/pay';
-import Stripe from './Page/Scripe/Stripe';
+
+
+import Stripe from './Page/Stripe/Stripe';
 
 
 function App() {

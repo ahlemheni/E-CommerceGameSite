@@ -17,6 +17,7 @@ import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import bcrypt from 'bcryptjs';
+import History from "./history";
 export default function Profile() {
   const [cookies] = useCookies(['session']);
   const navigate = useNavigate();
@@ -429,6 +430,11 @@ export default function Profile() {
                         </div>
                       </div>
                     </div>
+                    <div className="gaming-library">
+
+                    <History/>
+                    </div>
+
                   </div>
                 </div>
               </div>

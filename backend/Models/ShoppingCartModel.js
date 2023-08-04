@@ -17,6 +17,18 @@ const cartSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  orderStatus: {
+    type: Boolean,
+    default: false,
+  },
+  PayStatus: {
+    type: Boolean,
+    default: false,
+  },
+  location: {
+    type: String,
+    default:'Unknown', 
+  },
   client: {
     type: String,
     ref: 'userRole',

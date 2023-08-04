@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter as Router,Route,Routes,useNavigate} from 'react-router-dom';
+import {BrowserRouter as Router,Route,Routes} from 'react-router-dom';
 import Home from './Page/Home';
 import Profile from './Components/profile/profile';
 
@@ -10,11 +10,9 @@ import Login from './Page/Login';
 
 import Shop from './Page/Shop';
 import Card from './Page/card/Card';
-
 import ResetPassword from './Page/ResetPassword';
+import CheckoutSuccess from './Page/Stripe/CheckoutSuccess';
 
-
-import Stripe from './Page/Stripe/Stripe';
 
 
 function App() {
@@ -37,9 +35,9 @@ function App() {
             <Route path="Login" element={<Login />} />
             <Route path="ResetPassword" element={<ResetPassword />} />
            
-             
+            <Route path="checkout-success" element={<CheckoutSuccess />} />
+
             <Route path="card" element={<Card />} />
-            <Route path="pay/:CardId" element={<Stripe />} />
             <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

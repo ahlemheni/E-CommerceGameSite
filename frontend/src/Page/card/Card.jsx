@@ -21,23 +21,26 @@ import {
   MDBModalFooter,
 } from "mdb-react-ui-kit";
 import { useCookies } from 'react-cookie';
-import CashForm from '../CashForm/CashForm'
-import { Link ,useNavigate} from 'react-router-dom';
+
+import { Link } from 'react-router-dom';
+import PayButton from '../Stripe/PayButton';
 import { Modal } from "react-bootstrap";
 import { FaDollarSign } from "react-icons/fa";
-
+import CashForm from '../CashForm/CashForm';
 const Card = () => {
-const navigate=useNavigate()
   const [isLoading, setIsLoading] = useState(true);
   const [CardId, setCardId] = useState(); // Default quantity
 
   const [quantity, setQuantity] = useState(); // Default quantity
   const [ShoppingCart, setShoppingCart] = useState([]); // Initialize as an empty array, not an object
   const [totalPrice, setTotalPrice] = useState(0); // Initialize total price as 0
-  const [cookies,setCookie] = useCookies();
+  const [cookies,setCookie] = useCookies([]);
   const [basicModal, setBasicModal] = useState(false);
   const [PaymentModal, setPaymentModal] = useState(false);
   const [showModal,setShowModal]=useState(false );
+  const [showCard,setshowCard]=useState(false );
+  const [adress,setadress]=useState();
+
   const handleModalOpen = () => {
     setShowModal(true);
   };
@@ -45,8 +48,13 @@ const navigate=useNavigate()
   const handleModalClose = () => {
     setShowModal(false);
   };
+  const handleCardOpen = () => {
+    setshowCard(true);
+  };
 
-
+  const handleCardClose = () => {
+    setshowCard(false);
+  };
   const toggleShow = () => setBasicModal(!basicModal);
   const MethodedePayment = () => setPaymentModal(!PaymentModal);
 
@@ -55,17 +63,19 @@ const navigate=useNavigate()
     try {
       const response = await axios.get('http://localhost:5000/cart/user', { params: { IdUser: cookies.id } });
       setIsLoading(false);
-      console.log(response.data);
-      setCardId(response.data.shoppingcart._id);
-      setShoppingCart(response.data.shoppingcart.items);
-      setTotalPrice(response.data.shoppingcart.totalprice);
+      console.log(response.data[0]);
+      setCardId(response.data[0]._id);
+      setCookie('CardId', response.data[0]._id, { path: '/' });
 
-      const totalItems = response.data.shoppingcart.items.length;
-      setCookie('cartItemsCount', totalItems);
+      setShoppingCart(response.data[0].items);
+      setTotalPrice(response.data[0].totalprice);
+
+      setCookie('cartItemsCount', response.data[0].items.length, { path: '/' });
 
     } catch (error) {
       setIsLoading(false);
-      console.error(error);
+      setCookie('cartItemsCount', 0, { path: '/' });
+
     }
   };
   useEffect(() => {
@@ -172,28 +182,9 @@ const navigate=useNavigate()
     setIsLoading(false);
 
   };
-  const Pay =()=>{
-    navigate(`/pay/${CardId}`)
-  }
   
   return (
     <>
-    <style>
-        {`
-          .custom-modal-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-
-          .dollar-sign {
-            font-size: 2rem; /* Adjust the size of the dollar sign */
-            margin: 0 0.5rem; /* Add some spacing between the dollar signs */
-          }
-        `}
-      </style>
-
-       
       {isLoading ? (
         <Spinner />
       ) : (
@@ -216,7 +207,7 @@ const navigate=useNavigate()
                     { ShoppingCart && ShoppingCart.length > 0 ?(
                       ShoppingCart.map((item, index) => (
                         <>
-                        <MDBCard className="rounded-5 mb-1" key={index} style={{backgroundColor:"rgba(0,0,0,0.7008053221288515)"}}>
+                        <MDBCard className="rounded-5 mb-1"  style={{backgroundColor:"rgba(0,0,0,0.7008053221288515)"}}>
                           <MDBCardBody className="p-3">
                             <MDBRow className="justify-content-between align-items-center">
                               <MDBCol md="1" lg="1" xl="2">
@@ -318,23 +309,44 @@ const navigate=useNavigate()
                   </MDBModalHeader>
                   <MDBModalBody>
                   <div style={{ display: 'flex', justifyContent: 'center', gap: '30px' }}>
-                    <button className="btn btn-outline-success btn-lg" style={{ borderRadius: 30}} onClick={Pay}>
-                  Card <MDBIcon fas icon="credit-card" />
+                  <button className="btn btn-outline-success btn-lg" style={{ borderRadius: 10}} onClick={handleCardOpen} >
+                  Card  <MDBIcon fas icon="credit-card" />
               </button>
-              <button className="btn btn-outline-success btn-lg" style={{ borderRadius: 30}} onClick={handleModalOpen} >
-                  Cash <MDBIcon fas icon="hand-holding-usd" />
-              </button>
-              <Modal show={showModal} onHide={handleModalClose}>
-                <Modal.Header closeButton>
-                <Modal.Title className="custom-modal-title">
-        <FaDollarSign className="dollar-sign" />
-        Cash Form
-        <FaDollarSign className="dollar-sign" />
+              <Modal show={showCard} onHide={handleCardClose} > 
+                <Modal.Header closeButton style={{backgroundColor:"rgba(245,35,135,0.2190126050420168)"}} >
+                <Modal.Title className="text-center w-100">
+                <MDBIcon fas icon="credit-card" /> Card Form
       </Modal.Title>
                    </Modal.Header>
-                    <Modal.Body>
-                     <CashForm />
+                    <Modal.Body >
+                    <label ><MDBIcon fas icon="map-marker-alt" /> Address</label>
+      <MDBInput id="Address" value={adress} onChange={(e) => setadress(e.target.value)}  placeholder="1234 Main St, City, Country"name="Address"type="Address" required  style={{ backgroundColor:"#e8d3d8" ,borderRadius:"25px",marginBottom:"20px"}}/>
+                         </Modal.Body>
+                    <Modal.Footer >
+
+                    <div class=" d-md-flex justify-content-md-end">
+                    <PayButton cartItems={ShoppingCart} CardId={CardId} address={adress} />
+
+            </div>
+            </Modal.Footer >
+
+                {/* You can add a footer here if needed */}
+              </Modal>
+              
+                    <button className="btn btn-outline-success btn-lg" style={{ borderRadius: 10}} onClick={handleModalOpen} >
+                  Cash <MDBIcon fas icon="hand-holding-usd" />
+              </button>
+              <Modal show={showModal} onHide={handleModalClose} > 
+                <Modal.Header closeButton style={{backgroundColor:"rgba(245,35,135,0.2190126050420168)"}} >
+                <Modal.Title className="text-center w-100">
+                <MDBIcon fas icon="hand-holding-usd" /> Cash Form
+      </Modal.Title>
+                   </Modal.Header>
+                    <Modal.Body >
+                     <CashForm CardId={CardId}/>
                     </Modal.Body>
+                    
+
                 {/* You can add a footer here if needed */}
               </Modal>
                     </div>

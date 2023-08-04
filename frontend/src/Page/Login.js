@@ -18,7 +18,7 @@ function Login() {
   useEffect(() => {
     if (cookies.session) {
       navigate(`/profile/${cookies.username}`);
-      
+     
     }
   }, [cookies.session, cookies.username, navigate]);
 
@@ -27,29 +27,42 @@ function Login() {
       setErrorMessage('All fields are required.');
       return;
     }
-
+  
     const loginData = {};
-
+  
     if (emailOrUsername.current.value.includes('@')) {
       loginData.email = emailOrUsername.current.value;
     } else {
       loginData.username = emailOrUsername.current.value;
     }
-
+  
     loginData.password = password.current.value;
+  
     axios
       .post('http://localhost:5000/signIn', loginData)
       .then(function (response) {
         const { token, user, sessionId } = response.data;
-
+  
         if (token && user && sessionId) {
           setCookie('session', sessionId, { path: '/' });
           setCookie('username', user.username, { path: '/' });
           setCookie('id', user._id, { path: '/' });
-
           alert('Welcome, ' + user.username);
           navigate(`/profile/${user.username}`);
 
+          // Fetch the user's cart data and set cartItemsCount
+          axios
+            .get('http://localhost:5000/cart/user', { params: { IdUser: user._id } })
+            .then((response) => {
+              const cartItemsCount = response.data[0].items.length;
+              setCookie('cartItemsCount', cartItemsCount, { path: '/' });
+  
+            })
+            .catch((error) => {
+              console.error('Error fetching cart data:', error);
+              setCookie('cartItemsCount', 0, { path: '/' });
+              
+            });
         }
       })
       .catch((error) => {
@@ -61,6 +74,7 @@ function Login() {
         }
       });
   };
+  
   return (
     <div className="container">
       <div className="row">

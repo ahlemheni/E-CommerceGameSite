@@ -34,19 +34,18 @@ export default function GameCard(props) {
 
       const response = await axios.get('http://localhost:5000/cart/user', { params: { IdUser: cookies.id } });
      
-      const totalItems = response.data.shoppingcart.items.length;
-
-      setCookie('cartItemsCount', totalItems, { path: '/' });
+      setCookie('cartItemsCount', response.data[0].items.length, { path: '/' });
 
     } catch (error) {
-      console.error(error);
+      setCookie('cartItemsCount', 0, { path: '/' });
+
     }
   }
   };
   useEffect(() => {
  
     fetchShoppingCart();
-  }, [cookies.cartItemsCount]);
+  }, [cookies.id]);
   const addToCart = async (productId) => {
 
     try {

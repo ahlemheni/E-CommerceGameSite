@@ -101,6 +101,7 @@ export default function Profile() {
     settelError('');
     setShowModal(false);
     setShowPasswordForm(false);
+    setCurrentPasswordError('');
 
   };
   const comparePassword = () => {
@@ -109,7 +110,7 @@ export default function Profile() {
     return match;
   };
   const handleUpdate = () => {
-    const phoneFormat = /^\d{8}$/;
+    const phoneFormat = /^[0-9]+$/;
     const isPhoneValid = phoneFormat.test(newTel);
     let hasError = false;
 
@@ -122,7 +123,7 @@ export default function Profile() {
     
   }
 
-  if (newTel && !isPhoneValid) {
+  if ( !isPhoneValid|| newTel.length < 8) {
     settelError('Invalid Phone');
     hasError = true;
   } else {
@@ -169,6 +170,13 @@ export default function Profile() {
       const updatedUser = { ...user, ...updatedFields };
       setUser(updatedUser);
       await axios.put(`http://localhost:5000/update/` + id, updatedUser);
+      setShowPasswordForm(false);
+      setCurrentPassword("");
+      setnewPassword("");
+      setConfirmnewPassword("");
+      setPasswordError('');
+      setCPasswordError('');
+      setCurrentPasswordError('');
       setShowModal(false);
       setTopRightModal(!topRightModal);
 
@@ -281,7 +289,7 @@ export default function Profile() {
                                <label className="form-label custom-label mb-2" style={{ color: '#e75e8d',fontSize:"18px" }}><MDBIcon icon="phone-square" className="me-2" /> Phone :</label>
 
                                      <MDBInput
-                                  type="number"
+                                  type="text"
                                   value={newTel}
                                   onChange={(e) => setNewTel(e.target.value)}
                                   style={{
@@ -289,7 +297,6 @@ export default function Profile() {
                                     borderRadius: "25px",
                                     marginTop: 5,
                                     marginBottom:20,
-                                      width:"100%"
                                   }}
                                 />
                                   <label className="form-label custom-label mb-2" style={{ color: '#e75e8d', fontSize: "18px" }}>
@@ -430,7 +437,7 @@ export default function Profile() {
                         </div>
                       </div>
                     </div>
-                    <div className="gaming-library">
+                    <div className="page-content" style={{ border: "solid", marginBottom: "15px",  borderRadius: "60px",backgroundImage: "url('../assets/images/4597148.jpg')",  backgroundSize: "cover", backgroundRepeat: "no-repeat",backgroundPosition: "center" }}>
 
                     <History/>
                     </div>

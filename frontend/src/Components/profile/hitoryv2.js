@@ -50,11 +50,11 @@ function History() {
 
   return (
     <>
-        <div className=' col-6 mx-auto' style={{ border: "solid", backgroundColor: "rgba(0,0,0,0.6083683473389356)", borderRadius: "35px" }}>
+        <div className=' col-6 mx-auto'>
       <MDBTypography
         tag="h1"
-        className="mb-5 pt-4 text-center fw-bold text-uppercase"
-        style={{ fontFamily: "cursive", color: "rgba(241,72,169,0.9220938375350141)" }}
+        className="mb-5 pt-2 text-center fw-bold text-uppercase"
+        style={{ fontFamily: "cursive", color: "rgba(213,11,107,0.7148109243697479)" }}
       >
         <MDBIcon fas icon="file-invoice-dollar" /> My History
       </MDBTypography>
@@ -74,7 +74,7 @@ function History() {
         </div>
       ) : (
         ShoppingCart.map((item, index) => (
-          <div className ="container"style={{ border: "solid", marginBottom: "10px", backgroundColor: "#fff", borderRadius: "15px" }} key={item._id}>
+          <div className ="container"style={{ border: "solid", marginBottom: "15px", backgroundColor: "rgba(255,255,255,0.891281512605042)", borderRadius: "15px" }} key={item._id}>
             <h4 className="fw-bold mb-3 me-4 pe-4 " style={{ fontFamily: "cursive", color: "rgba(213,11,107,0.7148109243697479)", marginTop: "15px" }}><MDBIcon fas icon="shopping-basket" /> Order N : {index + 1}</h4>
             <div className="d-flex justify-content-between my-3 mx-auto">
               <div className="d-flex flex-column">
@@ -153,3 +153,5 @@ function History() {
 }
 
 export default History;
+
+

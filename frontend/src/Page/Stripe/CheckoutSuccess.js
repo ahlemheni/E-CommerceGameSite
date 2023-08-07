@@ -4,18 +4,59 @@ import { useCookies } from 'react-cookie';
 import { MDBIcon } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 
+const CART_API_URL = 'http://localhost:5000/cart/user';
+const PRODUCT_API_URL = 'http://localhost:5000/product';
+
 function CheckoutSuccess() {
   const [cookies, setCookie] = useCookies();
   const navigate = useNavigate();
+  const [shoppingCart, setShoppingCart] = useState([]);
+
+  const updateProductQuantity = async (productId, quantity) => {
+    try {
+      const productResponse = await axios.get(`${PRODUCT_API_URL}/one`, { params: { id: productId } });
+      const productQty = productResponse.data.qty;
+
+      const updatedQuantity = Math.max(0, productQty - quantity); 
+      console.log('Updating quantity for product:', productId);
+      console.log('New quantity:', updatedQuantity);
+      await axios.post(`${PRODUCT_API_URL}/update`, {
+        _id: productId,
+        qty: updatedQuantity,
+      });
+    } catch (error) {
+      console.error('Error while updating product quantity:', error.message);
+    }
+  };
+
   const updateShoppingCart = async () => {
     try {
+      const response = await axios.get(CART_API_URL, { params: { IdUser: cookies.id } });
+      const items = response.data[0].items;
+      setShoppingCart(items);
+
+      // Create a set to keep track of processed product IDs
+      const processedProductIds = new Set();
+
+      // Filter out duplicate products and update the quantities only once for each product
+      const uniqueItems = items.filter((item) => {
+        if (!processedProductIds.has(item.product)) {
+          processedProductIds.add(item.product);
+          return true;
+        }
+        return false;
+      });
+
+
+      const productUpdatePromises = uniqueItems.map((item) => updateProductQuantity(item.product, item.quantity));
+      await Promise.all(productUpdatePromises);
+
       const { CardId } = cookies;
       if (CardId) {
         const response = await axios.post(`http://localhost:5000/pay/card/${CardId}`);
         console.log(response.data);
         setCookie('cartItemsCount', 0, { path: '/' });
         localStorage.setItem('checkoutSuccess_' + CardId, true);
-
       } else {
         console.error('CardId not found in cookies.');
       }
@@ -23,6 +64,7 @@ function CheckoutSuccess() {
       console.error(error);
     }
   };
+
   useEffect(() => {
     if (cookies.session) {
       const { CardId } = cookies;
@@ -34,14 +76,16 @@ function CheckoutSuccess() {
         navigate('/');
       }
     } else {
-      navigate(`/Login`);
+      navigate('/Login');
     }
-  }, [cookies.session]);
-
+  }, [cookies.session, navigate]);
 
   const handleGoHome = () => {
     navigate('/');
   };
+
+
+
   return (
     <div className="container">
     <div className="row">

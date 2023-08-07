@@ -17,6 +17,8 @@ export default function GameCard(props) {
   const [quantity, setQuantity] = useState(1); // Initial quantity set to 1
   const [modalShow,setModalShow]=useState(false)
   const [topRightModal, setTopRightModal] = useState(false);
+  const [localQuantity, setLocalQuantity] = useState(0);
+
   const toggleShow = () => setTopRightModal(!topRightModal);
 
   const navigate = useNavigate();
@@ -33,7 +35,14 @@ export default function GameCard(props) {
     try {
 
       const response = await axios.get('http://localhost:5000/cart/user', { params: { IdUser: cookies.id } });
-     
+      const cartItems = response.data[0].items;
+
+      const cartItem = cartItems.find(item => item.product === props.game._id);
+      if (cartItem) {
+        setLocalQuantity(cartItem.quantity);
+      } else {
+        setLocalQuantity(localQuantity);
+      }
       setCookie('cartItemsCount', response.data[0].items.length, { path: '/' });
 
     } catch (error) {
@@ -43,13 +52,17 @@ export default function GameCard(props) {
   }
   };
   useEffect(() => {
- 
+   
     fetchShoppingCart();
   }, [cookies.id]);
-  const addToCart = async (productId) => {
 
+  const addToCart = async (productId) => {
+    if (localQuantity+1> props.game.qty) {
+      alert('Cannot add more than available stock.');
+      return;
+    }
+console.log(localQuantity+1)
     try {
-      
       // const updatedQuantity = props.game.qty - 1; // Decrement quantity by 1
   
       // // Update the product quantity on the server
@@ -59,6 +72,7 @@ export default function GameCard(props) {
       // });
   
       // Check if the product quantity was successfully updated
+        
         const response = await axios.post('http://localhost:5000/cart/save', {
           items: [
             {
@@ -77,7 +91,7 @@ export default function GameCard(props) {
         setTopRightModal(!topRightModal);
 
         fetchShoppingCart();
-    
+      
     } catch (error) {
       if (!cookies.id) {
         alert('Connect to your account is required.');
@@ -129,7 +143,7 @@ export default function GameCard(props) {
            </span>      
              ) : (
               <>
-              <Link onClick={() => addToCart(props.game._id)}>
+<Link onClick={() => addToCart(props.game._id)}>
               <i className="fa fa-shopping-bag"></i>
             </Link>
               <MDBModal
@@ -191,6 +205,8 @@ export default function GameCard(props) {
     game={props.game}
 review={props.reviews}
 quantity={quantity} 
+localQuantity={localQuantity} 
+
 updateQuantity={updateQuantity} 
 
     addToCart={addToCart} 

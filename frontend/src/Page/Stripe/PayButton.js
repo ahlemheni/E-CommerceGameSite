@@ -9,13 +9,17 @@ const PayButton = ({ cartItems,CardId,address }) => {
   const id = cookies.id;
   const [errorMessage, setErrorMessage] = useState('');
 
+
   const handleCheckout = () => {
+
     if (!address) {
       setErrorMessage('Location is required.');
       return;
     }
-
-    // Update the address before checkout
+   
+   
+    // Update the quantity for each product in the cartItems array
+ 
     axios
       .post(`http://localhost:5000/cart/address/${CardId}`, {
         location: address,
@@ -31,10 +35,11 @@ const PayButton = ({ cartItems,CardId,address }) => {
             CardId,
           })
           .then((response) => {
-            if (response.data.url) {
-              window.location.href = response.data.url;
-
-            }
+            console.log('Checkout Response:', response.data);
+      
+            window.location.href = response.data.url;
+          
+            
           })
           .catch((err) => console.log(err.message));
       })

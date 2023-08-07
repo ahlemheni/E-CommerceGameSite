@@ -866,4 +866,3 @@ module.exports.order=async (req,res)=>{
           console.log(`Error while updating info for product `)
   })
 }
-

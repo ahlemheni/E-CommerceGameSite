@@ -25,21 +25,22 @@ import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import PayButton from '../Stripe/PayButton';
 import { Modal } from "react-bootstrap";
-import { FaDollarSign } from "react-icons/fa";
 import CashForm from '../CashForm/CashForm';
 const Card = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [CardId, setCardId] = useState(); // Default quantity
+  const [CardId, setCardId] = useState(); 
 
-  const [quantity, setQuantity] = useState(); // Default quantity
-  const [ShoppingCart, setShoppingCart] = useState([]); // Initialize as an empty array, not an object
-  const [totalPrice, setTotalPrice] = useState(0); // Initialize total price as 0
+  const [quantity, setQuantity] = useState(); 
+  const [ShoppingCart, setShoppingCart] = useState([]); 
+  const [totalPrice, setTotalPrice] = useState(0); 
   const [cookies,setCookie] = useCookies([]);
   const [basicModal, setBasicModal] = useState(false);
   const [PaymentModal, setPaymentModal] = useState(false);
   const [showModal,setShowModal]=useState(false );
   const [showCard,setshowCard]=useState(false );
   const [adress,setadress]=useState();
+  const [productQty,setproductQty]=useState();
+  const [selectedId, setselectedId] = useState(null);
 
   const handleModalOpen = () => {
     setShowModal(true);
@@ -55,7 +56,12 @@ const Card = () => {
   const handleCardClose = () => {
     setshowCard(false);
   };
-  const toggleShow = () => setBasicModal(!basicModal);
+
+    const toggleShow = (cartItemId) => {
+      setselectedId(cartItemId);
+
+      setBasicModal(!basicModal);
+    };
   const MethodedePayment = () => setPaymentModal(!PaymentModal);
 
 
@@ -93,13 +99,9 @@ const Card = () => {
 
       const productResponse = await axios.get('http://localhost:5000/product/one', { params: { id: cartItem.product } });
       const productQty = productResponse.data.qty;
+      setproductQty(productResponse.data.qty);
   console.log(productQty)
-      // const updatedQuantity = productQty - 1; // Decrement quantity by 1
-      //  await axios.post('http://localhost:5000/product/update', {
-      //   _id: cartItem.product,
-      //   qty: updatedQuantity,
-      // });
-      // Find the cart item in the ShoppingCart array by its ID
+
       if (cartItem.quantity < productQty) {
 
       cartItem.quantity += 1;
@@ -125,20 +127,13 @@ const Card = () => {
   const handleDecrement = async (cartItemId) => {
 
     try {
-      // Find the cart item in the ShoppingCart array by its ID
       const cartItem = ShoppingCart.find(item => item._id === cartItemId);
-      // const productResponse = await axios.get('http://localhost:5000/product/one', { params: { id: cartItem.product } });
-      // const productQty = productResponse.data.qty;
 
 
-      // Check if the quantity is greater than 0 before decrementing
+
       if (cartItem.quantity > 1) {
         
-        // const updatedQuantity = productQty + 1; // Decrement quantity by 1
-        // await axios.post('http://localhost:5000/product/update', {
-        //   _id: cartItem.product,
-        //   qty: updatedQuantity,
-        // });
+     
         cartItem.quantity -= 1;
   
         const response = await axios.post('http://localhost:5000/cart/update', {
@@ -156,9 +151,10 @@ const Card = () => {
     }
 
   };
+
   const deleteone = async (cartItemId) => {
     setIsLoading(true);
-
+   
     try {
        await axios.post('http://localhost:5000/cart/deleteone', {
         cartItemId: cartItemId,
@@ -233,21 +229,22 @@ const Card = () => {
                               </MDBCol>
                             
                               <MDBCol md="1" lg="1" xl="4" className="text-end">
-                                <button  className="btn" onClick={toggleShow}>
+                              <button className="btn" onClick={() => toggleShow(item._id)}>
                                   <MDBIcon fas icon="trash text-danger" size="lg" />
                                 </button>
-                                <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-2' className="small-modal">
+                                {item._id === selectedId ? (
+                                <MDBModal show={basicModal} setShow={setBasicModal}  tabIndex="-2" className="small-modal">
                                 <MDBModalDialog >
                                 <MDBModalContent  className='text-center'>
                                   <MDBModalHeader className=' bg-danger text-white '>
                                     <MDBModalTitle> <MDBIcon fas icon="minus-circle" /> Remove {item.name} from cart</MDBModalTitle>
-                                    <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
+                                    <MDBBtn className='btn-close' color='none' onClick={() => toggleShow(item._id)}></MDBBtn>
                                   </MDBModalHeader>
                                   <MDBModalBody> <h5>Are you Sure ?</h5></MDBModalBody>
 
                                   <MDBModalFooter style={{ display: 'flex', justifyContent: 'space-between' }}>
                                    
-                                    <button className="btn btn-outline-success" style={{ borderRadius: 30}} onClick={toggleShow}>
+                                    <button className="btn btn-outline-success" style={{ borderRadius: 30}}onClick={() => toggleShow(item._id)}>
                                     <MDBIcon fas icon="times-circle" /> No 
                                     </button>
                                     <button className="btn btn-outline-danger" style={{ borderRadius: 30}} onClick={() => deleteone(item._id)}>
@@ -257,12 +254,13 @@ const Card = () => {
                                 </MDBModalContent>
                               </MDBModalDialog>
                             </MDBModal>
+                           ) : null}
                               </MDBCol>
                             </MDBRow>
                           </MDBCardBody>
                         </MDBCard>
                        
-                          </>
+                        </>
                       ))
                  
                     ) : (
@@ -325,7 +323,7 @@ const Card = () => {
                     <Modal.Footer >
 
                     <div class=" d-md-flex justify-content-md-end">
-                    <PayButton cartItems={ShoppingCart} CardId={CardId} address={adress} />
+                    <PayButton cartItems={ShoppingCart} CardId={CardId} address={adress}  />
 
             </div>
             </Modal.Footer >

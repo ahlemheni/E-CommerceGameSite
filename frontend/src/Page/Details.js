@@ -8,13 +8,16 @@ import Rating from '../Components/ProductRating/Rating';
 
 
 const Details = (props,detail) => { 
-  const [localQuantity, setLocalQuantity] = useState(props.quantity);
+
+  const [localQuantity, setLocalQuantity] = useState(1);
+  
   const handleIncrement = () => {
-    if (localQuantity < props.qte) {
+    if (localQuantity < props.qte-props.localQuantity) {
 
     setLocalQuantity((prevQuantity) => prevQuantity + 1);
     props.updateQuantity(localQuantity + 1); // Update the quantity in GameCard
   }
+
   };
   
   const handleDecrement = () => {
@@ -25,7 +28,7 @@ const Details = (props,detail) => {
     }
   };
 const handleAddToCart = () => {
-    props.addToCart(props.game._id);
+  props.addToCart(props.game._id);
     props.onHide(); // Hide the modal after adding to cart
   };
 

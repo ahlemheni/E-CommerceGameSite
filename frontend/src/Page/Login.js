@@ -74,6 +74,22 @@ function Login() {
         }
       });
   };
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === 'Enter') {
+        // Call the function that handles login
+        handleLogin();
+      }
+    };
+  
+    // Add the event listener to the document
+    document.addEventListener('keydown', handleKeyPress);
+  
+    // Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
   
   return (
     <div className="container">

@@ -128,7 +128,9 @@ function Shop() {
 
       <div className="container " >
       <div className="row">
-        <div className="page-content" >
+      <div className="page-content" >
+        <div className="gaming-library" style={{marginTop:"-20px"}}>
+
       <MDBRow>
 
       <MDBCol md="3"  >
@@ -147,10 +149,12 @@ function Shop() {
                 </nav>
 
           </div>
+
         </MDBCol>
         <MDBCol md="9">
-           
-                  <div className="filters text-light my-4 d-flex justify-content-between"  > 
+
+                  <div className="filters text-light my-4 d-flex flex-wrap justify-content-between">
+
                   <div className="d-flex mt-3">
                       <span className="mx-1"><MDBIcon fas icon="dollar-sign" /> Price :</span>
                       <div className="d-flex justify-content-between">
@@ -190,9 +194,9 @@ function Shop() {
     
               
                     <div className="d-flex mt-3">
+                    <div className="d-flex justify-content-between">
 
-                    <span className="mx-1"> <MDBIcon  className="mx-1"fas icon="search" /> Game Name :</span>
-                        <div className="d-flex justify-content-between">
+                    <span className="mx-1"> <MDBIcon  className="mx-1"fas icon="search" /> </span>
 
                       <input onChange={filterByNameAndCategory} type="text" id="gameID"   placeholder="Search games..." className="form-control form-control-sm"  style={{ backgroundColor: '#e8d3d8', borderRadius: '25px' }} />
                       </div>
@@ -216,7 +220,8 @@ function Shop() {
       </div>
       </div>
 
-         
+      </div>
+
 
    
 

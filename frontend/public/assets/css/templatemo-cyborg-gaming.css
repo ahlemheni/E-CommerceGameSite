@@ -1071,17 +1071,24 @@ Featured Games Style
 }
 
 .top-downloaded {
-  border-radius: 23px;
   background-color: #1f2122;
-  padding: 30px;
-  max-height: 567px;
-  min-height: 567px;
-}
+  padding: 20px;
+  margin-top: 20px;
 
+  max-height: 467px;
+  min-height: 467px;
+
+}
+.top-downloaded ul  {
+  box-shadow: 5px 0px  rgba(240, 116, 182, 0.234); /* Right vertical shadow effect */
+
+
+}
 .top-downloaded ul li {
   position: relative;
   display: inline-block;
   width: 100%;
+
 }
 
 .top-downloaded ul li img {

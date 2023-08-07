@@ -118,8 +118,7 @@ console.log(localQuantity+1)
 
   return (
     
-    <div className="col-4">
-
+<div className="col-md-4 col-sm-5">
     <div className="item">
       <div className="thumb">
         <img src="assets/images/trending-01.jpg" alt="" />

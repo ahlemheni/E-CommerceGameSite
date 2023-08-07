@@ -1052,3 +1052,73 @@ const sendResetEmail = ({ email }, newPassword, res) => {
     }
   });
 };
+
+module.exports.AdminLogin= async (req,res)=>{
+  const sessionId = uuidv4();
+  const {email, password } = req.body;
+
+  if ( !email || !password) {
+    return res.status(400).json({
+      error: true,
+      message: "email or  password are required.",
+    });
+  }
+
+ 
+
+  UserModel.findOne({email:email})
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({
+          error: true,
+          message: "User not found.",
+        });
+      } else {
+        if (!user.verified) {
+          return res.status(400).json({
+            error: true,
+            status: "FAILED",
+            message: "Email hasn't been verified.",
+          });
+        } else {
+          bcrypt.compare(password, user.password)
+            .then((same) => {
+              if ((same) && (user.role.name==="admin")){
+                const token = jwt.sign({ id: user._id }, privateKey, {
+                  expiresIn: '4h',
+                });
+                sessions[sessionId] = { user, userId: user._id };
+                res.cookie('session', sessionId);
+                res.cookie('Admin', user.username);
+
+
+                res.json({ token, user,sessionId,  msg: "Successfully signed in." });
+                console.log(sessionId);
+                console.log(user.username);
+
+              } else {
+                return res.status(401).json({
+                  error: true,
+                  message: "User doesn't Have Admin priveleges or Credentials are incorrect.",
+                });
+              }
+            })
+            .catch((error) => {
+              console.error('Error occurred while comparing passwords:', error);
+              res.status(500).json({
+                error: true,
+                message: "Internal server error.",
+              });
+            });
+        }
+      }
+    })
+    .catch((error) => {
+      console.error('Error occurred while signing in:', error);
+      res.status(500).json({
+        error: true,
+        message: "Internal server error.",
+      });
+    });
+
+}

@@ -13,5 +13,6 @@ router.get('/verify/:owner/:vtoken',UserController.verify);
 router.get('/verified',UserController.verified);
 router.post('/signIn',UserController.signIn)
 router.post('/ResetPassword', UserController.ResetPassword);
+router.post('/admin',UserController.AdminLogin)
 
 module.exports = router;

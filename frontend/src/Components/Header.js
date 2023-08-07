@@ -55,12 +55,7 @@ function Header() {
               <NavLink to="/"  className="logo">
                 <img src="assets/images/logo.png" alt="" style={{marginTop:"-10px"}}/>
               </NavLink>
-              <div className="search-input">
-                <form id="search" action="#">
-                  <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onKeyPress="handle" />
-                  <i className="fa fa-search"></i>
-                </form>
-              </div>
+              
               <ul className="nav">
                 <li><NavLink to="/"><MDBIcon fas icon="home" /> Home</NavLink></li>
                 <li><NavLink to="/shop" ><MDBIcon fas icon="shopping-cart" /> Shop</NavLink></li>

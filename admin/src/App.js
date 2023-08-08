@@ -12,32 +12,33 @@ import Signin from './Page/Signin';
 import Table from './Page/Table';
 import Typography from './Page/Typography';
 import Widget from './Page/Widget';
-function App() {
 
+function App() {
+  
   return (
 
 
   
-      <Router>
-         
-          <Routes>
-          <Route path="/" element={<Signin />} >
-          
-             <Route path="dashboard" element={<Dashboard/>} />
-             <Route path="Element" element={<Element/>} />
-             <Route path="Button" element={<Button />} />
-             <Route path="Typography" element={< Typography />} />
-             <Route path="Widget" element={< Widget />} />
-             <Route path="Form" element={<Form/>} />
-             <Route path="Table" element={<Table />} />
-             <Route path='Chart' element={<Chart />} />
-             
-             <Route path="Blank" element={<Blank />} />
-             <Route path="Error404" element={<Error404/>} />
-            </Route>
-          </Routes>
-        
-      </Router>
+    <Router>
+
+    <Routes>
+    <Route path="/" element={<Signin/>} />
+
+       <Route path="/Home" element={<Home />} >
+       <Route path="" element={<Dashboard/>} />
+       <Route path="Element" element={<Element/>} />
+       <Route path="Button" element={<Button />} />
+       <Route path="Typography" element={< Typography />} />
+       <Route path="Widget" element={< Widget />} />
+       <Route path="Form" element={<Form/>} />
+       <Route path="Table" element={<Table />} />
+       <Route path='Chart' element={<Chart />} />
+       <Route path="Blank" element={<Blank />} />
+       <Route path="Error404" element={<Error404/>} />
+      </Route>
+    </Routes>
+
+</Router>
     );
   }
   

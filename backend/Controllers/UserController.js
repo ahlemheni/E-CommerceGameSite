@@ -1071,7 +1071,7 @@ module.exports.AdminLogin= async (req,res)=>{
       if (!user) {
         return res.status(404).json({
           error: true,
-          message: "User not found.",
+          message: "Admin not found .",
         });
       } else {
         if (!user.verified) {

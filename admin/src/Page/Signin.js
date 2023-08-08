@@ -3,21 +3,24 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
+
+
 const Signin = () => {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies([]);
   const expirationDate = new Date();
-  expirationDate.setTime(expirationDate.getTime() + 3 * 60 * 60 * 1000);
+  expirationDate.setTime(expirationDate.getTime() + 60 * 1000);
   const email = useRef();
   const password = useRef();
   const [errorMessage, setErrorMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false); 
+  const [error, setError] = useState('');
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
   useEffect(() => {
     if (cookies.session) {
-      navigate(`/dashboard`);
+      navigate(`/Home`);
      
     }
   }, [cookies.session, cookies.username, navigate]);
@@ -44,11 +47,11 @@ const Signin = () => {
         const { token, user, sessionId } = response.data;
   
         if (token && user && sessionId) {
-          setCookie('session', sessionId, { path: '/', expires: expirationDate  });
-          setCookie('Admin', user.username, { path: '/', expires: expirationDate  });
-          setCookie('id', user._id, { path: '/', expires: expirationDate  });
+          setCookie('session', sessionId, { path: '/'});
+          setCookie('Admin', user.username, { path: '/'  });
+          setCookie('id', user._id, { path: '/' });
           alert('Welcome, ' + user.username);
-          navigate(`/dashboard`);
+          navigate(`/Home`);
         }
       })
       .catch((error) => {
@@ -60,6 +63,8 @@ const Signin = () => {
         }
       });
   };
+ 
+  
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'Enter') {
@@ -76,6 +81,7 @@ const Signin = () => {
       document.removeEventListener('keydown', handleKeyPress);
     };
   }, []);
+
   return (
 <div className="container-fluid position-relative d-flex align-items-center justify-content-center min-vh-100">
   <div className="bg-secondary rounded p-4 p-sm-5 mx-3" style={{ maxWidth: "450px", width: "80%" }}>
@@ -92,15 +98,31 @@ const Signin = () => {
       <label htmlFor="email">Email address</label>
     </div>
     <div className="form-floating mb-4">
-      <input type="password" className="form-control" id="password" placeholder="Password" ref={password} style={{ width: "100%" }} />
-      <label htmlFor="password">Password</label>
+       
+    <input
+      type="password"
+      className="form-control"
+      id="password"
+      placeholder="Password"
+      ref={password}
+      style={{  
+      height: "100%",
+     }} // Give space for the icon
+    />
+    <label htmlFor="password">Password</label>
+  
+
     </div>
+
+
+      
     {errorMessage && <div className="text-danger mb-3">{errorMessage}</div>}
-    <div className="d-flex align-items-center justify-content-between mb-4">
-      <Link to="">Forgot Password</Link>
-    </div>
+   
     <button type="submit" className="btn btn-primary py-3 w-100 mb-4" onClick={handleLogin}>Sign In</button>
-    <p className="text-center mb-0">Don't have an Account? <Link to="">Sign Up</Link></p>
+    <div className="d-flex align-items-center justify-content-between mb-4">
+      <Link to='http://localhost:3001/ResetPassword'>Forgot Password</Link>
+    </div>
+   
   </div>
 </div>
 

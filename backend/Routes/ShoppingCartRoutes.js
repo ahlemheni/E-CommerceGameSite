@@ -13,6 +13,7 @@ router.post('/pay/card/:cartId',ShoppingController.order)
 router.post('/cart/address/:id',ShoppingController.address)
 router.get('/cart/history',ShoppingController.history)
 router.post('/Cash/:cartId',ShoppingController.Cash)
-router.get('/admin/revenue',ShoppingController.revenue)
+router.get('/admin/Monthlyrevenue',ShoppingController.Monthlyrevenue)
+router.get('/admin/Dailyrevenue',ShoppingController.DailyRevenue)
 
 module.exports = router;

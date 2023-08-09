@@ -4,11 +4,11 @@ const ReviewModel=require('../Models/ReviewModel')
 
 module.exports.get = async (req, res) => {
   try {
-    // Fetch all products
-    const products = await ProductModel.find().lean();
+    // Fetch all products and populate the genre field
+    const products = await ProductModel.find().populate('genre').lean();
 
     const productIds = products.map((product) => product._id);
-    const reviews = await ReviewModel.find({ productId:productIds });
+    const reviews = await ReviewModel.find({ productId: productIds });
 
     const reviewsByProductId = {};
     reviews.forEach((review) => {
@@ -23,7 +23,7 @@ module.exports.get = async (req, res) => {
       if (productReviews) {
         product.reviews = productReviews;
       } else {
-        product.reviews = []; 
+        product.reviews = [];
       }
     });
 

@@ -7,7 +7,7 @@ import axios from 'axios';
         const [products, setProducts] = useState([]);
     
         const handleRetrieveProduct = () => {
-            axios.get("http://localhost:5000/products/all")
+            axios.get("http://localhost:5000/products/getgenre")
                 .then(response => {
                     setProducts(response.data); // Update the state with fetched products
                 })

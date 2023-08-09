@@ -52,7 +52,7 @@ const handleAddToCart = () => {
       <Modal.Body className='body' >
         <div className='main'> 
                 <div className='img-container'>  
-                <img src="assets/images/trending-01.jpg" alt='product image' /> 
+                <img src={props.img} alt='product image' style={{maxWidth:"300px"}}/> 
 <Rating
     IDProduct={props.ID}
 

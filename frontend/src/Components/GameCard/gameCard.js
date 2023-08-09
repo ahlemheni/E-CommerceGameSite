@@ -193,7 +193,9 @@ console.log(localQuantity+1)
         
   
 
-    <Details name={props.game.name} 
+    <Details 
+    img={props.game.image}
+    name={props.game.name} 
     price={props.game.price} 
     game_name={props.game.game_title} 
     cat={props.game.category} 

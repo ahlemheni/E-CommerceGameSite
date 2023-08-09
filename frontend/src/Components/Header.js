@@ -5,7 +5,7 @@ import {  MDBIcon } from 'mdb-react-ui-kit';
 import { NavLink ,useNavigate} from 'react-router-dom';
 
 function Header() {
-  const [cookies, setCookie, removeCookie] = useCookies(['session','username','id','cartItemsCount']);
+  const [cookies, setCookie, removeCookie] = useCookies(['session','username','id','cartItemsCount','CardId']);
   const sessionCookie = cookies.session;
   const username = cookies.username;
   const cartItemsCount = cookies.cartItemsCount;
@@ -19,6 +19,8 @@ function Header() {
       removeCookie('username');
       removeCookie('id');
       removeCookie('cartItemsCount');
+      removeCookie('CardId');
+
     }
 
   };

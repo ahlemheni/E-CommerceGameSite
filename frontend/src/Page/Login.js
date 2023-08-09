@@ -44,7 +44,7 @@ function Login() {
         const { token, user, sessionId } = response.data;
   
         if (token && user && sessionId) {
-          setCookie('session', sessionId, { path: '/' });
+          setCookie('session', sessionId,  { path: '/' });
           setCookie('username', user.username, { path: '/' });
           setCookie('id', user._id, { path: '/' });
           alert('Welcome, ' + user.username);
@@ -55,8 +55,9 @@ function Login() {
             .get('http://localhost:5000/cart/user', { params: { IdUser: user._id } })
             .then((response) => {
               const cartItemsCount = response.data[0].items.length;
-              setCookie('cartItemsCount', cartItemsCount, { path: '/' });
-  
+              setCookie('cartItemsCount', cartItemsCount,  { path: '/'  });
+              setCookie('CardId', response.data[0]._id,  { path: '/'  });
+
             })
             .catch((error) => {
               console.error('Error fetching cart data:', error);
@@ -82,10 +83,8 @@ function Login() {
       }
     };
   
-    // Add the event listener to the document
     document.addEventListener('keydown', handleKeyPress);
   
-    // Clean up the event listener when the component unmounts
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
     };

@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter as Router,Route,Routes} from 'react-router-dom';
+import {BrowserRouter as Router,Route,Routes,useNavigate} from 'react-router-dom';
 import Blank from './Page/Blank';
 import Button from './Page/Button';
 import Chart from './Page/Chart';
@@ -12,9 +12,10 @@ import Signin from './Page/Signin';
 import Table from './Page/Table';
 import Typography from './Page/Typography';
 import Widget from './Page/Widget';
-
+import { useCookies } from 'react-cookie';
+import { useEffect } from 'react';
 function App() {
-  
+
   return (
 
 
@@ -24,7 +25,7 @@ function App() {
     <Routes>
     <Route path="/" element={<Signin/>} />
 
-       <Route path="/Home" element={<Home />} >
+       <Route path="Home/" element={<Home />} >
        <Route path="" element={<Dashboard/>} />
        <Route path="Element" element={<Element/>} />
        <Route path="Button" element={<Button />} />

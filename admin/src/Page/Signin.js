@@ -47,11 +47,11 @@ const Signin = () => {
         const { token, user, sessionId } = response.data;
   
         if (token && user && sessionId) {
-          setCookie('session', sessionId, { path: '/'});
+          setCookie('sessionAdmin', sessionId, { path: '/'});
           setCookie('Admin', user.username, { path: '/'  });
-          setCookie('id', user._id, { path: '/' });
+          setCookie('idAdmin', user._id, { path: '/' });
           alert('Welcome, ' + user.username);
-          navigate(`/Home`);
+          window.location.replace(`/Home`);
         }
       })
       .catch((error) => {
@@ -81,7 +81,25 @@ const Signin = () => {
       document.removeEventListener('keydown', handleKeyPress);
     };
   }, []);
+  useEffect(() => {
+    const handlePopstate = () => {
+      // Rétablir l'URL précédente et empêcher le retour en arrière
+      window.history.pushState(null, '', '/Home');
+    };
 
+    // Écouter l'événement popstate lorsque le composant est monté
+    window.addEventListener('popstate', handlePopstate);
+
+    // Nettoyer l'écouteur d'événement lors du démontage du composant
+    return () => {
+      window.removeEventListener('popstate', handlePopstate);
+    };
+  }, []);
+  useEffect(() => {
+    if (cookies.sessionAdmin) {
+      window.location.replace('/Home');
+    }
+  }, []);
   return (
 <div className="container-fluid position-relative d-flex align-items-center justify-content-center min-vh-100">
   <div className="bg-secondary rounded p-4 p-sm-5 mx-3" style={{ maxWidth: "450px", width: "80%" }}>
@@ -120,7 +138,7 @@ const Signin = () => {
    
     <button type="submit" className="btn btn-primary py-3 w-100 mb-4" onClick={handleLogin}>Sign In</button>
     <div className="d-flex align-items-center justify-content-between mb-4">
-      <Link to='http://localhost:3001/ResetPassword'>Forgot Password</Link>
+      <Link to='http://localhost:3000/ResetPassword'>Forgot Password</Link>
     </div>
    
   </div>

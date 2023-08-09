@@ -21,19 +21,21 @@ import {
   MDBModalFooter,
 } from "mdb-react-ui-kit";
 import { useCookies } from 'react-cookie';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { Link } from 'react-router-dom';
 import PayButton from '../Stripe/PayButton';
 import { Modal } from "react-bootstrap";
 import CashForm from '../CashForm/CashForm';
 const Card = () => {
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(true);
   const [CardId, setCardId] = useState(); 
 
   const [quantity, setQuantity] = useState(); 
   const [ShoppingCart, setShoppingCart] = useState([]); 
   const [totalPrice, setTotalPrice] = useState(0); 
-  const [cookies,setCookie] = useCookies([]);
+  const [cookies, setCookie] = useCookies(['session', 'username', 'id', 'cartItemsCount', 'CardId']);
   const [basicModal, setBasicModal] = useState(false);
   const [PaymentModal, setPaymentModal] = useState(false);
   const [showModal,setShowModal]=useState(false );
@@ -89,7 +91,13 @@ const Card = () => {
     fetchShoppingCart();
   }, [cookies.id]);
   
- 
+  useEffect(() => {
+    if (!cookies.session) {
+      navigate(`/`);
+            alert( "Your session has expired")
+
+    }
+  }, []);
 
   const handleIncrement = async (cartItemId) => {
 

@@ -23,9 +23,9 @@ document.addEventListener('keydown', resetInactivityTimeout);
 document.addEventListener('scroll',resetInactivityTimeout)
 function deleteCookiesAndRedirect() {
   // Delete all cookies
-  setCookie('session', '', { path: '/', expires: new Date(0) });
+  setCookie('sessionAdmin', '', { path: '/', expires: new Date(0) });
   setCookie('Admin', '', { path: '/', expires: new Date(0) });
-  setCookie('id', '', { path: '/', expires: new Date(0) });
+  setCookie('idAdmin', '', { path: '/', expires: new Date(0) });
 
   alert("your session has expired")
   navigate('/');
@@ -41,7 +41,11 @@ useEffect(() => {
     // Remove other event listeners if added
   };
 }, []);
-
+useEffect(() => {
+  if (!cookies.sessionAdmin) {
+    window.location.replace('/');
+  }
+}, [navigate, cookies.sessionAdmin]);
 
     return (
       <div>

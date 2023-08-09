@@ -869,7 +869,7 @@ module.exports.order=async (req,res)=>{
   })
 }
 
-module.exports.revenue= async ( req,res)=>{
+module.exports.Monthlyrevenue= async ( req,res)=>{
   try {
     const revenueByMonth = await ShoppingCart.aggregate([
       {
@@ -896,4 +896,29 @@ module.exports.revenue= async ( req,res)=>{
     throw error;
   }
 };
+module.exports.DailyRevenue= async ( req,res)=>{
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Set the time to the beginning of the day
+  
+  try {
+    const revenueForToday = await ShoppingCart.aggregate([
+      {
+        $match: {
+          date: { $gte: today }, // Filter documents with date greater than or equal to today
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalRevenue: { $sum: '$totalprice' },
+        },
+      },
+    ]);
+  
+    res.send(revenueForToday);
+  } catch (error) {
+    console.log("Error encountered:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
 

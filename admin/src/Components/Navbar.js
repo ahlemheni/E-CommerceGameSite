@@ -1,9 +1,20 @@
 import { useCookies } from 'react-cookie';
+import { NavLink } from 'react-router-dom';
 
 function Navbar(){
   const [cookies, setCookie, removeCookie] = useCookies(['sessionAdmin','Admin','idAdmin']);
   const imageData = localStorage.getItem('imageData');
+  const handleLogout = () => {
+    const confirmLogout = window.confirm('Are you sure you want to logout ?');
 
+    if (confirmLogout) {
+      removeCookie('sessionAdmin');
+      removeCookie('Admin');
+      removeCookie('idAdmin');
+
+      localStorage.removeItem('imageData');
+    }
+  };
   return(
 
 
@@ -24,8 +35,7 @@ function Navbar(){
           </a>
           <div className="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
             <a href="#" className="dropdown-item">My Profile</a>
-            <a href="#" className="dropdown-item">Settings</a>
-            <a href="#" className="dropdown-item">Log Out</a>
+            <NavLink to="/" onClick={handleLogout} className="dropdown-item">Log Out</NavLink>
           </div>
         </div>
       </div>

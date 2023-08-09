@@ -1,6 +1,50 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom';
-const Table = () => {
+import axios from 'axios';
+
+    const Table = () => {
+        const [errorMessage, setErrorMessage] = useState('');
+        const [products, setProducts] = useState([]);
+    
+        const handleRetrieveProduct = () => {
+            axios.get("http://localhost:5000/products/all")
+                .then(response => {
+                    setProducts(response.data); // Update the state with fetched products
+                })
+                .catch(error => {
+                    if (error.response) {
+                        setErrorMessage(error.response.data);
+                    } else {
+                        setErrorMessage("An Error has Occurred. Please try again later.");
+                    }
+                });
+        };
+    
+        useEffect(() => {
+            handleRetrieveProduct(); // Fetch products when the component mounts
+        }, []);
+        const handleDeleteProduct = (productId, productName) => {
+            const deleteData = {
+                _id: productId,
+                name: productName
+            };
+            
+            axios.post('http://localhost:5000/product/delete', deleteData)
+                .then(response => {
+                    // Refresh the product list after successful deletion
+                    handleRetrieveProduct();
+                })
+                .catch(error => {
+                    if (error.response) {
+                        setErrorMessage(error.response.data);
+                    } else {
+                        setErrorMessage("An Error has Occurred. Please try again later.");
+                    }
+                });
+        };
+    const handleUpdateProduct =()=>{
+
+    }
   return (
     <div class="container-fluid position-relative d-flex p-0">
     <div class="content">
@@ -16,43 +60,44 @@ const Table = () => {
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">First Name</th>
-                                            <th scope="col">Last Name</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Country</th>
-                                            <th scope="col">ZIP</th>
-                                            <th scope="col">Status</th>
+                                            <th scope="col">Label</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Game Title</th>
+                                            <th scope="col">Genre</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>jhon@email.com</td>
-                                            <td>USA</td>
-                                            <td>123</td>
-                                            <td>Member</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>mark@email.com</td>
-                                            <td>UK</td>
-                                            <td>456</td>
-                                            <td>Member</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>jacob@email.com</td>
-                                            <td>AU</td>
-                                            <td>789</td>
-                                            <td>Member</td>
-                                        </tr>
-                                    </tbody>
+    {products.map((product, index) => (
+        <tr key={product._id}>
+            <th scope="row">{index + 1}</th>
+            <td>{product.name}</td>
+            <td>{product.qty}</td>
+            <td>{product.category}</td>
+            <td>{product.game_title}</td>
+            <td>{product.genre.name}</td>
+            <td>{product.description}</td>
+            <td>{product.price}$</td>
+            <td>
+                <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => handleDeleteProduct(product._id,product.name)}
+                >
+                    Delete
+                </button>
+                <button
+                    className="btn btn-primary btn-sm mx-2"
+                    onClick={() => handleUpdateProduct(product._id)}
+                >
+                    Update
+                </button>
+            </td>
+        </tr>
+    ))}
+</tbody>
                                 </table>
                             </div>
                         </div>

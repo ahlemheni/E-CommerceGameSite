@@ -1,7 +1,7 @@
 const { ShoppingCart, CartItem} = require('../Models/ShoppingCartModel')
 const session = require('express-session');
 const UserModel = require('../Models/UserModel');
-const assert=require('assert')
+
 const ProductModel = require('../Models/ProductModel');
 require('dotenv').config();
 const nodemailer = require('nodemailer');
@@ -868,3 +868,32 @@ module.exports.order=async (req,res)=>{
           console.log(`Error while updating info for product `)
   })
 }
+
+module.exports.revenue= async ( req,res)=>{
+  try {
+    const revenueByMonth = await ShoppingCart.aggregate([
+      {
+        $project: {
+          year: { $year: '$date' },
+          month: { $month: '$date' },
+          totalprice: 1,
+        },
+      },
+      {
+        $group: {
+          _id: { year: '$year', month: '$month' },
+          totalRevenue: { $sum: '$totalprice' },
+        },
+      },
+      {
+        $sort: { '_id.year': 1, '_id.month': 1 },
+      },
+    ]);
+
+    res.send(revenueByMonth)
+  } catch (error) {
+    console.log("error encountered....")
+    throw error;
+  }
+};
+

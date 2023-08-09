@@ -280,7 +280,7 @@ module.exports.Cash= async(req,res)=>{
     }
     else{
         ShoppingCart
-        .findByIdAndUpdate(cartId,{orderStatus:true,location:location,date:Newdate})
+        .findByIdAndUpdate(cartId,{orderStatus:true,location:location,date:Newdate,MethodePay:"Cash"})
         .then(async ()=>{
           const userEmail = client.email; 
           try {
@@ -861,7 +861,7 @@ module.exports.address=async (req,res)=>{
 module.exports.order=async (req,res)=>{
   const { cartId } = req.params;
   ShoppingCart
-  .findByIdAndUpdate(cartId,{PayStatus:true,orderStatus:true})
+  .findByIdAndUpdate(cartId,{PayStatus:true,orderStatus:true,MethodePay:"card"})
   .then(()=>{res.send("Order has been delivered => deleting order from the list  ...")
                   })
   .catch((err)=>{

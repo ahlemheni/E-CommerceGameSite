@@ -3,7 +3,7 @@ require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const { ShoppingCart } = require('../Models/ShoppingCartModel');
 const UserModel=require("../Models/UserModel")
-const YOUR_DOMAIN = 'http://localhost:3000';
+const YOUR_DOMAIN = 'http://localhost:3001';
 
 module.exports.checkout = async (req, res) => {
   try {

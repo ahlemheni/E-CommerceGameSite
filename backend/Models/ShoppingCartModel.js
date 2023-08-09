@@ -25,6 +25,10 @@ const cartSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  MethodePay: {
+    type: String,
+    default:'Unknown', 
+  },
   location: {
     type: String,
     default:'Unknown', 

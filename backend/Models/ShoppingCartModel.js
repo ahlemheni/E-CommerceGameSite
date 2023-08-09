@@ -33,6 +33,10 @@ const cartSchema = new mongoose.Schema({
     type: String,
     ref: 'userRole',
   },
+  date: {
+    type: Date,
+    default: Date.now, 
+  },
 });
 
 const ShoppingCart = mongoose.model('ShoppingCart', cartSchema);

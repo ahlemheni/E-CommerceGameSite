@@ -271,6 +271,8 @@ module.exports.history = async (req, res) => {
 module.exports.Cash= async(req,res)=>{
   const {Username,id,location}=req.body
   const {cartId}=req.params
+  const Newdate = new Date()
+
   try{
     const client= await UserModel.findOne({username:Username,_id:id})
     if(!client){
@@ -278,7 +280,7 @@ module.exports.Cash= async(req,res)=>{
     }
     else{
         ShoppingCart
-        .findByIdAndUpdate(cartId,{orderStatus:true,location:location})
+        .findByIdAndUpdate(cartId,{orderStatus:true,location:location,date:Newdate})
         .then(async ()=>{
           const userEmail = client.email; 
           try {

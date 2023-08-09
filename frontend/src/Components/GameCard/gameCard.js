@@ -121,7 +121,7 @@ console.log(localQuantity+1)
 <div className="col-md-4 col-sm-5">
     <div className="item">
       <div className="thumb">
-        <img src="assets/images/trending-01.jpg" alt="" />
+        <img src={props.game.image} alt="" />
         <span className="price">
           {props.game.price}$ <br/>
           {renderRating()}

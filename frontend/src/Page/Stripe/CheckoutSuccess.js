@@ -35,10 +35,8 @@ function CheckoutSuccess() {
       const items = response.data[0].items;
       setShoppingCart(items);
 
-      // Create a set to keep track of processed product IDs
       const processedProductIds = new Set();
 
-      // Filter out duplicate products and update the quantities only once for each product
       const uniqueItems = items.filter((item) => {
         if (!processedProductIds.has(item.product)) {
           processedProductIds.add(item.product);

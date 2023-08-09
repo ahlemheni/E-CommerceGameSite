@@ -82,11 +82,12 @@ function History() {
                   ID : {item._id}
                 </MDBTypography>
                 <div className="d-flex align-items-center justify-content-between">
-                  <p className="fw-bold mb-0 me-0"> <MDBIcon fas icon="map-marker-alt" /> Location: {item.location}</p>
-                
+                  <p className="fw-bold mb-0 me-0"> <MDBIcon fas icon="map-marker-alt" /> Location: {item.location}</p> <br/>
+
 
                 </div>
-              
+                <p className="fw-bold mb-0 me-0"> <MDBIcon fas icon="hand-holding-usd" /> Method of Payment: {item.MethodePay}</p>
+
               </div>
               <div >
 
@@ -118,14 +119,7 @@ function History() {
           return item.items.length > 0 && item._id === selectedTransactionId ? (
             item.items.map((cartItem) => (
               <div className="d-flex align-items-center my-3 mx-auto" key={cartItem._id}>
-                <div className="flex-shrink-0 me-4">
-                  <MDBCardImage
-                    src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/13.webp"
-                    fluid
-                    style={{ width: "150px" }}
-                    alt="Generic placeholder image"
-                  />
-                </div>
+               
                 <div className="d-flex flex-column">
                   <MDBTypography tag="h5" className="text-primary mb-2">
                     {cartItem.name}

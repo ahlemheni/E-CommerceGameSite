@@ -1,10 +1,37 @@
 
-
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import moment from 'moment';
 
 const  Dashboard = () => {
+  const [ShoppingCart, setShoppingCart] = useState([]);
 
+  const fetchShoppingCart = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/cart/all');
 
+      const paidShoppingHistory = response.data.filter((item) => item.MethodePay === "Cash");
+      const shoppingCartWithClientDetails = await Promise.all(
+        paidShoppingHistory.map(async (item) => {
+          const clientResponse = await axios.get(`http://localhost:5000/users/${item.client}`);
+          const client = clientResponse.data;
+  
+          return {
+            ...item,
+            clientEmail: client.email // Assuming the client's email property is named 'email'
+          };
+        })
+      );
+  
+      setShoppingCart(shoppingCartWithClientDetails);
+
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+  useEffect(() => {
+    fetchShoppingCart(); // Fetch products when the component mounts
+}, []);
   return (
     
    <div class="content">
@@ -75,70 +102,37 @@ const  Dashboard = () => {
       {/* Sales Chart End */}
       {/* Recent Sales Start */}
       <div className="container-fluid pt-4 px-4">
+        
+ 
         <div className="bg-secondary text-center rounded p-4">
           <div className="d-flex align-items-center justify-content-between mb-4">
-            <h6 className="mb-0">Recent Salse</h6>
-            <a href>Show All</a>
+            <h6 className="mb-0"> Status of cash delivery</h6>
           </div>
           <div className="table-responsive">
             <table className="table text-start align-middle table-bordered table-hover mb-0">
               <thead>
                 <tr className="text-white">
-                  <th scope="col"><input className="form-check-input" type="checkbox" /></th>
                   <th scope="col">Date</th>
-                  <th scope="col">Invoice</th>
+                  <th scope="col">ID Order</th>
+
                   <th scope="col">Customer</th>
                   <th scope="col">Amount</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><input className="form-check-input" type="checkbox" /></td>
-                  <td>01 Jan 2045</td>
-                  <td>INV-0123</td>
-                  <td>Jhon Doe</td>
-                  <td>$123</td>
-                  <td>Paid</td>
-                  <td><a className="btn btn-sm btn-primary" href>Detail</a></td>
+              {ShoppingCart.map((item, index) => (
+
+                <tr key={item._id}>
+                  <td>{moment(item.date).format('YYYY-MM-DD HH:mm:ss')}</td>
+
+                  <td>{item._id}</td>
+
+                  <td>{item.clientEmail}</td>
+                  <td>${item.totalprice}</td>
+                  <td>{item.PayStatus ? 'Paid' : 'Unpaid'}</td>
                 </tr>
-                <tr>
-                  <td><input className="form-check-input" type="checkbox" /></td>
-                  <td>01 Jan 2045</td>
-                  <td>INV-0123</td>
-                  <td>Jhon Doe</td>
-                  <td>$123</td>
-                  <td>Paid</td>
-                  <td><a className="btn btn-sm btn-primary" href>Detail</a></td>
-                </tr>
-                <tr>
-                  <td><input className="form-check-input" type="checkbox" /></td>
-                  <td>01 Jan 2045</td>
-                  <td>INV-0123</td>
-                  <td>Jhon Doe</td>
-                  <td>$123</td>
-                  <td>Paid</td>
-                  <td><a className="btn btn-sm btn-primary" href>Detail</a></td>
-                </tr>
-                <tr>
-                  <td><input className="form-check-input" type="checkbox" /></td>
-                  <td>01 Jan 2045</td>
-                  <td>INV-0123</td>
-                  <td>Jhon Doe</td>
-                  <td>$123</td>
-                  <td>Paid</td>
-                  <td><a className="btn btn-sm btn-primary" href>Detail</a></td>
-                </tr>
-                <tr>
-                  <td><input className="form-check-input" type="checkbox" /></td>
-                  <td>01 Jan 2045</td>
-                  <td>INV-0123</td>
-                  <td>Jhon Doe</td>
-                  <td>$123</td>
-                  <td>Paid</td>
-                  <td><a className="btn btn-sm btn-primary" href>Detail</a></td>
-                </tr>
+           ))}
               </tbody>
             </table>
           </div>

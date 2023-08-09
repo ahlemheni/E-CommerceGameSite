@@ -1,8 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 
 import { Link } from 'react-router-dom';
 function Sidebar(){
   const [activeLink, setActiveLink] = useState('');
+  const [cookies, setCookie, removeCookie] = useCookies(['sessionAdmin','Admin','idAdmin']);
+  const imageData = localStorage.getItem('imageData');
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -18,11 +21,11 @@ function Sidebar(){
         </Link>
         <div className="d-flex align-items-center ms-4 mb-4">
           <div className="position-relative">
-            <img className="rounded-circle" src="img/user.jpg" alt style={{width: 40, height: 40}} />
+            <img className="rounded-circle" src={imageData} alt style={{width: 40, height: 40}} />
             <div className="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1" />
           </div>
           <div className="ms-3">
-            <h6 className="mb-0">Jhon Doe</h6>
+            <h6 className="mb-0">{cookies.Admin}</h6>
             <span>Admin</span>
           </div>
         </div>

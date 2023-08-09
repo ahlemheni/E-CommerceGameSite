@@ -50,6 +50,8 @@ const Signin = () => {
           setCookie('sessionAdmin', sessionId, { path: '/'});
           setCookie('Admin', user.username, { path: '/'  });
           setCookie('idAdmin', user._id, { path: '/' });
+          localStorage.setItem('imageData', user.profileImage);
+
           alert('Welcome, ' + user.username);
           window.location.replace(`/Home`);
         }

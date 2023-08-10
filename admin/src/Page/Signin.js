@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
+import ResetPassword from './ResetPasword';
 
 
 
@@ -12,6 +13,8 @@ const Signin = () => {
   expirationDate.setTime(expirationDate.getTime() + 60 * 1000);
   const email = useRef();
   const password = useRef();
+  const [modalShow,setModalShow]=useState(false)
+
   const [errorMessage, setErrorMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false); 
   const [error, setError] = useState('');
@@ -19,11 +22,11 @@ const Signin = () => {
     setShowPassword(!showPassword);
   };
   useEffect(() => {
-    if (cookies.session) {
+    if (cookies.sessionAdmin) {
       navigate(`/Home`);
      
     }
-  }, [cookies.session, cookies.username, navigate]);
+  }, [cookies.sessionAdmin,navigate]);
 
   const handleLogin = () => {
     if (!email.current.value || !password.current.value) {
@@ -135,9 +138,10 @@ const Signin = () => {
    
     <button type="submit" className="btn btn-primary py-3 w-100 mb-4" onClick={handleLogin}>Sign In</button>
     <div className="d-flex align-items-center justify-content-between mb-4">
-      <Link to='http://localhost:3000/ResetPassword'>Forgot Password</Link>
-    </div>
-   
+      <Link onClick={() => setModalShow(true)}>Forgot Password</Link>
+    </div> 
+    <ResetPassword show={modalShow}
+      onHide={() => setModalShow(false)} />
   </div>
 </div>
 

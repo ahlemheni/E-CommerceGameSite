@@ -35,6 +35,7 @@ const Form = () => {
     };
     reader.readAsDataURL(file);
   };
+  
   const handleADD = () => {
   
 

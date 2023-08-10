@@ -68,12 +68,21 @@ module.exports.save= async(req,res)=>{
 module.exports.update= async(req,res)=>{
 
     const {_id,qty,image,price}= req.body
+    if(!image){
+      ProductModel
+      .findByIdAndUpdate(_id,{qty,price})
+      .then(()=>(res.send("product information updated SUCCESSFULLY...")))
+      .catch((err)=>{
+        console.log(`Error while updating info for product : ${_id} :${err}`)
+})
+    }
+    else{
     ProductModel
     .findByIdAndUpdate(_id,{qty,image,price})
     .then(()=>{res.send("product information updated sucessfully...")})
     .catch((err)=>{
             console.log(`Error while updating info for product : ${_id} :${err}`)
-    })
+    })}
 }
 
 

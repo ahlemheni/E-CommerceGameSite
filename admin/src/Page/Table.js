@@ -195,7 +195,8 @@ import {
                     aria-label="name"
                     aria-describedby="basic-addon1"
                     value={productid} // Use productid state here
-                    onChange={(e) => SetproductId(e.target.value)}
+                    
+                    disabled
                 />
               </div>
              

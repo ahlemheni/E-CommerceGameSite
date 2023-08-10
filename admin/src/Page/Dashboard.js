@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import {  MDBIcon } from 'mdb-react-ui-kit';
 
 const  Dashboard = () => {
   const [ShoppingCart, setShoppingCart] = useState([]);
@@ -114,7 +115,9 @@ const  Dashboard = () => {
 
                   <th scope="col">Customer</th>
                   <th scope="col">Amount</th>
-                  <th scope="col">Status</th>
+                  <th scope="col">Pay Status</th>
+                  <th scope="col">Status of delivery</th>
+
                 </tr>
               </thead>
               <tbody>
@@ -128,6 +131,8 @@ const  Dashboard = () => {
                   <td>{item.clientEmail}</td>
                   <td>${item.totalprice}</td>
                   <td>{item.PayStatus ? 'Paid' : 'Unpaid'}</td>
+                  <td style={{textAlign:"center"}}>{item.delivery ? <MDBIcon far icon="check-circle"  style={{color:"green"}}/> : <MDBIcon far icon="times-circle" style={{color:"red"}} />}</td>
+
                 </tr>
            ))}
               </tbody>

@@ -75,24 +75,19 @@ const Signin = () => {
       }
     };
   
-    // Add the event listener to the document
     document.addEventListener('keydown', handleKeyPress);
   
-    // Clean up the event listener when the component unmounts
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
     };
   }, []);
   useEffect(() => {
     const handlePopstate = () => {
-      // Rétablir l'URL précédente et empêcher le retour en arrière
       window.history.pushState(null, '', '/Home');
     };
 
-    // Écouter l'événement popstate lorsque le composant est monté
     window.addEventListener('popstate', handlePopstate);
 
-    // Nettoyer l'écouteur d'événement lors du démontage du composant
     return () => {
       window.removeEventListener('popstate', handlePopstate);
     };
@@ -127,7 +122,7 @@ const Signin = () => {
       ref={password}
       style={{  
       height: "100%",
-     }} // Give space for the icon
+     }} 
     />
     <label htmlFor="password">Password</label>
   

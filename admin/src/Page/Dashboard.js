@@ -26,8 +26,7 @@ const  Dashboard = () => {
         })
       );
   
-      setShoppingCart(shoppingCartWithClientDetails);
-
+      setShoppingCart( shoppingCartWithClientDetails.reverse());
     } catch (error) {
       console.error('Error fetching cart data:', error);
     }

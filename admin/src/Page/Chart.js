@@ -1,58 +1,37 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import Revenus from './Revenus';
+import ProductsQuantityChart from './ProductsQuantityChart';
 
 const Chart = () => {
   return (
     <div className="container-fluid position-relative d-flex p-0">
-     <div class="content">
+    <div class="content">
       <div className="container-fluid pt-4 px-4">
-        <div className="row g-4">
-          <div className="col-sm-12 col-xl-6">
-            <div className="bg-secondary rounded h-100 p-4">
-              <h6 className="mb-4">Single Line Chart</h6>
-              <canvas id="line-chart" />
+        <div className="row">
+  
+            <div className="col-sm-10 col-xl-6">
+              <div className="bg-secondary rounded h-100 p-4">
+                <h6 className="mb-4">MonthlyRevenue</h6>
+                <Revenus/>
+              </div>
             </div>
-          </div>
-          <div className="col-sm-12 col-xl-6">
-            <div className="bg-secondary rounded h-100 p-4">
-              <h6 className="mb-4">Multiple Line Chart</h6>
-              <canvas id="salse-revenue" />
-            </div>
-          </div>
-          <div className="col-sm-12 col-xl-6">
-            <div className="bg-secondary rounded h-100 p-4">
-              <h6 className="mb-4">Single Bar Chart</h6>
-              <canvas id="bar-chart" />
-            </div>
-          </div>
-          <div className="col-sm-12 col-xl-6">
-            <div className="bg-secondary rounded h-100 p-4">
-              <h6 className="mb-4">Multiple Bar Chart</h6>
-              <canvas id="worldwide-sales" />
-            </div>
-          </div>
-          <div className="col-sm-12 col-xl-6">
-            <div className="bg-secondary rounded h-100 p-4">
-              <h6 className="mb-4">Pie Chart</h6>
-              <canvas id="pie-chart" />
-            </div>
-          </div>
-          <div className="col-sm-12 col-xl-6">
-            <div className="bg-secondary rounded h-100 p-4">
-              <h6 className="mb-4">Doughnut Chart</h6>
-              <canvas id="doughnut-chart" />
-            </div>
+          
+          {/* Ajoutez une classe de marge pour créer de l'espace */}
+  
+            <div className="col-sm-10 col-xl-6">
+              <div className="bg-secondary rounded h-100 p-4">
+                <h6 className="mb-4">ProductsQuantity</h6>
+                <ProductsQuantityChart/>
+              </div>
           </div>
         </div>
       </div>
       <div>
       </div>
-      </div>
-   
-    <Link  to="#" className="btn btn-lg btn-primary btn-lg-square back-to-top"><i className="bi bi-arrow-up" /></Link>
+    </div>
+  </div>
   
- 
-</div>
 
   )
 }

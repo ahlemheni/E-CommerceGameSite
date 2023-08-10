@@ -15,5 +15,6 @@ router.get('/cart/history',ShoppingController.history)
 router.post('/Cash/:cartId',ShoppingController.Cash)
 router.get('/admin/Monthlyrevenue',ShoppingController.Monthlyrevenue)
 router.get('/admin/Dailyrevenue',ShoppingController.DailyRevenue)
+router.get('/admin/ProductsQuantity',ShoppingController.ProductsQuantity)
 
 module.exports = router;

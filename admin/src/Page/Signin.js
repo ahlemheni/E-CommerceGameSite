@@ -101,6 +101,9 @@ const Signin = () => {
     }
   }, []);
   return (
+    <div style={{backgroundImage: "url('img/Black and Blue Modern Gradient Zoom Virtual Background.png')",  backgroundSize: "cover", backgroundRepeat: "no-repeat",backgroundPosition: "center"}}>
+      
+   
 <div className="container-fluid position-relative d-flex align-items-center justify-content-center min-vh-100">
   <div className="bg-secondary rounded p-4 p-sm-5 mx-3" style={{ maxWidth: "450px", width: "80%" }}>
     <div className="d-flex align-items-center justify-content-between mb-3">
@@ -145,7 +148,7 @@ const Signin = () => {
   </div>
 </div>
 
-
+</div>
   
    
   )

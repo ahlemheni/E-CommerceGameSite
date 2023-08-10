@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import {  MDBIcon } from 'mdb-react-ui-kit';
+import { Chart } from 'chart.js/auto';
+import Revenus from './Revenus';
 
 const  Dashboard = () => {
   const [ShoppingCart, setShoppingCart] = useState([]);
   const [totalRevenue, settotalRevenue] = useState();
   const [total, settotal] = useState();
-
+  useEffect(() => {
   const fetchShoppingCart = async () => {
     try {
       const response = await axios.get('http://localhost:5000/cart/all');
@@ -42,10 +44,14 @@ const  Dashboard = () => {
       console.error('Error fetching cart data:', error);
     }
   };
-  useEffect(() => {
+
+  
+
     fetchShoppingCart();
-    fetchDailyRevenue(); // Fetch products when the component mounts
-}, []);
+    fetchDailyRevenue();
+  }, []);
+
+
   return (
     
    <div class="content">
@@ -74,28 +80,7 @@ const  Dashboard = () => {
         </div>
       </div>
      
-      <div className="container-fluid pt-4 px-4">
-        <div className="row g-4">
-          <div className="col-sm-12 col-xl-6">
-            <div className="bg-secondary text-center rounded p-4">
-              <div className="d-flex align-items-center justify-content-between mb-4">
-                <h6 className="mb-0">Worldwide Sales</h6>
-                <a href>Show All</a>
-              </div>
-              <canvas id="worldwide-sales" />
-            </div>
-          </div>
-          <div className="col-sm-12 col-xl-6">
-            <div className="bg-secondary text-center rounded p-4">
-              <div className="d-flex align-items-center justify-content-between mb-4">
-                <h6 className="mb-0">Salse &amp; Revenue</h6>
-                <a href>Show All</a>
-              </div>
-              <canvas id="salse-revenue" />
-            </div>
-          </div>
-        </div>
-      </div>
+   
       {/* Sales Chart End */}
       {/* Recent Sales Start */}
       <div className="container-fluid pt-4 px-4">

@@ -868,9 +868,14 @@ module.exports.order=async (req,res)=>{
   })
 }
 
-module.exports.Monthlyrevenue= async ( req,res)=>{
+module.exports.Monthlyrevenue = async (req, res) => {
   try {
     const revenueByMonth = await ShoppingCart.aggregate([
+      {
+        $match: {
+          PayStatus: true // Filter documents with PayStatus true
+        }
+      },
       {
         $project: {
           year: { $year: '$date' },
@@ -889,12 +894,13 @@ module.exports.Monthlyrevenue= async ( req,res)=>{
       },
     ]);
 
-    res.send(revenueByMonth)
+    res.send({ revenueByMonth });
   } catch (error) {
-    console.log("error encountered....")
+    console.log("error encountered....");
     throw error;
   }
 };
+
 module.exports.DailyRevenue = async (req, res) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0); // Set the time to the beginning of the day
@@ -942,5 +948,29 @@ module.exports.DailyRevenue = async (req, res) => {
   }
 };
 
+module.exports.ProductsQuantity = async (req, res) => {
+  try {
+    const soldProducts = await ShoppingCart.aggregate([
+      {
+        $match: { PayStatus: true } // Filtrer les paniers avec PayStatus à true
+      },
+      {
+        $unwind: '$items'
+      },
+      {
+        $group: {
+          _id: '$items.name', // Grouper par nom du produit
+
+          totalQuantitySold: { $sum: '$items.quantity' }
+        }
+      }
+    ]);
+
+    res.json({ soldProducts });
+  } catch (error) {
+    console.error('Error calculating sold quantity:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
 
 

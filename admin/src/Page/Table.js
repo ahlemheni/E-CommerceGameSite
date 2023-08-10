@@ -1,24 +1,8 @@
 import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import {
-    MDBCard,
-    MDBCardBody,
-    MDBCardImage,
-    MDBCol,
-    MDBContainer,
-    MDBIcon,
-    MDBInput,
-    MDBRow,
-    MDBBtn,
-    MDBModal,
-    MDBModalDialog,
-    MDBModalContent,
-    MDBModalHeader,
-    MDBModalTitle,
-    MDBModalBody,
-    MDBModalFooter,
-  } from "mdb-react-ui-kit";
+import { MDBIcon } from "mdb-react-ui-kit";
+  import Modal from 'react-bootstrap/Modal'; 
 
     const Table = () => {
         const [errorMessage, setErrorMessage] = useState('');
@@ -30,6 +14,7 @@ import {
         const [quantity, setquantity] = useState('');
         const [pic, setPic] = useState(null);
         const [productid,SetproductId]=useState('')
+  
         const handleImagePreview = (pic) => {
    
             const reader = new FileReader();
@@ -83,12 +68,18 @@ import {
                     }
                 });
         };
+        const handleCloseModal = () => {
+         
+          setShowUpdateModal(false);
+      
+        };
         const handleOpenUpdateModal = (productId) => {
             const productToUpdate = products.find(product => product._id === productId);
             setSelectedProduct(productToUpdate);
             SetproductId(productToUpdate._id);
             setprice(productToUpdate.price); // Set the price state with the selected product's price
-            setquantity(productToUpdate.qty); // Set the quantity state with the selected product's quantity
+            setquantity(productToUpdate.qty); 
+            setImagePreview(productToUpdate.image)
             setShowUpdateModal(true);
           };
     const handleUpdateProduct =()=>{
@@ -100,9 +91,24 @@ import {
         }
         axios.post('http://localhost:5000/product/update',UpdateData)
         .then(response=>{
-            setShowUpdateModal(false)
-            handleRetrieveProduct()
-
+          setShowUpdateModal(false);
+alert("Updated  successfully....")
+          const updatedProductIndex = products.findIndex(
+            (product) => product._id === productid
+          );
+  
+          if (updatedProductIndex !== -1) {
+            const updatedProducts = [...products];
+            updatedProducts[updatedProductIndex] = {
+              ...updatedProducts[updatedProductIndex],
+              qty: UpdateData.qty,
+              price: UpdateData.price,
+              image: UpdateData.image,
+              // Update other fields as needed
+            };
+  
+            setProducts(updatedProducts);
+          }
         })
         .catch((error)=>{
             if (error.response) {
@@ -163,29 +169,18 @@ import {
                  Update
                 </button>
             </td>
-        </tr>
-    ))}
-</tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <MDBModal show={showUpdateModal} tabIndex="-1">
-  <MDBModalDialog>
-    <MDBModalContent>
-      <MDBModalHeader>
-     
-        <MDBBtn
-          className="btn-close"
-          color="none"
-          onClick={() => setShowUpdateModal(false)}
-        ></MDBBtn>
-      </MDBModalHeader>
-      <MDBModalBody>
+            <Modal show={showUpdateModal} tabIndex="-1"onHide={handleCloseModal} >
+    
+      <Modal.Header closeButton style={{backgroundColor:" rgba(0,0,0,0.07055322128851538)"}}>
+      <Modal.Title className="text-center w-100">
+
+      <h4  style={{textAlign:"center", color:'black'}}> <MDBIcon fas icon="plus" /> Update Product</h4>
+
+      </Modal.Title>
+
+      </Modal.Header>
+      <Modal.Body>
       
-              <h4 className="mb-4" style={{textAlign:"center", color:'black'}}> <MDBIcon fas icon="plus" /> Update Product</h4>
               <div className="input-group mb-5">
                 <span className="input-group-text" id="basic-addon1"><MDBIcon fas icon="terminal" /></span>
                 <input
@@ -196,6 +191,7 @@ import {
                     aria-describedby="basic-addon1"
                     value={productid} // Use productid state here
                     onChange={(e) => SetproductId(e.target.value)}
+                    readOnly
                 />
               </div>
              
@@ -220,10 +216,10 @@ import {
                    />
 
               </div>
-             
 
-              <div className="input-group mb-5">
-              <span className="input-group-text" id="basic-addon2"><MDBIcon far icon="images" /></span>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+
+
 
               <input className="input-group-text"
                type="file"
@@ -232,32 +228,42 @@ import {
                   accept="image/png, image/jpeg" 
                   style={{backgroundColor:"black"}}
                   onChange={(e) => {
-                    setPic(e.target.files[0]);
+                    setImagePreview(e.target.files[0]);
                     handleImagePreview(e);
                   }}
                    />
+
                     {imagePreview && (
-                      <img src={imagePreview} alt="Preview" style={{ marginTop: '10px', maxWidth: '200px', borderRadius: '50%' }} />
+                      <img src={imagePreview} alt="Preview" style={{ maxWidth: '200px', borderRadius: '50%' }} />
                     )}
               </div>
-           
+
              
               <br/>
               {errorMessage && <div className="text-danger mb-3">{errorMessage}</div>}
              
 
-      </MDBModalBody>
-      <MDBModalFooter>
-        <MDBBtn color="secondary" onClick={() => setShowUpdateModal(false)}>
-          Cancel
-        </MDBBtn>
-        <MDBBtn color="primary" onClick={()=>handleUpdateProduct()}>
-          Update
-        </MDBBtn>
-      </MDBModalFooter>
-    </MDBModalContent>
-  </MDBModalDialog>
-</MDBModal>
+      </Modal.Body>
+      <Modal.Footer style={{ display: 'flex', justifyContent: 'space-between' ,backgroundColor:" rgba(0,0,0,0.2638305322128851)"}} >
+        <button className="btn btn-outline-danger" style={{ borderRadius: 30}} onClick={() => setShowUpdateModal(false)}>
+        <MDBIcon fas icon="times-circle" />  Cancel
+        </button>
+        <button className="btn btn-outline-success" style={{ borderRadius: 30}}  onClick={()=>handleUpdateProduct()}>
+        <MDBIcon far icon="edit" /> Update
+        </button>
+      </Modal.Footer>
+</Modal>
+        </tr>
+        
+    ))}
+</tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
             </div>
         <Link to="#" className="btn btn-lg btn-primary btn-lg-square back-to-top"><i className="bi bi-arrow-up"></i></Link>
     </div>

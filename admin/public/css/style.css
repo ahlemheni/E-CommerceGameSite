@@ -82,7 +82,17 @@
     background: var(--dark);
     transition: 0.5s;
 }
-
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    padding: 1rem;
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
 @media (min-width: 992px) {
     .sidebar {
         margin-left: 0;

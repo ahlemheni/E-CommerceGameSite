@@ -3,7 +3,7 @@ function Footer(){
     return(
     
   
-      <div className="content">
+      <div className="content" >
       <div className="container-fluid pt-4 px-4">
       <div className="bg-secondary rounded-top p-4">
         <div className="row">

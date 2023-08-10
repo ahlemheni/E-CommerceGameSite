@@ -38,7 +38,7 @@ function Sidebar(){
            <Link  to="/Home/Table" className={`nav-item nav-link ${activeLink === '/Home/Table' ? 'active' : ''}`}  onClick={() => handleLinkClick('/Home/Table')}><i className="fa fa-table me-2" />Tables Of Product</Link>
            <Link to="/Home/Form" className={`nav-item nav-link ${activeLink === '/Home/Form' ? 'active' : ''}`}  onClick={() => handleLinkClick('/Home/Form')}><i className="fa fa-keyboard me-2" />ADD Product</Link>
 
-          <Link to="/Home/Chart" className={`nav-item nav-link ${activeLink === '/Home/Chart' ? 'active' : ''}`}  onClick={() => handleLinkClick('/Home/Chart')}><i className="fa fa-chart-bar me-2" />income</Link>
+          <Link to="/Home/Chart" className={`nav-item nav-link ${activeLink === '/Home/Chart' ? 'active' : ''}`}  onClick={() => handleLinkClick('/Home/Chart')}><i className="fa fa-chart-bar me-2" />Income</Link>
      
         </div>
       

@@ -119,7 +119,7 @@ function History() {
           return item.items.length > 0 && item._id === selectedTransactionId ? (
             item.items.map((cartItem) => (
               <div className="d-flex align-items-center my-3 mx-auto" key={cartItem._id}>
-               
+                
                 <div className="d-flex flex-column">
                   <MDBTypography tag="h5" className="text-primary mb-2">
                     {cartItem.name}

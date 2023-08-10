@@ -53,13 +53,11 @@ module.exports.save= async(req,res)=>{
     const {name,description,category,qty,image,game_title,price,genre} = req.body
     try{
       const Genrename= await GenreModel.findOne({name:genre})
-      console.log(Genrename._id)
       let Objectid=Genrename._id
     ProductModel
     .create({name,description,category,qty,image,game_title,price,genre:Objectid})
     .then((data)=>{
         console.log("Product has been added to the inventory...")
-        console.log(data)
         res.send(data);
     })}
     catch(err){
@@ -100,10 +98,7 @@ module.exports.findone = async (req, res) => {
 
         _id: id
       });
-      console.log(product)
       const reviews = await ReviewModel.find({ productId:product._id });
-      console.log(product);
-      console.log(reviews); 
       if (!product) {
         res.status(404).json({ error: 'Product not found' });
       } else {

@@ -5,6 +5,8 @@ import moment from 'moment';
 
 const  Dashboard = () => {
   const [ShoppingCart, setShoppingCart] = useState([]);
+  const [totalRevenue, settotalRevenue] = useState();
+  const [total, settotal] = useState();
 
   const fetchShoppingCart = async () => {
     try {
@@ -18,7 +20,7 @@ const  Dashboard = () => {
   
           return {
             ...item,
-            clientEmail: client.email // Assuming the client's email property is named 'email'
+            clientEmail: client.email
           };
         })
       );
@@ -29,8 +31,20 @@ const  Dashboard = () => {
       console.error('Error fetching cart data:', error);
     }
   };
+  const fetchDailyRevenue = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/admin/Dailyrevenue');
+
+      settotalRevenue(response.data.dailyRevenue)
+      settotal(response.data.total )
+
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
   useEffect(() => {
-    fetchShoppingCart(); // Fetch products when the component mounts
+    fetchShoppingCart();
+    fetchDailyRevenue(); // Fetch products when the component mounts
 }, []);
   return (
     
@@ -38,42 +52,25 @@ const  Dashboard = () => {
   
       <div className="container-fluid pt-4 px-4">
         <div className="row g-4">
-          <div className="col-sm-6 col-xl-3">
+          <div className="col-sm-12 col-xl-6">
             <div className="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
               <i className="fa fa-chart-line fa-3x text-primary" />
               <div className="ms-3">
                 <p className="mb-2">Today Sale</p>
-                <h6 className="mb-0">$1234</h6>
+                <h6 className="mb-0">$ {totalRevenue}</h6>
               </div>
             </div>
           </div>
-          <div className="col-sm-6 col-xl-3">
+          <div className="col-sm-12 col-xl-6">
             <div className="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
               <i className="fa fa-chart-bar fa-3x text-primary" />
               <div className="ms-3">
                 <p className="mb-2">Total Sale</p>
-                <h6 className="mb-0">$1234</h6>
+                <h6 className="mb-0">$ {total}</h6>
               </div>
             </div>
           </div>
-          <div className="col-sm-6 col-xl-3">
-            <div className="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-              <i className="fa fa-chart-area fa-3x text-primary" />
-              <div className="ms-3">
-                <p className="mb-2">Today Revenue</p>
-                <h6 className="mb-0">$1234</h6>
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-6 col-xl-3">
-            <div className="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-              <i className="fa fa-chart-pie fa-3x text-primary" />
-              <div className="ms-3">
-                <p className="mb-2">Total Revenue</p>
-                <h6 className="mb-0">$1234</h6>
-              </div>
-            </div>
-          </div>
+         
         </div>
       </div>
      

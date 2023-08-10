@@ -71,7 +71,6 @@ const Card = () => {
     try {
       const response = await axios.get('http://localhost:5000/cart/user', { params: { IdUser: cookies.id } });
       setIsLoading(false);
-      console.log(response.data[0]);
       setCardId(response.data[0]._id);
       setCookie('CardId', response.data[0]._id, { path: '/' });
 
@@ -108,7 +107,6 @@ const Card = () => {
       const productResponse = await axios.get('http://localhost:5000/product/one', { params: { id: cartItem.product } });
       const productQty = productResponse.data.qty;
       setproductQty(productResponse.data.qty);
-  console.log(productQty)
 
       if (cartItem.quantity < productQty) {
 
@@ -214,19 +212,14 @@ const Card = () => {
                         <MDBCard className="rounded-5 mb-1"  style={{backgroundColor:"rgba(0,0,0,0.7008053221288515)"}}>
                           <MDBCardBody className="p-3">
                             <MDBRow className="justify-content-between align-items-center">
-                              <MDBCol md="1" lg="1" xl="2">
-                                <MDBCardImage className="rounded-3" fluid
-                                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                                  alt="Cotton T-shirt"
-                                />
-                              </MDBCol>
-                              <MDBCol md="2" lg="2" xl="3">
+                           
+                              <MDBCol md="5" lg="4" xl="4" className="ml-4">
                                 <p className="lead fw-normal mb-3" style={{ color: 'rgba(255,101,182,0.8380602240896359)', fontFamily: 'Comic Sans MS',fontSize:"25px" }}>{item.name}</p>
                                 <p style={{  color: 'rgba(255,255,255,0.7512254901960784)',fontFamily: 'Comic Sans MS',fontSize:"15px",fontWeight:"bold" }}>
                                   <span style={{  color: '#fff',fontFamily: 'Comic Sans MS',fontSize:"15px" }}>Price/U : </span>{item.price} $
                                 </p>
                               </MDBCol>
-                              <MDBCol md="1" lg="1" xl="2" className="d-flex align-items-center justify-content-around">
+                              <MDBCol md="4" lg="4" xl="2" className="d-flex align-items-center justify-content-around">
                               <button className="btn btn-outline-primary btn-sm" onClick={() => handleDecrement(item._id)}>
                                   <MDBIcon fas icon="minus" />
                                 </button>

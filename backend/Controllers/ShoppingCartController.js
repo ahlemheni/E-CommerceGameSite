@@ -51,7 +51,7 @@ module.exports.save = async (req, res) => {
       const cartItems = [];
 
       for (const item of items) {
-        const { product, name, quantity, price } = item;
+        const { product, name, quantity, price} = item;
         const productExists = await ProductModel.findById(product);
         if (!productExists) {
           return res.status(400).json({ error: 'Product not found' });
@@ -61,6 +61,7 @@ module.exports.save = async (req, res) => {
           name,
           quantity,
           price,
+          
         });
         cartItems.push(cartItem);
       }
@@ -101,6 +102,7 @@ module.exports.save = async (req, res) => {
             name,
             quantity,
             price,
+            
           });
           cart.items.push(cartItem);
         }
@@ -206,7 +208,6 @@ module.exports.get =  async (req,res)=>{
 }
 module.exports.findone= async(req,res)=>{
     const { id,username } = req.body;
-    console.log(username, id);
 
    
     try {
@@ -216,7 +217,6 @@ module.exports.findone= async(req,res)=>{
             client:username
 
         });
-        console.log(shoppingcart);
         if (!shoppingcart) {
             res.status(404).json({ error: 'there is no shopping cart for this user' });
         } else {
@@ -293,7 +293,6 @@ module.exports.Cash= async(req,res)=>{
           if (shopping && shopping.items) {
             // Shopping cart found and has items
             const items = shopping.items;
-            console.log(items);
             const emailMessage = `<!DOCTYPE html>
             <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
             
@@ -914,8 +913,18 @@ module.exports.DailyRevenue= async ( req,res)=>{
         },
       },
     ]);
-  
-    res.send(revenueForToday);
+    const totalOfTotalPrice = await ShoppingCart.aggregate([
+      {
+        $group: {
+          _id: null,
+          total: { $sum: '$totalprice' },
+        },
+      },
+    ]);
+    const dailyRevenue = revenueForToday.length > 0 ? revenueForToday[0].totalRevenue : 0;
+    const total = totalOfTotalPrice.length > 0 ? totalOfTotalPrice[0].total : 0;
+    res.send({ dailyRevenue, total });
+
   } catch (error) {
     console.log("Error encountered:", error);
     res.status(500).json({ error: "Internal server error" });

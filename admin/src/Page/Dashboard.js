@@ -66,7 +66,7 @@ const  Dashboard = () => {
             <div className="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
               <i className="fa fa-chart-bar fa-3x text-primary" />
               <div className="ms-3">
-                <p className="mb-2">Total Sale</p>
+                <p className="mb-2">Year's Sales</p>
                 <h6 className="mb-0">$ {total}</h6>
               </div>
             </div>

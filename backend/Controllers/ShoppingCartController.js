@@ -895,7 +895,7 @@ module.exports.Monthlyrevenue= async ( req,res)=>{
     throw error;
   }
 };
-module.exports.DailyRevenue= async ( req,res)=>{
+module.exports.DailyRevenue = async (req, res) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0); // Set the time to the beginning of the day
   
@@ -904,6 +904,7 @@ module.exports.DailyRevenue= async ( req,res)=>{
       {
         $match: {
           date: { $gte: today }, // Filter documents with date greater than or equal to today
+          PayStatus: true, // Additional condition
         },
       },
       {
@@ -913,21 +914,33 @@ module.exports.DailyRevenue= async ( req,res)=>{
         },
       },
     ]);
-    const totalOfTotalPrice = await ShoppingCart.aggregate([
+    
+    const revenueByYear = await ShoppingCart.aggregate([
+      {
+        $match: {
+          PayStatus: true, // Additional condition
+        },
+      },
       {
         $group: {
-          _id: null,
+          _id: { $year: '$date' }, // Group by year
           total: { $sum: '$totalprice' },
         },
       },
+      {
+        $sort: { _id: 1 }, // Sort the results by year in ascending order
+      },
     ]);
+    
     const dailyRevenue = revenueForToday.length > 0 ? revenueForToday[0].totalRevenue : 0;
-    const total = totalOfTotalPrice.length > 0 ? totalOfTotalPrice[0].total : 0;
+    const total = revenueByYear.reduce((acc, yearData) => acc + yearData.total, 0);
+    
     res.send({ dailyRevenue, total });
-
   } catch (error) {
     console.log("Error encountered:", error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
+
+
 

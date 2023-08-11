@@ -1005,6 +1005,7 @@ Featured Games Style
 
 .featured-games .item img {
   border-radius: 23px;
+  
 }
 
 .featured-games .item h4 {
@@ -1201,6 +1202,15 @@ Live Stream Style
 
 .live-stream .thumb img {
   border-radius: 23px; 
+
+}
+.thumb-img{
+  
+    width: 100%; /* Définissez la largeur souhaitée */
+    height: 200px; /* Définissez la hauteur souhaitée */
+    border-radius: 23px; 
+    display: block;
+    margin: 0 auto;
 }
 
 .live-stream .thumb:hover .hover-effect {

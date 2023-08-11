@@ -1,24 +1,31 @@
+import React from 'react';
 
-function Footer(){
-    return(
-    
-  
-      <div className="content" >
+const Footer = () => {
+  const footerStyle = {
+    position: 'fixed',
+    bottom: 0,
+    right:0,
+    width:"84%",
+    boxShadow: '0px -1px 5px rgba(0, 0, 0, 0.1)', // Optional: Add a subtle shadow
+  };
+
+  return (
+    <div >
       <div className="container-fluid pt-4 px-4">
-      <div className="bg-secondary rounded-top p-4">
-        <div className="row">
-          <div className="col-12 col-sm-6 text-center text-sm-start">
-            © <a href="#">Your Site Name</a>, All Right Reserved. 
-          </div>
-          <div className="col-12 col-sm-6 text-center text-sm-end">
-            {/*/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. *** /*/}
-            Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-            <br />Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+        <div className="bg-secondary rounded-top p-4" style={footerStyle}>
+          <div className="row">
+            <div className="col-12 col-sm-6 text-center text-sm-start">
+              © <a href="#">Gamer's Zone</a>, All Right Reserved.
+            </div>
+            <div className="col-12 col-sm-6 text-center text-sm-end">
+              Designed By <a href="https:/Swiftcode.com">Swiftcode</a>
+              <br />Distributed By: <a href="https://Swiftcode.com" target="_blank">Swiftcode</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
-);
-    }
-    export default Footer
+  );
+};
+
+export default Footer;

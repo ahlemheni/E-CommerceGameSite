@@ -128,7 +128,7 @@ alert("Updated  successfully....")
                   
                     <div className="col-12">
                         <div className="bg-secondary rounded h-100 p-4">
-                            <h6 className="mb-4">Responsive Table</h6>
+                            <h6 className="mb-4">Product's list</h6>
                             <div className="table-responsive">
                                 <table className="table">
                                     <thead>
@@ -266,7 +266,7 @@ alert("Updated  successfully....")
             </div>
         
             </div>
-        <Link to="#" className="btn btn-lg btn-primary btn-lg-square back-to-top"><i className="bi bi-arrow-up"></i></Link>
+       
     </div>
 
 

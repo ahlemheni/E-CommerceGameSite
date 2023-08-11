@@ -18,7 +18,7 @@ const  Dashboard = () => {
       const paidShoppingHistory = response.data.filter((item) => item.MethodePay === "Cash");
       const shoppingCartWithClientDetails = await Promise.all(
         paidShoppingHistory.map(async (item) => {
-          const clientResponse = await axios.get(`http://localhost:5000/users/${item.client}`);
+          const clientResponse = await axios.get(`http://localhost:5000/users/one`, { params: { id: item.client } });
           const client = clientResponse.data;
   
           return {

@@ -1,9 +1,11 @@
 const nodemailer = require('nodemailer');
+require('dotenv').config();
+
 const transporter = nodemailer.createTransport({
     service: 'gmail', // You can use other services like 'SMTP', 'SendGrid', etc.
     auth: {
-      user: 'chattichiheb35@gmail.com', // Replace with your Gmail username or email
-      pass: 'ejgjzihlqtctemup', // Replace with your Gmail password
+      user: process.env.user, // Replace with your Gmail username or email
+      pass: process.env.pass, // Replace with your Gmail password
     },
   });
 module.exports.contact = async (req, res) => {
@@ -13,7 +15,7 @@ module.exports.contact = async (req, res) => {
   
       const mailOptions = {
         from: emailInput,
-        to:'chattichiheb35@gmail.com',
+        to:'swiftcodeentreprise@gmail.com',
         subject: `  Contact Form Message from : ${usernameInput}`,
         html: `<!DOCTYPE html>
         <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">

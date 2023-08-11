@@ -151,9 +151,17 @@ name="genre"
   <option className="input-group-text" value="">--Please choose an option--</option>
   <option value="FPS">FPS</option>
   <option value="MMORPG">MMORPG</option>
-  
+
+  <option value="Action">Action</option>
+  <option value="Adventure">Adventure</option>
+  <option value="Horror">Horror</option>
+  <option value="Strategy">Strategy</option>
+  <option value="Puzzle">Puzzle</option>
+  <option value="Sport">Sport</option>
+
 </select>
-<span className="input-group-text">Categorie</span>
+
+<span className="input-group-text">Category</span>
 
 <select name="Categorie" 
 id="Categorie-select"
@@ -184,11 +192,11 @@ id="Categorie-select"
                     handleImagePreview(e);
                   }}
                    />
-                    {imagePreview && (
-                      <img src={imagePreview} alt="Preview" style={{ marginTop: '10px', maxWidth: '200px', borderRadius: '50%' }} />
-                    )}
+                   
               </div>
-           
+              {imagePreview && (
+                      <img src={imagePreview} alt="Preview" style={{  maxWidth: '200px', borderRadius: '50%' }} />
+                    )}
               <div className="input-group ">
                 <span className="input-group-text">Description</span>
                 <textarea

@@ -153,7 +153,11 @@ alert("Updated  successfully....")
             <td>{product.category}</td>
             <td>{product.game_title}</td>
             <td>{product.genre.name}</td>
-            <td>{product.description}</td>
+            <td>
+  {product.description.length > 70
+    ? product.description.substring(0, 70) + "..."
+    : product.description}
+</td>
             <td>{product.price}$</td>
             <td>
                 <button

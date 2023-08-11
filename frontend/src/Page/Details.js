@@ -51,17 +51,19 @@ const handleAddToCart = () => {
 
       <Modal.Body className='body' >
         <div className='main'> 
-                <div className='img-container'>  
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+
                 <img src={props.img} alt='product image' style={{maxWidth:"300px"}}/> 
 <Rating
     IDProduct={props.ID}
 
 />
-                </div> 
+</div> 
+
                 <div className='product-details-container'> 
                 <p>Name : <span>{props.name}</span></p> 
                 <p >
-  descr:<span style={props.desc.length > 20 ? { fontSize: '10px' } : null}>{props.desc}</span>
+  descr:<span style={props.desc.length > 20 ? { fontSize: '15px' } : null}>{props.desc}</span>
 </p> 
                   <p>category :<span>{props.cat}</span></p> 
                 <p>game title :<span>{props.game_name}</span></p> 
@@ -80,22 +82,28 @@ const handleAddToCart = () => {
             {props.qte === 0 ? (
         <></>
              ) : (
-                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-
-              <MDBCol  className="d-flex align-items-center justify-content-around">
+              <div className="d-flex align-items-center gap-2">
               <button className="btn btn-outline-primary btn-sm" onClick={handleDecrement}>
-                  <MDBIcon fas icon="minus" />
-                </button>
-                <MDBInput style={{  fontFamily: 'Comic Sans MS',fontSize:"15px",textAlign:"center" }} readOnly value={localQuantity} type="number" size="sm"  onChange={(e) => setLocalQuantity(parseInt(e.target.value))} />
-                <button className="btn btn-outline-primary btn-sm" onClick={handleIncrement}>
-                  <MDBIcon fas icon="plus" />
-                </button>
-              </MDBCol> 
-
+                <MDBIcon fas icon="minus" />
+              </button>
+              <MDBInput
+                style={{ fontFamily: 'Comic Sans MS', fontSize: "15px", textAlign: "center" }}
+                readOnly
+                value={localQuantity}
+                type="number"
+                size="sm"
+                onChange={(e) => setLocalQuantity(parseInt(e.target.value))}
+              />
+              <button className="btn btn-outline-primary btn-sm" onClick={handleIncrement}>
+                <MDBIcon fas icon="plus" />
+              </button>
+            
               <button className="btn btn-outline-success" onClick={handleAddToCart}>
-              <i className="fa fa-shopping-bag"></i> Add To Cart
-            </button>
+                <i className="fa fa-shopping-bag"></i> Add To Cart
+              </button>
             </div>
+            
+            
 
           )}
 

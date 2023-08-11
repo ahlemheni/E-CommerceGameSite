@@ -3,7 +3,7 @@ const router=express.Router()
 const UserController = require("../Controllers/UserController")
 
 router.get('/',UserController.get)
-router.get('/users/:id', UserController.findOne);
+router.get('/users/one', UserController.findOne);
 
 router.post('/save',UserController.save)
 router.put('/update/:id', UserController.update);

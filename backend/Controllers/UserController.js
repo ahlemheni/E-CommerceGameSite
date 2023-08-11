@@ -15,7 +15,7 @@ module.exports.get= async(req,res)=>{
        
 }
 module.exports.findOne = (req, res) => {
-  const {  id } = req.params;
+  const {  id } = req.query;
 
   UserModel.findById(id)
   .then(user => {

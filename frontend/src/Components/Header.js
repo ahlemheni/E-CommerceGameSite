@@ -66,7 +66,7 @@ function Header() {
                   <>
                     <li><NavLink to="/card" ><MDBIcon fas icon="shopping-basket" /><span className="notification"> {cartItemsCount}</span></NavLink></li>
                     <li><NavLink to="/Login" onClick={handleLogout}><MDBIcon fas icon="sign-out-alt" /> Logout</NavLink></li>
-                    <li><NavLink to={`/profile/${username}`}>Profile <img src="../assets/images/profile-header.jpg" alt="" /></NavLink></li>
+                    <li><NavLink to={`/profile`}>Profile <img src="../assets/images/profile-header.jpg" alt="" /></NavLink></li>
                   </>
                 ) : (
                   <>

@@ -30,7 +30,7 @@ function App() {
             <Route path='Shop' element={<Shop/>} />
 
 
-            <Route path="profile/:username" element={<Profile  />} />
+            <Route path="profile" element={<Profile  />} />
             <Route path="Registre" element={<Register />} />
             <Route path="Login" element={<Login />} />
             <Route path="ResetPassword" element={<ResetPassword />} />

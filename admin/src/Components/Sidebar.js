@@ -31,14 +31,14 @@ function Sidebar(){
         </div>
         <div className="navbar-nav w-100">
         <Link
-        to=""
-        className={`nav-item nav-link ${activeLink === '' ? 'active' : ''}`}
-        onClick={() => handleLinkClick('')}
+        to="/Home"
+        className={`nav-item nav-link ${activeLink === '/Home' ? 'active' : ''}`}
+        onClick={() => handleLinkClick('/Home')}
       ><i className="fa fa-tachometer-alt me-2" />Dashboard</Link>
-           <Link  to="/Home/Table" className={`nav-item nav-link ${activeLink === '/Home/Table' ? 'active' : ''}`}  onClick={() => handleLinkClick('/Home/Table')}><i className="fa fa-table me-2" />Tables Of Product</Link>
-           <Link to="/Home/Form" className={`nav-item nav-link ${activeLink === '/Home/Form' ? 'active' : ''}`}  onClick={() => handleLinkClick('/Home/Form')}><i className="fa fa-keyboard me-2" />ADD Product</Link>
+           <Link  to="/Table" className={`nav-item nav-link ${activeLink === '/Table' ? 'active' : ''}`}  onClick={() => handleLinkClick('/Table')}><i className="fa fa-table me-2" />Tables Of Product</Link>
+           <Link to="/Form" className={`nav-item nav-link ${activeLink === '/Form' ? 'active' : ''}`}  onClick={() => handleLinkClick('/Form')}><i className="fa fa-keyboard me-2" />ADD Product</Link>
 
-          <Link to="/Home/Chart" className={`nav-item nav-link ${activeLink === '/Home/Chart' ? 'active' : ''}`}  onClick={() => handleLinkClick('/Home/Chart')}><i className="fa fa-chart-bar me-2" />Income</Link>
+          <Link to="/Chart" className={`nav-item nav-link ${activeLink === '/Chart' ? 'active' : ''}`}  onClick={() => handleLinkClick('/Chart')}><i className="fa fa-chart-bar me-2" />Income</Link>
      
         </div>
       

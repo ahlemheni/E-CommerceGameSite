@@ -68,7 +68,7 @@ export default function Profile() {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/users/' + id);
+        const response = await axios.get('http://localhost:5000/users/one' , { params: { id: id } });
         setUser(response.data);
         setIsLoading(false);
         setNewUsername(response.data.username); 

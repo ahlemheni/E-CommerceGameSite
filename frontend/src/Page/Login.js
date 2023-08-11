@@ -17,7 +17,7 @@ function Login() {
   };
   useEffect(() => {
     if (cookies.session) {
-      navigate(`/profile/${cookies.username}`);
+      navigate(`/profile`);
      
     }
   }, [cookies.session, cookies.username, navigate]);
@@ -48,7 +48,7 @@ function Login() {
           setCookie('username', user.username, { path: '/' });
           setCookie('id', user._id, { path: '/' });
           alert('Welcome, ' + user.username);
-          navigate(`/profile/${user.username}`);
+          navigate(`/profile`);
 
           // Fetch the user's cart data and set cartItemsCount
           axios

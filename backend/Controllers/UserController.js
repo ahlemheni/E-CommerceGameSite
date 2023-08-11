@@ -75,7 +75,7 @@ module.exports.save = async (req, res) => {
 const sendVerificationEmail =({_id , email,emailToken},res)=>{
   const currentUrl ="http://localhost:5000";
   const mailOptions ={
-    from : 'chattichiheb35@gmail.com',
+    from : 'swiftcodeentreprise@gmail.com',
     to : email,
     subject:'verify your account ',
     html:`<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -767,7 +767,7 @@ module.exports.ResetPassword = (req, res) => {
 
 const sendResetEmail = ({ email }, newPassword, res) => {
   const mailOptions = {
-    from: 'chattichiheb35@gmail.com',
+    from: 'swiftcodeentreprise@gmail.com',
     to: email,
     subject: 'Reset Password',
     html: `<!DOCTYPE html>

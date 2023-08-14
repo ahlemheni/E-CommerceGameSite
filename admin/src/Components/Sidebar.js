@@ -1,15 +1,20 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 function Sidebar(){
-  const [activeLink, setActiveLink] = useState('');
-  const [cookies, setCookie, removeCookie] = useCookies(['sessionAdmin','Admin','idAdmin']);
+  const location = useLocation();
+
+  const [activeLink, setActiveLink] = useState(location.pathname);
+  const [cookies, setCookie, removeCookie] = useCookies (['sessionAdmin', 'Admin', 'idAdmin', 'supadminCookie']);
   const imageData = localStorage.getItem('imageData');
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
   };
+  useEffect(() => {
+    setActiveLink(location.pathname);
+  }, [location.pathname]);
     return(
       <div className="content">
       <div className="container-fluid position-relative d-flex p-0">
@@ -25,9 +30,13 @@ function Sidebar(){
             <div className="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1" />
           </div>
           <div className="ms-3">
-            <h6 className="mb-0">{cookies.Admin}</h6>
-            <span>Admin</span>
-          </div>
+  <h6 className="mb-0">{cookies.Admin}</h6>
+  {cookies.supadminCookie === 'true' ? (
+    <span>Supadmin</span>
+  ) : (
+    <span>Admin</span>
+  )}
+</div>
         </div>
         <div className="navbar-nav w-100">
         <Link
@@ -39,7 +48,20 @@ function Sidebar(){
            <Link to="/Form" className={`nav-item nav-link ${activeLink === '/Form' ? 'active' : ''}`}  onClick={() => handleLinkClick('/Form')}><i className="fa fa-keyboard me-2" />ADD Product</Link>
 
           <Link to="/Chart" className={`nav-item nav-link ${activeLink === '/Chart' ? 'active' : ''}`}  onClick={() => handleLinkClick('/Chart')}><i className="fa fa-chart-bar me-2" />Income</Link>
-     
+          {cookies.supadminCookie && (
+            <>
+          <Link
+            to="/Admin"
+            className={`nav-item nav-link ${activeLink === '/Admin' ? 'active' : ''}`}
+            onClick={() => handleLinkClick('/Admin')}
+          ><i className="fa fa-chart-bar me-2" />ADD Admin</Link>
+          <Link
+            to="/ListeAdmin"
+            className={`nav-item nav-link ${activeLink === '/ListeAdmin' ? 'active' : ''}`}
+            onClick={() => handleLinkClick('/ListeAdmin')}
+          ><i className="fa fa-chart-bar me-2" />Liste Of Admin</Link>
+          </>
+        )}
         </div>
       
       </nav>

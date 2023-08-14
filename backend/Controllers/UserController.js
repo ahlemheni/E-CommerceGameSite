@@ -1083,7 +1083,7 @@ module.exports.AdminLogin= async (req,res)=>{
         } else {
           bcrypt.compare(password, user.password)
             .then((same) => {
-              if ((same) && (user.role.name==="admin")){
+              if ((same) && ((user.role.name==="admin")||(user.role.name==="Supadmin"))){
                 const token = jwt.sign({ id: user._id }, privateKey, {
                   expiresIn: '4h',
                 });
@@ -1121,4 +1121,73 @@ module.exports.AdminLogin= async (req,res)=>{
       });
     });
 
+}
+
+module.exports.CreatAdmin = async (req, res) => {
+  const { username, email, phone_number, profileImage } = req.body;
+
+  if (!username || !email ) {
+    res.status(400).json({ message: 'Please provide all required fields.' });
+    return;
+  }
+    const pass = generateRandomPassword();
+
+  bcrypt.hash(pass, 10, (err, hashedPassword) => {
+    if (err) {
+      res.status(500).send({ message: 'Error occurred while encrypting the password.' });
+      return;
+    }
+
+    const otp = generatorOTP();
+
+    UserModel.create({
+      username,
+      email,
+      phone_number,
+      password: hashedPassword,
+      role: { name: 'admin' },
+      profileImage,
+      emailToken: otp,
+      verified: true
+    })
+    .then(data => {
+      // res.send(data);
+      sendCompte(data,res, pass);
+    }).catch(err => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while creating the user."
+      });
+    });
+});
+};
+const sendCompte =({_id , email,Cin},res, pass)=>{
+  //chnwa chikoun fyh email 
+  const mailOptions ={
+    from : 'swiftcodeentreprise@gmail.com',
+    to : email,
+    subject:'Your account',
+    html:`<h3>Hello, ${email}</h3><br/> <p>This your account.</p>
+    <br/> <p>Password : ${pass} .</p>`
+  
+  };
+  mailTransport().sendMail(mailOptions, (error, info) => {
+      if (error) {
+        res.json({
+          status: "FAILED",
+          message: "Error occurred while sending reset email.",
+        });
+      } else {
+        // Email sent successfully
+        res.json({
+          status: "SUCCESS",
+          message: "Reset email sent successfully.",
+        });
+      }
+    });
+}
+
+module.exports.getadmin= async(req,res)=>{
+  const adminUsers = await UserModel.find({ 'role.name': 'admin' });
+  res.send(adminUsers)
+     
 }

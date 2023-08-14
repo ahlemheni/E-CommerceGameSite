@@ -56,6 +56,10 @@ const Signin = () => {
           localStorage.setItem('imageData', user.profileImage);
 
           alert('Welcome, ' + user.username);
+          if (user.role.name === 'Supadmin') {
+            // Set a specific cookie for supadmin
+            setCookie('supadminCookie', 'true', { path: '/' });
+          }
           window.location.replace(`/Home`);
         }
       })

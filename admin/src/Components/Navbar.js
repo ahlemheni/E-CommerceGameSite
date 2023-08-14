@@ -2,7 +2,7 @@ import { useCookies } from 'react-cookie';
 import { NavLink } from 'react-router-dom';
 
 function Navbar(){
-  const [cookies, setCookie, removeCookie] = useCookies(['sessionAdmin','Admin','idAdmin']);
+  const [cookies, setCookie, removeCookie] = useCookies (['sessionAdmin', 'Admin', 'idAdmin', 'sessionSupAdmin', 'SupAdmin', 'idSupAdmin']);
   const imageData = localStorage.getItem('imageData');
   const handleLogout = () => {
     const confirmLogout = window.confirm('Are you sure you want to logout ?');
@@ -11,7 +11,8 @@ function Navbar(){
       removeCookie('sessionAdmin');
       removeCookie('Admin');
       removeCookie('idAdmin');
-
+      removeCookie('supadminCookie');
+      
       localStorage.removeItem('imageData');
     }
   };

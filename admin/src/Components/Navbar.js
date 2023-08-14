@@ -35,7 +35,6 @@ function Navbar(){
             <span className="d-none d-lg-inline-flex">{cookies.Admin}</span>
           </a>
           <div className="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-            <a href="#" className="dropdown-item">My Profile</a>
             <NavLink to="/" onClick={handleLogout} className="dropdown-item">Log Out</NavLink>
           </div>
         </div>

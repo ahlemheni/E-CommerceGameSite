@@ -54,12 +54,12 @@ function Sidebar(){
             to="/Admin"
             className={`nav-item nav-link ${activeLink === '/Admin' ? 'active' : ''}`}
             onClick={() => handleLinkClick('/Admin')}
-          ><i className="fa fa-chart-bar me-2" />ADD Admin</Link>
+          ><i className=" fa fa-user-plus me-2" />ADD Admin</Link>
           <Link
             to="/ListeAdmin"
             className={`nav-item nav-link ${activeLink === '/ListeAdmin' ? 'active' : ''}`}
             onClick={() => handleLinkClick('/ListeAdmin')}
-          ><i className="fa fa-chart-bar me-2" />Liste Of Admin</Link>
+          ><i className="fa fa-address-card me-2"/>Admin's List</Link>
           </>
         )}
         </div>
